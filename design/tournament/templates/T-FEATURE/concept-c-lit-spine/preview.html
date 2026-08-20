@@ -1,0 +1,753 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Auto Accident Injury Treatment in San Rafael, CA</title>
+<meta name="description" content="Chiropractic care after a San Rafael collision - what we examine, how your injury is documented, and how care is paid for. Written estimate before treatment.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,300;8..60,400;8..60,600;8..60,700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../../../../san-rafael-auto-accident-injury-tokens.css">
+<link rel="stylesheet" href="../../../../san-rafael-auto-accident-injury-structural.css">
+<link rel="stylesheet" href="../../../../san-rafael-auto-accident-injury-chrome.css">
+
+<style>
+/* ==========================================================================
+   THE GRAMMAR LAYERS, AND NOTHING ELSE.
+   The locked structural sheet ships .container but deliberately NOT .row / .col:
+   it is the SYSTEM sheet, while the forced DOM grammar
+   (section -> .container -> .row -> .col -> object) is a BUILD law. So the two
+   layers between them have to be declared where a body is first composed, and
+   this is that file. GEOMETRY ONLY: every value is a locked token, nothing here
+   re-skins a component, and the block contains exactly one colour declaration,
+   stated below rather than hidden.
+   ========================================================================== */
+.row{display:grid;gap:var(--ds-space-gap);grid-template-columns:1fr}
+.col{min-width:0}
+.row--split{gap:calc(var(--ds-space-gap) * 1.9);align-items:start}
+@media (min-width:900px){
+  .row--split{grid-template-columns:minmax(0,1.12fr) minmax(0,0.88fr)}
+}
+
+/* A full-bleed container. Named in the DOM-grammar law itself ("allow
+   .container--full"), and it is the only legal way to hang the band decorations
+   off the grammar instead of orphaning them under the band element. */
+.container--full{max-width:none;padding-left:0;padding-right:0}
+
+/* THE DECORATION CHAIN OF A LIT BAND, and why it needs one declaration.
+   .section--deep > * makes EVERY direct child a positioned, z-indexed box. With
+   the scrim and the carved seam inside .container--full > .row > .col that would
+   (a) anchor the seam to the 1140px reading column instead of the full bleed and
+   (b) hand the 62%-tall scrim a zero-height containing block, because the
+   decoration row has no content of its own. Returning THIS ONE container to
+   static gives both back to the band element, which is the box the locked sheet
+   always intended them to measure against. The content container keeps its
+   raised z-index, so it still paints above the scrim. Nothing else changes. */
+.section--deep > .container--full{position:static;z-index:auto}
+
+/* A full-bleed band that closes on the carved seam needs the clearance the
+   contained plane gets from .stage-seamed: the 54px curve plus 34px. */
+.section--seamed{padding-bottom:calc(var(--ds-space-band) + 34px)}
+.hero.section--seamed{padding-bottom:calc(var(--ds-space-band) * 1.15 + 34px)}
+
+/* The numbered hairline OPENS a band, so its own band-sized top margin would
+   double the section's padding. Zeroed only where it is the first thing in a col. */
+.col > .seam-rule:first-child{margin-top:0}
+
+/* THE ONE COLOUR DECLARATION IN THIS FILE, stated rather than hidden.
+   .card__disc paints a brand gradient that INVERTS with the surface (deep blue on
+   paper, pale blue on the material) while the icon inside inherits the band's ink.
+   So the same disc that passes on paper renders white-on-pale-blue on the lit
+   band. --ds-ink-invert is the one token that flips the right way on both
+   grounds: #ffffff on paper, #14171a on the material. Measured against the
+   lightest stop of each gradient: 3.24:1 on paper and 7.7:1 on the material, both
+   clear of the 3:1 floor for a graphical object. */
+.card__disc{color:var(--ds-ink-invert)}
+
+/* The drawn diagram: every stroke named from a token, so no literal colour can
+   enter the markup. Measured on the sunken art ground (#f1f4f6): the entry marks
+   at 5.01:1 and the interval dashes at 5.06:1, both clear of 3:1 for a graphical
+   object that carries meaning. The axis is decoration and takes the hairline. */
+.spine-art .art-axis{stroke:var(--ds-line-strong)}
+.spine-art .art-entry{stroke:var(--ds-brand-primary-deep)}
+.spine-art .art-interval{stroke:var(--ds-ink-faint)}
+</style>
+</head>
+<body>
+<span id="top"></span>
+<a class="skip-link" href="#main">Skip to content</a>
+
+<div class="rail-scope" id="rail-scope">
+  <header class="rail section--deep surface-dark" id="rail" data-open="false">
+    <span class="scrim"></span>
+    <div class="container rail__inner">
+
+      <a class="rail__brand" href="index.html">
+        <span class="rail__mark" aria-hidden="true"></span>
+        <span class="rail__wordmark">
+          <span class="rail__word">San Rafael</span>
+          <span class="rail__sub">Auto Accident Injury</span>
+        </span>
+      </a>
+
+      <div class="rail__slot rail__slot--call">
+        <a class="btn btn-ghost btn--phone" href="tel:+14158779400">
+          <svg class="ico" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M6 3h3l2 5-2 1a12 12 0 006 6l1-2 5 2v3a2 2 0 01-2 2A16 16 0 014 6a2 2 0 012-3z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></svg>
+          Call (415) 877-9400
+        </a>
+      </div>
+
+      <div class="rail__slot rail__slot--book">
+        <a class="btn btn-primary" href="consultation.html">
+          Request a consultation
+          <svg class="arrow" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M4 12h15M13 6l6 6-6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </a>
+      </div>
+
+      <button class="rail__toggle" type="button" id="rail-toggle" aria-expanded="false" aria-controls="rail-drawer">
+        <span class="rail__burger" aria-hidden="true"><i></i><i></i><i></i></span>
+        <span class="rail__toggle-label">Menu</span>
+      </button>
+
+      
+      
+      <div class="rail__sheet deep" id="rail-drawer" aria-hidden="true">
+        <div class="rail__plate">
+          <span class="rule-lit"></span>
+          <p class="rail__kicker">Everywhere this site goes, in the order a crash makes you need it.</p>
+
+          <nav class="rail__nav" aria-label="Primary">
+            <div class="rail__set">
+              <p class="rail__group">If you were just hit</p>
+              <ul class="rail__list">
+                <li class="rail__item">
+                  <a class="rail__link" href="auto-accident.html">Injured in a Crash
+                    <svg class="arrow" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M4 12h15M13 6l6 6-6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                  </a>
+                  <span class="rail__note">Care after a collision, and what to do in the first days.</span>
+                </li>
+                <li class="rail__item">
+                  <a class="rail__link" href="cost.html">What It Costs
+                    <svg class="arrow" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M4 12h15M13 6l6 6-6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                  </a>
+                  <span class="rail__note">How a lien works, who signs it, and what happens to the bill.</span>
+                </li>
+                <li class="rail__item">
+                  <a class="rail__link" href="consultation.html">Book a Visit
+                    <svg class="arrow" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M4 12h15M13 6l6 6-6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                  </a>
+                  <span class="rail__note">Request a consultation, and what to bring with you.</span>
+                </li>
+                <li class="rail__item">
+                  <a class="rail__link" href="conditions.html">Conditions We Treat
+                    <svg class="arrow" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M4 12h15M13 6l6 6-6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                  </a>
+                  <span class="rail__note">Whiplash, back, neck, shoulder, nerve and disc injuries.</span>
+                </li>
+              </ul>
+            </div>
+            <div class="rail__set">
+              <p class="rail__group">Before you decide</p>
+              <ul class="rail__list">
+                <li class="rail__item">
+                  <a class="rail__link" href="testimonials.html">Proof
+                    <svg class="arrow" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M4 12h15M13 6l6 6-6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                  </a>
+                  <span class="rail__note">What patients have written, quoted and attributed.</span>
+                </li>
+                <li class="rail__item">
+                  <a class="rail__link" href="doctor.html">The Practice
+                    <svg class="arrow" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M4 12h15M13 6l6 6-6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                  </a>
+                  <span class="rail__note">Who treats you, and the parent clinic behind this office.</span>
+                </li>
+                <li class="rail__item">
+                  <a class="rail__link" href="narrative-report.html">Your Medical Record
+                    <svg class="arrow" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M4 12h15M13 6l6 6-6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                  </a>
+                  <span class="rail__note">The narrative report your claim is eventually read from.</span>
+                </li>
+                <li class="rail__item">
+                  <a class="rail__link" href="for-attorneys.html">For Attorneys
+                    <svg class="arrow" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M4 12h15M13 6l6 6-6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                  </a>
+                  <span class="rail__note">Records, timelines, and what this office sends your firm.</span>
+                </li>
+              </ul>
+            </div>
+          </nav>
+
+          <p class="rail__fine">55 Mitchell Blvd, Ste 10, San Rafael</p>
+        </div>
+      </div>
+
+    </div>
+  </header>
+</div>
+<div class="rail-veil" id="rail-veil" data-open="false" hidden></div>
+
+<main id="main">
+
+<section class="section section--deep surface-dark hero section--seamed">
+  <div class="container container--full">
+    <div class="row">
+      <div class="col">
+        <span class="scrim"></span>
+        <svg class="seam" viewBox="0 0 1200 54" preserveAspectRatio="none" aria-hidden="true">
+          <path class="seam-back" d="M0 16 C 300 54 900 54 1200 12 L1200 54 L0 54 Z"/>
+          <path class="seam-front" d="M0 24 C 320 56 880 56 1200 20 L1200 54 L0 54 Z"/>
+        </svg>
+      </div>
+    </div>
+  </div>
+  <div class="container">
+    <div class="row">
+      <div class="col">
+        <div class="flow rise">
+          <span class="rule-lit"></span>
+          <h1 class="h-hero">Injured in a car accident in San Rafael?</h1>
+          <p class="lead">This page answers the three questions that decide whether you can start care at all: what we examine, how your injury is written down, and how the care gets paid for.</p>
+          <div class="cta-row">
+            <a class="btn btn-primary" href="consultation.html">
+              Request a consultation
+              <svg class="arrow" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M4 12h15M13 6l6 6-6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </a>
+            <a class="btn btn-quiet" href="cost.html">
+              See how liens work
+              <svg class="arrow" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M4 12h15M13 6l6 6-6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section section--paper">
+  <div class="container">
+    <div class="row row--split">
+      <div class="col">
+        <div class="flow rise">
+          <h2 class="h-band">What the delay costs you</h2>
+          <p class="lead">Many crash injuries do not announce themselves at the roadside. Soft tissue and facet joint injuries commonly show up a day or more after the collision, once the adrenaline has gone and the inflammation has developed. That is how these injuries tend to behave. It is not a diagnosis of you, and nothing on this page can tell you what is wrong without an examination.</p>
+          <p class="measure">A period between the collision and the first documented examination shows up in the medical record as a gap. Adjusters and defence reviewers routinely read a gap as a sign the injury was minor or unrelated to the crash. Not because the person was not hurt, but because nothing was written down while they were. That is a fact about how records are read, not a warning about what will happen to you.</p>
+          <p class="measure">An early examination produces objective findings, meaning measured ranges of motion, orthopedic and neurological test results, and a written description of how the collision happened. Dated, and held in a record that does not depend on anyone remembering correctly a year later.</p>
+          <p class="note">The full version of that argument, and what to do in the first days, is on <a href="after-a-crash.html">what to do after a crash</a>. The short version sits in the <a href="faq.html">questions people ask</a>.</p>
+          
+          <img src="../../../../../assets/collision-rear-end-dusk.jpg" width="1024" height="576" loading="lazy" decoding="async" alt="Two cars stopped at an angle on a wet suburban road at dusk, hazard lights reflecting off the damp asphalt, with no people in frame." style="width:100%;height:auto;max-height:20rem;object-fit:cover;border-radius:var(--ds-r-surface)">
+        </div>
+      </div>
+      <div class="col">
+        <figure class="figure-drawn">
+          <div class="figure-drawn__art">
+            <svg class="spine-art" viewBox="0 0 320 268" role="img" aria-labelledby="spine-art-title spine-art-desc">
+              <title id="spine-art-title">A record with an interval before its first entry</title>
+              <desc id="spine-art-desc">A drawn vertical axis. A ring near the top stands for the collision. Below it a dashed run stands for the interval in which nothing is written down. Below that, five solid rules of differing length stand for dated entries in the record.</desc>
+              <g fill="none" stroke-width="2" stroke-linecap="round">
+                <path class="art-axis" d="M44 22 V 250"/>
+                <circle class="art-entry" cx="44" cy="34" r="9"/>
+                <path class="art-entry" d="M64 34 H 288"/>
+                <path class="art-interval" d="M44 60 V 130" stroke-dasharray="2 9"/>
+                <path class="art-interval" d="M64 74 H 208" stroke-dasharray="2 9"/>
+                <path class="art-interval" d="M64 100 H 244" stroke-dasharray="2 9"/>
+                <circle class="art-entry" cx="44" cy="152" r="4"/>
+                <path class="art-entry" d="M64 152 H 268"/>
+                <circle class="art-entry" cx="44" cy="178" r="4"/>
+                <path class="art-entry" d="M64 178 H 220"/>
+                <circle class="art-entry" cx="44" cy="204" r="4"/>
+                <path class="art-entry" d="M64 204 H 286"/>
+                <circle class="art-entry" cx="44" cy="230" r="4"/>
+                <path class="art-entry" d="M64 230 H 196"/>
+              </g>
+            </svg>
+          </div>
+          <figcaption>A drawn diagram, not a photograph of this office. The dashed run is the interval before the first entry. The solid rules below it are dated entries in the record.</figcaption>
+        </figure>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section section--deep surface-dark section--seamed">
+  <div class="container container--full">
+    <div class="row">
+      <div class="col">
+        <span class="scrim"></span>
+        <svg class="seam" viewBox="0 0 1200 54" preserveAspectRatio="none" aria-hidden="true">
+          <path class="seam-back" d="M0 16 C 300 54 900 54 1200 12 L1200 54 L0 54 Z"/>
+          <path class="seam-front" d="M0 24 C 320 56 880 56 1200 20 L1200 54 L0 54 Z"/>
+        </svg>
+      </div>
+    </div>
+  </div>
+  <div class="container">
+    <div class="row">
+      <div class="col">
+        <span class="rule-lit"></span>
+        <h2 class="h-band">What you get here</h2>
+        <div class="grid g-3 grid-top">
+          <div class="card rise" style="--i:0">
+            <span class="card__disc">
+              <svg class="ico" viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="11" cy="11" r="6" stroke="currentColor" stroke-width="2"/><path d="M15.6 15.6L21 21" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+            </span>
+            <h3 class="h-card">An examination built for a collision.</h3>
+            <p>Orthopedic and neurological examination, and diagnostic X-ray where it is indicated. You can find out what is actually injured instead of guessing from how it feels. It means the plan of care is aimed at a finding rather than at a symptom.</p>
+          </div>
+          <div class="card rise" style="--i:1">
+            <span class="card__disc">
+              <svg class="ico" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M9 3h7l4 4v11a1 1 0 01-1 1H9z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/><path d="M5 7v13a1 1 0 001 1h9" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </span>
+            <h3 class="h-card">The paperwork handled.</h3>
+            <p>Insurance verification, lien billing, and coordination with your attorney if you have one. You can start care without becoming your own claims administrator. It means the practical obstacle between the crash and the treatment is taken off your desk.</p>
+          </div>
+          <div class="card rise" style="--i:2">
+            <span class="card__disc">
+              <svg class="ico" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M6 3h9l4 4v14H6z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/><path d="M9 8h4M9 12h7M9 16h5" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+            </span>
+            <h3 class="h-card">The injury written down.</h3>
+            <p>Dated objective findings recorded at every visit. You can hand your claim a record that was made while the injury was fresh. It means the account of your injury does not rest on memory.</p>
+          </div>
+        </div>
+        <div class="notice notice--info mt-gap">
+          <svg class="ico" viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="2"/><path d="M12 11v5M12 7.6h.01" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+          <p>Each of those describes a process. None of them describes a result. We do not guarantee a recovery, a recovery time, or a claim outcome, and no page on this site will.</p>
+        </div>
+        
+        <img class="mt-gap" src="../../../../../assets/anatomy-cervical-spine.jpg" width="1024" height="768" loading="lazy" decoding="async" alt="An anatomical model of stacked cervical vertebrae photographed against a black ground, with the canal through their centres picked out in light." style="width:100%;height:auto;max-width:32rem;max-height:20rem;object-fit:cover;border-radius:var(--ds-r-surface)">
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section section--paper">
+  <div class="container">
+    <div class="row">
+      <div class="col">
+        <p class="seam-rule">01</p>
+        <div class="flow rise">
+          <h2 class="h-band">The examination, and what comes out of it</h2>
+          <div class="steps">
+            <div class="steps__item">
+              <p class="steps__num">01</p>
+              <div class="steps__body">
+                <h3 class="h-card">Intake and history.</h3>
+                <p>How the collision happened: direction of impact, seat position, headrest height, seatbelt, airbag, what hurt at the scene and what hurt the next morning. The mechanism of the force changes what we examine, which is why the questions are specific.</p>
+              </div>
+            </div>
+            <div class="steps__item">
+              <p class="steps__num">02</p>
+              <div class="steps__body">
+                <h3 class="h-card">Orthopedic and neurological examination.</h3>
+                <p>Ranges of motion measured rather than estimated, orthopedic tests, and a neurological screen of reflex, strength and sensation. Every clinical term you hear in the room gets explained in the room.</p>
+              </div>
+            </div>
+            <div class="steps__item">
+              <p class="steps__num">03</p>
+              <div class="steps__body">
+                <h3 class="h-card">Diagnostic X-ray, where it is indicated.</h3>
+                <p>X-rays are recommended in some cases and not in others, and if they are recommended you are told what the imaging is being used to rule in or rule out for your specific injury before anything is taken. You can decline. Lead shielding is provided. The cost of any X-ray is given to you in writing, and it appears on your written estimate, before a single image is taken. The full version of this block, including the consent conversation, is on <a href="first-visit.html">your first visit</a>.</p>
+              </div>
+            </div>
+            <div class="steps__item">
+              <p class="steps__num">04</p>
+              <div class="steps__body">
+                <h3 class="h-card">The written findings.</h3>
+                <p>What was tested, what was measured, what was found, and the date it was found. Released to your attorney, your insurer or another clinician on your signed authorisation, and to nobody without it.</p>
+              </div>
+            </div>
+            <div class="steps__item">
+              <p class="steps__num">05</p>
+              <div class="steps__body">
+                <h3 class="h-card">The report for your claim.</h3>
+                <p>A narrative report of your care can be prepared for a personal injury claim. The turnaround and a sample of what the report contains are set out on <a href="narrative-report.html">the narrative report page</a>, and this page does not restate either, so that one figure changes in one place.</p>
+              </div>
+            </div>
+          </div>
+          
+          <img src="../../../../../assets/record-radiograph.jpg" width="1024" height="768" loading="lazy" decoding="async" alt="A spine X-ray film clipped to an illuminated light panel in a dark room, showing the vertebral column from the base of the skull to the pelvis." style="width:100%;height:auto;max-width:32rem;max-height:20rem;object-fit:cover;border-radius:var(--ds-r-surface)">
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section section--sunken">
+  <div class="container">
+    <div class="row row--split">
+      <div class="col">
+        <p class="seam-rule">02</p>
+        <div class="flow rise">
+          <h2 class="h-band">What we will and will not claim</h2>
+          <p class="lead">This site publishes no star rating, no review count, and no patient volume figure. Not for want of material, but because a number a visitor cannot check is not proof, and this practice is being rebuilt around things you can check.</p>
+        </div>
+      </div>
+      <div class="col">
+        <div class="plate">
+          <p>What you can check: Dr. Michael Perry Joseph appears in the federal CMS provider registry under NPI 1215189410. That is a registry entry. It tells you the practice exists as an enrolled provider, and it is not a verdict on clinical quality, so we do not present it as one.</p>
+          <p class="plate__fine">What you will not find here: a promise about your recovery, a prediction about your claim, or a comparison in which this practice comes out on top. If we do not think we can help you, we will say so and name the kind of clinician you should be seeing instead.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section section--paper">
+  <div class="container">
+    <div class="row">
+      <div class="col">
+        <p class="seam-rule">03</p>
+        <div class="flow rise">
+          <h2 class="h-band">What this replaces</h2>
+          <p class="lead">Most chiropractic practices treat the pain and stop there, because for most patients that is the whole job. A crash injury has two more jobs attached to it. It has to be funded, or you cannot start. It has to be documented, or the treatment does not count for anything later.</p>
+          <div class="plate plate--terms plate--quiet plate--wide">
+            <p>This practice is organised around those two extra jobs. That is the difference, and it is a difference in what gets organised, not a claim that anyone else is doing it badly. Medication manages pain. Our aim is the mechanical injury causing it. Both have a place, and for some injuries you need both.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section section--deep surface-dark section--seamed">
+  <div class="container container--full">
+    <div class="row">
+      <div class="col">
+        <span class="scrim"></span>
+        <svg class="seam" viewBox="0 0 1200 54" preserveAspectRatio="none" aria-hidden="true">
+          <path class="seam-back" d="M0 16 C 300 54 900 54 1200 12 L1200 54 L0 54 Z"/>
+          <path class="seam-front" d="M0 24 C 320 56 880 56 1200 20 L1200 54 L0 54 Z"/>
+        </svg>
+      </div>
+    </div>
+  </div>
+  <div class="container">
+    <div class="row row--split">
+      <div class="col">
+        <div class="flow rise">
+          <span class="rule-lit"></span>
+          <h2 class="h-band">How care is paid for</h2>
+          <p class="lead">There are five ways care after a collision gets funded, and your case may use more than one.</p>
+          <ul class="list">
+            <li><strong>MedPay.</strong> Medical payments coverage on your own auto policy, if your policy carries it.</li>
+            <li><strong>The at-fault driver's liability cover.</strong> Paid out at the end, through the claim, not as you go.</li>
+            <li><strong>Your own uninsured or underinsured motorist coverage.</strong> The UM/UIM rail, which is the one that matters when the other driver has no cover. See <a href="cost-uninsured-driver.html">what happens when the other driver is uninsured</a>.</li>
+            <li><strong>A lien against the personal injury settlement.</strong> Care now, paid from the settlement later.</li>
+            <li><strong>Self-pay.</strong> For a case with no claim behind it.</li>
+          </ul>
+        </div>
+      </div>
+      <div class="col">
+        <div class="plane">
+          <svg class="ico" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 3l7 3v6c0 4-3 7-7 9-4-2-7-5-7-9V6z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/><path d="M9 12l2 2 4-4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          <p>Auto insurance often covers care after a collision. Coverage depends on your policy and the circumstances of the crash. We will check your benefits and tell you what applies to you before treatment starts. What we will not do is tell you what your insurer is going to decide, because we do not know and neither does anyone who tells you otherwise.</p>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col">
+        <div class="stat-band mt-band">
+          <p class="h-stat">$0 out of pocket to start.</p>
+          <div class="stat-band__terms">
+            <p>Care here is provided on a lien. You are billed nothing at any point while your case is open, and this practice is paid out of the settlement when the case resolves.</p>
+            <p>If we do not accept your case, if the case is lost, or if it settles for less than the bill, the balance is written off in full and you owe us nothing.</p>
+            <p>There is no rate card on this site and no per service price, because the number that matters to you is the one on your own written estimate.</p>
+          </div>
+        </div>
+        <p class="fine mt-gap">The whole money question is resolved on <a href="cost.html">how care is paid for</a>. Your price in writing comes from <a href="good-faith-estimate.html">the written estimate</a>.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section section--tight section--paper">
+  <div class="container">
+    <div class="row">
+      <div class="col">
+        <div class="flow rise">
+          <h2 class="h-band">Where to go next</h2>
+          <div class="tile-grid">
+            <a class="tile" href="whiplash.html"><span><em>My neck hurts</em>: whiplash</span>
+              <svg class="arrow" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M4 12h15M13 6l6 6-6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </a>
+            <a class="tile" href="after-a-crash.html"><span><em>It started days later</em>: what to do after a crash</span>
+              <svg class="arrow" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M4 12h15M13 6l6 6-6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </a>
+            <a class="tile" href="first-visit.html"><span><em>What happens at the first appointment</em>: your first visit</span>
+              <svg class="arrow" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M4 12h15M13 6l6 6-6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </a>
+            <a class="tile" href="conditions.html"><span><em>All the injuries we treat</em>: conditions we see</span>
+              <svg class="arrow" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M4 12h15M13 6l6 6-6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </a>
+            <a class="tile" href="work-injuries.html"><span><em>I was hurt at work, not in a car</em>: work injuries</span>
+              <svg class="arrow" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M4 12h15M13 6l6 6-6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </a>
+            <a class="tile" href="chiropractic.html"><span><em>What chiropractic care actually does</em>: how chiropractic care works</span>
+              <svg class="arrow" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M4 12h15M13 6l6 6-6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </a>
+            <a class="tile" href="faq.html"><span><em>Questions</em>: the questions people ask</span>
+              <svg class="arrow" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M4 12h15M13 6l6 6-6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </a>
+            <a class="tile" href="doctor.html"><span><em>Who is examining me</em>: Dr. Michael Perry Joseph</span>
+              <svg class="arrow" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M4 12h15M13 6l6 6-6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </a>
+            <a class="tile" href="contact.html"><span><em>Where you are</em>: contact and directions</span>
+              <svg class="arrow" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M4 12h15M13 6l6 6-6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section section--paper">
+  <div class="container">
+    <div class="row">
+      <div class="col">
+        <p class="seam-rule">04</p>
+        <div class="flow rise">
+          <h2 class="h-band">Questions people actually ask</h2>
+          <div class="faq">
+            <details class="faq__item" open>
+              <summary class="faq__q">I do not have an attorney. Will you still see me?<span class="faq__mark" aria-hidden="true"></span></summary>
+              <div class="faq__a">
+                <p>Yes. Having a lawyer is not a condition of being treated here. This is a chiropractic practice and not a law firm, so nothing we tell you is legal advice and we do not recommend a firm. If you want the money side first, start at <a href="cost.html">how care is paid for</a>.</p>
+              </div>
+            </details>
+            <details class="faq__item">
+              <summary class="faq__q">What happens if my claim fails?<span class="faq__mark" aria-hidden="true"></span></summary>
+              <div class="faq__a">
+                <p>You are billed nothing. Care is on a lien, so nothing is billed to you while the case is open. If the case is lost, if we do not accept it, or if it settles for less than the bill, the balance is written off in full and you owe us nothing.</p>
+              </div>
+            </details>
+            <details class="faq__item">
+              <summary class="faq__q">The driver who hit me has no insurance.<span class="faq__mark" aria-hidden="true"></span></summary>
+              <div class="faq__a">
+                <p>That is the uninsured motorist rail, and it is the question this market answers worst. It has its own page: <a href="cost-uninsured-driver.html">what happens when the other driver is uninsured</a>.</p>
+              </div>
+            </details>
+            <details class="faq__item">
+              <summary class="faq__q">Will you tell me the cost before you examine me?<span class="faq__mark" aria-hidden="true"></span></summary>
+              <div class="faq__a">
+                <p>Yes, in writing, before the examination. That is <a href="good-faith-estimate.html">the written estimate</a>.</p>
+              </div>
+            </details>
+            <details class="faq__item">
+              <summary class="faq__q">Do I need X-rays?<span class="faq__mark" aria-hidden="true"></span></summary>
+              <div class="faq__a">
+                <p>Only if they are indicated for your injury. You are told why, you are told the cost in writing first, you can decline, and shielding is provided.</p>
+              </div>
+            </details>
+            <details class="faq__item">
+              <summary class="faq__q">How soon will I be seen?<span class="faq__mark" aria-hidden="true"></span></summary>
+              <div class="faq__a">
+                <p>New auto accident patients are seen the same day. That commitment covers new auto accident patients only. The practice's published opening hours are Tuesday to Friday, 9am to 6pm, and those hours describe when the door is open rather than when any other kind of appointment is available.</p>
+              </div>
+            </details>
+          </div>
+        </div>
+        
+        <div class="band-close">
+          <p>If you were hurt in a collision in San Rafael or anywhere in Marin, the next step is an examination and a written estimate, in that order.</p>
+          <a class="btn-link" href="good-faith-estimate.html">
+            Get your estimate in writing
+            <svg class="arrow" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M4 12h15M13 6l6 6-6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </a>
+        </div>
+        <p class="fine mt-gap">55 Mitchell Blvd, Ste 10, San Rafael. Opening hours and directions are on <a href="contact.html">contact</a>.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<section class="precta section section--deep surface-dark">
+  <span class="scrim"></span>
+  <div class="container cta-band">
+    <div class="cta-band__body">
+      <span class="rule-lit"></span>
+      <h2 class="h-band">Start with a consultation.</h2>
+      <p>Bring the police report if you have one. We examine you, explain what we find, and put the estimate in writing before care begins.</p>
+    </div>
+    <div class="cta-row">
+      <a class="btn btn-primary" href="consultation.html">
+        Request a consultation
+        <svg class="arrow" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M4 12h15M13 6l6 6-6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </a>
+      <a class="btn btn-ghost btn--phone" href="tel:+14158779400">
+        <svg class="ico" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M6 3h3l2 5-2 1a12 12 0 006 6l1-2 5 2v3a2 2 0 01-2 2A16 16 0 014 6a2 2 0 012-3z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></svg>
+        Call (415) 877-9400
+      </a>
+    </div>
+  </div>
+</section>
+
+<footer class="sfoot section--deep surface-dark" id="site-footer">
+  <span class="scrim"></span>
+
+  <div class="container sfoot__row sfoot__row--top">
+    <a class="sfoot__ident" href="index.html">
+      <span class="rail__mark" aria-hidden="true"></span>
+      <span class="rail__wordmark">
+        <span class="rail__word">San Rafael</span>
+        <span class="rail__sub">Auto Accident Injury</span>
+      </span>
+    </a>
+    <p class="sfoot__line">A chiropractic office for people hurt in collisions, and a satellite of Pain Relief Clinic of Marin.</p>
+    <a class="sfoot__top" href="#top">
+      Back to top
+      <svg class="arrow" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M4 12h15M13 6l6 6-6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </a>
+  </div>
+
+  <div class="container sfoot__row sfoot__row--nav">
+    <details class="fcol" open>
+      <summary class="fcol__head">Injured in a Crash<span class="fcol__mark" aria-hidden="true"></span></summary>
+      <ul class="fcol__list">
+        <li><a href="auto-accident.html">Auto accident injury care</a></li>
+        <li><a href="after-a-crash.html">What to do after a crash</a></li>
+        <li><a href="first-visit.html">Your first visit</a></li>
+        <li><a href="faq.html">Questions, answered</a></li>
+        <li><a href="work-injuries.html">Work injuries</a></li>
+      </ul>
+    </details>
+
+    <details class="fcol" open>
+      <summary class="fcol__head">What It Costs<span class="fcol__mark" aria-hidden="true"></span></summary>
+      <ul class="fcol__list">
+        <li><a href="cost.html">What care costs</a></li>
+        <li><a href="cost-uninsured-driver.html">If the other driver is uninsured</a></li>
+        <li><a href="good-faith-estimate.html">Good Faith Estimate</a></li>
+      </ul>
+    </details>
+
+    <details class="fcol" open>
+      <summary class="fcol__head">Conditions We Treat<span class="fcol__mark" aria-hidden="true"></span></summary>
+      <ul class="fcol__list">
+        <li><a href="conditions.html">All conditions</a></li>
+        <li><a href="whiplash.html">Whiplash</a></li>
+        <li><a href="low-back-pain.html">Low back pain</a></li>
+        <li><a href="upper-back-neck-pain.html">Upper back and neck pain</a></li>
+        <li><a href="shoulder-pain.html">Shoulder pain</a></li>
+        <li><a href="headache-migraine.html">Headaches and migraines</a></li>
+        <li><a href="pinched-nerve.html">Pinched nerve</a></li>
+        <li><a href="slipped-disc.html">Slipped disc</a></li>
+        <li><a href="sciatica.html">Sciatica</a></li>
+      </ul>
+    </details>
+
+    <details class="fcol" open>
+      <summary class="fcol__head">The Practice<span class="fcol__mark" aria-hidden="true"></span></summary>
+      <ul class="fcol__list">
+        <li><a href="doctor.html">Your chiropractor</a></li>
+        <li><a href="pain-relief-clinic-of-marin.html">Pain Relief Clinic of Marin</a></li>
+        <li><a href="testimonials.html">Patient reviews</a></li>
+        <li><a href="chiropractic.html">How chiropractic care works</a></li>
+        <li><a href="narrative-report.html">Narrative reports</a></li>
+        <li><a href="for-attorneys.html">For attorneys</a></li>
+      </ul>
+    </details>
+
+    <details class="fcol" open>
+      <summary class="fcol__head">Visit Us<span class="fcol__mark" aria-hidden="true"></span></summary>
+      <ul class="fcol__list">
+        <li><a href="contact.html">Contact and hours</a></li>
+        <li><a href="consultation.html">Request a consultation</a></li>
+        <li><a href="forms.html">Patient forms</a></li>
+        <li><a href="accessibility.html">Accessibility</a></li>
+        <li><a href="privacy.html">Privacy policy</a></li>
+      </ul>
+    </details>
+
+    <details class="fcol" open>
+      <summary class="fcol__head">Contact<span class="fcol__mark" aria-hidden="true"></span></summary>
+      <ul class="fcol__list">
+        <li><a href="tel:+14158779400">(415) 877-9400</a></li>
+        <li><span class="fcol__fact">55 Mitchell Blvd, Ste 10, San Rafael, CA 94903</span></li>
+        <li><span class="fcol__fact">Mon closed · Tue-Fri 9am-6pm · Sat closed</span></li>
+      </ul>
+    </details>
+  </div>
+
+  <div class="container sfoot__row sfoot__row--legal">
+    <p>&copy; 2026 San Rafael Auto Accident Injury Chiropractic Center. Care is provided on a lien.</p>
+    <p class="sfoot__legal-links">
+      <a href="accessibility.html">Accessibility</a>
+      <a href="privacy.html">Privacy policy</a>
+    </p>
+  </div>
+</footer>
+
+<script>
+/* ===========================================================================
+   CHROME BEHAVIOUR. Three jobs, no library.
+     1. open / close the ONE panel that is both the desktop mega and the phone
+        drawer, with aria-expanded, aria-hidden, Escape, veil-click, and focus
+        returned to the control that opened it;
+     2. the sticky shrink-on-scroll state (composition-medical-health section 1);
+     3. the footer columns as an EXCLUSIVE accordion below 768. The panel
+        itself has NO accordions by design (its eight destinations are flat and
+        all visible at once), so the "two open at once grew past the viewport"
+        failure has nowhere to happen there; the footer is the one place this
+        chrome has collapsible groups, and exactly one is open at a time.
+   The winner's fourth job, the reviewer state deck, does not ship: it drove the
+   review-only control strip, which is scaffolding.
+   Every <details> ships with the open attribute, so with JS off the whole
+   footer reads fully expanded. Nothing here can leave content unreachable.
+   =========================================================================== */
+(function () {
+  'use strict';
+
+  var rail = document.getElementById('rail');
+  var toggle = document.getElementById('rail-toggle');
+  var sheet = document.getElementById('rail-drawer');
+  var veil = document.getElementById('rail-veil');
+
+  function setPanel(open) {
+    rail.setAttribute('data-open', open ? 'true' : 'false');
+    toggle.setAttribute('aria-expanded', open ? 'true' : 'false');
+    sheet.setAttribute('aria-hidden', open ? 'false' : 'true');
+    veil.setAttribute('data-open', open ? 'true' : 'false');
+    if (open) { veil.removeAttribute('hidden'); } else { veil.setAttribute('hidden', ''); }
+  }
+
+  toggle.addEventListener('click', function () {
+    setPanel(rail.getAttribute('data-open') !== 'true');
+  });
+  veil.addEventListener('click', function () { setPanel(false); toggle.focus(); });
+  document.addEventListener('keydown', function (e) {
+    if (e.key === 'Escape' && rail.getAttribute('data-open') === 'true') { setPanel(false); toggle.focus(); }
+  });
+
+  /* 2. shrink on scroll. */
+  function onScroll() {
+    if (window.scrollY > 24) { rail.classList.add('is-scrolled'); }
+    else { rail.classList.remove('is-scrolled'); }
+  }
+  window.addEventListener('scroll', onScroll, { passive: true });
+  onScroll();
+
+  /* 3. footer columns: EXCLUSIVE below 768, always open above it. */
+  var narrow = window.matchMedia('(max-width: 767px)');
+  var cols = Array.prototype.slice.call(document.querySelectorAll('.fcol'));
+  function syncCols() {
+    if (!narrow.matches) { cols.forEach(function (c) { c.open = true; }); }
+    else {
+      cols.forEach(function (c, i) { c.open = (i === 0); });
+    }
+  }
+  cols.forEach(function (col) {
+    col.addEventListener('toggle', function () {
+      if (!narrow.matches) { if (!col.open) { col.open = true; } return; }
+      if (!col.open) { return; }
+      cols.forEach(function (other) { if (other !== col) { other.open = false; } });
+    });
+  });
+  if (narrow.addEventListener) { narrow.addEventListener('change', syncCols); }
+  syncCols();
+}());
+</script>
+</body>
+</html>
