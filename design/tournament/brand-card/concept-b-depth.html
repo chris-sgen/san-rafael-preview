@@ -1,0 +1,339 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Brand Card B: DEPTH</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,300;8..60,400;8..60,600;8..60,700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../../san-rafael-auto-accident-injury-tokens.css">
+<link rel="stylesheet" href="../../san-rafael-auto-accident-injury-structural.css">
+
+<style>
+
+:root{
+  --ds-font-display:"Source Serif 4",Georgia,"Times New Roman",serif;
+  --ds-font-body:Inter,system-ui,-apple-system,sans-serif;
+  --ds-leading-tight:1.01;
+  --ds-track-display:-0.021em;
+}
+.surface-dark{
+  --ds-font-display:"Source Serif 4",Georgia,"Times New Roman",serif;
+  --ds-font-body:Inter,system-ui,-apple-system,sans-serif;
+  --ds-leading-tight:1.01;
+  --ds-track-display:-0.021em;
+}
+
+*,*::before,*::after{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--ds-surface);color:var(--ds-ink);font-family:var(--ds-font-body);font-size:var(--ds-step-body);line-height:var(--ds-leading-body);-webkit-font-smoothing:antialiased}
+.wrap{max-width:1140px;margin:0 auto;padding:0 24px}
+.zone{padding:var(--ds-space-band) 0;border-top:1px solid var(--ds-line)}
+.zone-label{font-family:var(--ds-font-mono);font-size:var(--ds-step-fine);letter-spacing:var(--ds-track-eyebrow);text-transform:uppercase;color:var(--ds-ink-faint);margin:0 0 var(--ds-space-gap)}
+.sheet-head{padding:var(--ds-space-band) 0 var(--ds-space-gap)}
+.eyebrow{font-size:var(--ds-step-fine);letter-spacing:var(--ds-track-eyebrow);text-transform:uppercase;font-weight:600;color:var(--ds-brand-primary-deep);margin:0 0 var(--ds-space-tight)}
+.h-sheet{font-family:var(--ds-font-display);font-weight:600;font-size:var(--ds-step-h2);line-height:var(--ds-leading-tight);letter-spacing:var(--ds-track-display);margin:0;max-width:21ch}
+p.lead{color:var(--ds-ink-soft);max-width:62ch;margin:var(--ds-space-gap) 0 0}
+p.note{border-left:3px solid var(--ds-brand-accent);padding:2px 0 2px 16px;color:var(--ds-ink-soft);max-width:62ch;margin:var(--ds-space-gap) 0 0;font-size:var(--ds-step-fine)}
+
+.deep{
+  position:relative;
+  isolation:isolate;
+  overflow:hidden;
+  border-radius:var(--ds-r-surface);
+  background-color:var(--ds-surface-deep);
+  background-image:linear-gradient(158deg,var(--ds-surface-2) 0%,var(--ds-surface-deep) 52%,var(--ds-surface-sunken) 100%);
+  border:1px solid var(--ds-line);
+  box-shadow:var(--ds-shadow-lift);
+  box-shadow:var(--ds-shadow-lift),inset 0 1px 0 color-mix(in srgb,var(--ds-ink) 20%,transparent);
+}
+
+.deep::before{
+  content:"";position:absolute;inset:0;z-index:var(--ds-z-below);pointer-events:none;
+  background-image:
+    radial-gradient(72% 86% at 8% -8%,var(--ds-brand-accent) 0%,transparent 62%),
+    radial-gradient(58% 62% at 96% 108%,var(--ds-brand-primary-deep) 0%,transparent 66%);
+  opacity:var(--ds-opacity-texture);
+}
+
+.deep::after{
+  content:"";position:absolute;inset:0;z-index:var(--ds-z-below);pointer-events:none;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='g'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='140' height='140' filter='url(%23g)' opacity='0.55'/%3E%3C/svg%3E");
+  background-size:140px 140px;
+  opacity:var(--ds-opacity-faint);
+  mix-blend-mode:overlay;
+}
+.deep > *{position:relative;z-index:var(--ds-z-raised)}
+
+.scrim{position:absolute;inset:auto 0 0 0;height:62%;z-index:var(--ds-z-base);pointer-events:none;background-image:linear-gradient(180deg,transparent 0%,var(--ds-surface-deep) 100%);opacity:var(--ds-opacity-scrim)}
+
+.stage{padding:clamp(2.6rem,6vw,4.6rem) clamp(1.4rem,4vw,3.2rem)}
+.rule-lit{width:96px;height:4px;border-radius:var(--ds-r-pill);background-color:var(--ds-brand-accent);margin:0 0 var(--ds-space-gap);box-shadow:0 0 0 1px color-mix(in srgb,var(--ds-brand-accent) 30%,transparent),0 6px 26px color-mix(in srgb,var(--ds-brand-accent) 45%,transparent)}
+.h-hero{font-family:var(--ds-font-display);font-weight:600;font-size:var(--ds-step-hero);line-height:var(--ds-leading-tight);letter-spacing:var(--ds-track-display);color:var(--ds-ink);margin:0;max-width:15ch}
+.h-band{font-family:var(--ds-font-display);font-weight:700;font-size:var(--ds-step-hero);line-height:var(--ds-leading-tight);letter-spacing:var(--ds-track-display);color:var(--ds-ink);margin:0;max-width:13ch;font-variant-numeric:tabular-nums}
+.row-cta{display:flex;flex-wrap:wrap;gap:var(--ds-space-gap);margin-top:calc(var(--ds-space-gap) * 1.4)}
+
+.plane{
+  margin-top:calc(var(--ds-space-gap) * 1.6);
+  padding:18px 20px;
+  border-radius:var(--ds-r-control);
+  background-color:var(--ds-surface-2);
+  background-color:color-mix(in srgb,var(--ds-surface-2) 62%,transparent);
+  -webkit-backdrop-filter:blur(18px) saturate(150%);
+  backdrop-filter:blur(18px) saturate(150%);
+  border:1px solid var(--ds-line-strong);
+  box-shadow:var(--ds-shadow);
+  box-shadow:var(--ds-shadow),inset 0 1px 0 color-mix(in srgb,var(--ds-ink) 22%,transparent);
+  max-width:36rem;
+}
+
+.plane p{margin:0;color:var(--ds-ink-soft);font-size:var(--ds-step-fine);max-width:52ch}
+
+.seam{display:block;width:100%;height:54px;margin-top:-1px}
+.seam .seam-back{fill:var(--ds-surface-sunken);opacity:var(--ds-opacity-texture)}
+.seam .seam-front{fill:var(--ds-surface)}
+
+.swatch-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(184px,1fr));gap:var(--ds-space-gap)}
+.swatch{border:1px solid var(--ds-line);border-radius:var(--ds-r-surface);overflow:hidden;background:var(--ds-surface-2);box-shadow:var(--ds-shadow)}
+.swatch-chip{display:block;height:82px;position:relative}
+.swatch-chip::after{content:"";position:absolute;inset:0;box-shadow:inset 0 -18px 26px -18px color-mix(in srgb,#000000 40%,transparent)}
+.swatch-meta{padding:12px 14px}
+.swatch-role{font-weight:600;font-size:var(--ds-step-fine);margin:0}
+.swatch-hex{font-family:var(--ds-font-mono);font-size:var(--ds-step-fine);color:var(--ds-ink-faint);margin:3px 0 0}
+
+.mat-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(208px,1fr));gap:var(--ds-space-gap)}
+.mat{border-radius:var(--ds-r-surface);overflow:hidden;border:1px solid var(--ds-line);background:var(--ds-surface-2);box-shadow:var(--ds-shadow)}
+.mat-art{height:118px;display:grid;place-items:center;position:relative}
+.mat-body{padding:14px 16px}
+.mat-name{font-family:var(--ds-font-display);font-weight:600;font-size:var(--ds-step-h3);line-height:1.2;margin:0}
+.mat-note{font-size:var(--ds-step-fine);color:var(--ds-ink-soft);margin:5px 0 0}
+
+.type-row{border-top:1px solid var(--ds-line);padding:var(--ds-space-gap) 0}
+.type-spec{font-family:var(--ds-font-mono);font-size:var(--ds-step-fine);color:var(--ds-ink-faint);margin:0 0 10px}
+.h-type-a{font-family:var(--ds-font-display);font-weight:600;font-size:var(--ds-step-h2);line-height:var(--ds-leading-tight);letter-spacing:var(--ds-track-display);margin:0;max-width:19ch}
+.h-type-b{font-family:var(--ds-font-display);font-weight:400;font-size:var(--ds-step-h3);line-height:1.35;margin:0;max-width:34ch;color:var(--ds-ink-soft)}
+.numerals{font-family:var(--ds-font-body);font-weight:600;font-variant-numeric:tabular-nums;font-size:1.5rem;letter-spacing:0.01em;margin:0}
+
+.atom-row{display:flex;flex-wrap:wrap;gap:var(--ds-space-gap);align-items:center}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:10px;min-height:var(--ds-tap);padding:0 26px;border-radius:var(--ds-r-control);font-family:var(--ds-font-body);font-weight:600;font-size:var(--ds-step-body);line-height:1;text-decoration:none;border:1px solid transparent;cursor:pointer;transition:background-color var(--ds-dur-fast) var(--ds-ease),border-color var(--ds-dur-fast) var(--ds-ease),box-shadow var(--ds-dur-fast) var(--ds-ease),transform var(--ds-dur-fast) var(--ds-ease)}
+.btn-primary{background-color:var(--ds-brand-primary);color:var(--ds-brand-on-primary);box-shadow:0 8px 22px color-mix(in srgb,var(--ds-brand-primary) 30%,transparent)}
+.btn-primary:hover{background-color:var(--ds-brand-primary-deep);transform:translateY(-1px);box-shadow:0 12px 30px color-mix(in srgb,var(--ds-brand-primary) 42%,transparent)}
+.btn-quiet{background-color:var(--ds-surface-2);color:var(--ds-ink);border-color:var(--ds-line-strong);box-shadow:var(--ds-shadow)}
+.btn-quiet:hover{border-color:var(--ds-brand-primary)}
+.btn:focus-visible{outline:3px solid var(--ds-brand-accent);outline-offset:2px}
+.btn-ico{width:18px;height:18px;flex:none}
+.field{min-height:var(--ds-tap);min-width:248px;padding:0 14px;border:1px solid var(--ds-line-strong);border-radius:var(--ds-r-control);background:var(--ds-surface-2);color:var(--ds-ink);font-family:var(--ds-font-body);font-size:var(--ds-step-body);box-shadow:inset 0 2px 4px color-mix(in srgb,var(--ds-ink) 6%,transparent)}
+.field:focus-visible{outline:3px solid var(--ds-brand-accent);outline-offset:2px;border-color:var(--ds-brand-primary)}
+.tag{display:inline-flex;align-items:center;gap:8px;min-height:34px;padding:0 14px;border-radius:var(--ds-r-pill);background-color:var(--ds-brand-accent-soft);color:var(--ds-brand-primary-ink);font-size:var(--ds-step-fine);font-weight:600;border:1px solid color-mix(in srgb,var(--ds-brand-primary) 22%,transparent)}
+.tag-ico{width:14px;height:14px;flex:none}
+.plate{border:1px solid var(--ds-line);border-radius:var(--ds-r-surface);background:var(--ds-surface-2);padding:22px;max-width:440px;box-shadow:var(--ds-shadow-lift);box-shadow:var(--ds-shadow-lift),inset 0 1px 0 color-mix(in srgb,var(--ds-surface-2) 90%,transparent);transition:box-shadow var(--ds-dur-fast) var(--ds-ease),transform var(--ds-dur-fast) var(--ds-ease)}
+.plate:hover{transform:translateY(-3px)}
+.h-plate{font-family:var(--ds-font-display);font-weight:600;font-size:var(--ds-step-h3);line-height:1.25;margin:0 0 8px;max-width:24ch;display:flex;align-items:center;gap:10px}
+.plate-ico{width:22px;height:22px;flex:none}
+.plate p{margin:0;color:var(--ds-ink-soft)}
+
+.lockup{display:flex;align-items:center;gap:16px;flex-wrap:wrap}
+.mark{width:56px;height:56px;border-radius:var(--ds-r-control);display:grid;place-items:center;background-color:var(--ds-surface-deep);background-image:linear-gradient(150deg,var(--ds-brand-primary) 0%,var(--ds-brand-primary-deep) 58%,var(--ds-brand-primary-ink) 100%);box-shadow:var(--ds-shadow-lift);box-shadow:var(--ds-shadow-lift),inset 0 1px 0 color-mix(in srgb,#ffffff 34%,transparent)}
+.mark svg{width:30px;height:30px}
+.h-word{font-family:var(--ds-font-display);font-weight:600;font-size:1.24rem;line-height:1.2;letter-spacing:var(--ds-track-display);margin:0;max-width:30ch}
+.word-sub{font-size:var(--ds-step-fine);color:var(--ds-ink-soft);margin:4px 0 0}
+
+@media (max-width:640px){
+  .wrap{padding:0 18px}
+  .stage{padding-left:1.2rem;padding-right:1.2rem}
+}
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{transition-duration:0ms !important;animation-duration:0ms !important;scroll-behavior:auto !important}
+}
+</style>
+</head>
+<body>
+
+<div class="wrap">
+
+  <header class="sheet-head">
+    <p class="eyebrow">Brand card B of 3</p>
+    <h1 class="h-sheet">DEPTH: the dark surface is a lit material</h1>
+    <p class="lead">The brand's measured signature is a full bleed dark hero, and the photograph that used to carry it is stock, so it cannot ship. Concept B answers that with material rather than with type scale: the dark plane is built from a directional base gradient, a soft bloom in the practice's own cyan falling from the top left, a grain veil at the faint opacity token, and real elevation between planes, so it reads as a lit physical surface that was designed on purpose, never as a black rectangle or an empty slot waiting for a picture.</p>
+    <p class="note">Type is Source Serif 4 over Inter, typography menu 43. The serif is the point: this practice's differentiator is a document, the estimate it puts in writing before it examines you, and a serif gives that promise an authority a grotesque cannot. Inter carries every number, label and control.</p>
+  </header>
+
+  <section class="zone">
+    <p class="zone-label">Logo lockup</p>
+    <div class="lockup">
+      <span class="mark">
+        <svg viewBox="0 0 32 32" fill="none" aria-hidden="true">
+          <path d="M16 4v24" stroke="#ffffff" stroke-width="2.4" stroke-linecap="round"/>
+          <path d="M11 8h10M10 14h12M11 20h10M13 26h6" stroke="#28c8f8" stroke-width="2.4" stroke-linecap="round"/>
+        </svg>
+      </span>
+      <span>
+        <p class="h-word">San Rafael Auto Accident Injury</p>
+        <p class="word-sub">Chiropractic care for people hurt in a collision, on a lien</p>
+      </span>
+    </div>
+    <p class="note">The mark sits on the material, not on flat colour: a lit gradient plate with an inset top highlight, so the logo is the first place the concept's light direction is stated. Only a 514 by 150 raster of the existing logo exists, so the lockup is drawn here rather than placed, and a vector original is still an open owner item.</p>
+  </section>
+
+  <section class="zone">
+    <p class="zone-label">Palette, by the role each colour plays</p>
+    <div class="swatch-grid">
+      <div class="swatch"><span class="swatch-chip" style="background:#2898d0"></span><div class="swatch-meta"><p class="swatch-role">Primary: actions and links</p><p class="swatch-hex">#2898d0, the logo's dominant sample</p></div></div>
+      <div class="swatch"><span class="swatch-chip" style="background:#28c8f8"></span><div class="swatch-meta"><p class="swatch-role">Accent: the light source</p><p class="swatch-hex">#28c8f8, the bloom and the lit rule</p></div></div>
+      <div class="swatch"><span class="swatch-chip" style="background:#1d6f9b"></span><div class="swatch-meta"><p class="swatch-role">Primary deep: pressed, and the far bloom</p><p class="swatch-hex">#1d6f9b</p></div></div>
+      <div class="swatch"><span class="swatch-chip" style="background:#14171a"></span><div class="swatch-meta"><p class="swatch-role">Deep: the material the light falls on</p><p class="swatch-hex">#14171a, 42.9% of the measured page</p></div></div>
+      <div class="swatch"><span class="swatch-chip" style="background:#1c2126"></span><div class="swatch-meta"><p class="swatch-role">Raised plane: the elevated dark surface</p><p class="swatch-hex">#1c2126, one step up from deep</p></div></div>
+      <div class="swatch"><span class="swatch-chip" style="background:#fafbfc"></span><div class="swatch-meta"><p class="swatch-role">Paper: the reading canvas, kept calm</p><p class="swatch-hex">#fafbfc, where the terms get read</p></div></div>
+      <div class="swatch"><span class="swatch-chip" style="background:#4a5259"></span><div class="swatch-meta"><p class="swatch-role">Ink soft: secondary copy</p><p class="swatch-hex">#4a5259, 7.4:1 on paper</p></div></div>
+      <div class="swatch"><span class="swatch-chip" style="background:#d6f2fd"></span><div class="swatch-meta"><p class="swatch-role">Accent soft: tag and wash surfaces</p><p class="swatch-hex">#d6f2fd</p></div></div>
+    </div>
+    <p class="note">Depth is what the palette is FOR here. Deep, raised plane and paper are three declared grounds, not one dark and one light, and the two blues are split by job: the mid blue acts, the cyan lights. That split is what keeps the accent from being spent on ordinary buttons. The three colours the current site fights with, the pure red, the template orange and the mid blue, are all left behind.</p>
+  </section>
+
+  <section class="zone">
+    <p class="zone-label">Signature move 1: the dark hero, carried by material and light</p>
+    <div class="deep surface-dark stage">
+      <span class="scrim"></span>
+      <span class="rule-lit"></span>
+      <h2 class="h-hero">Hit by a car in San Rafael?</h2>
+      <p class="lead">Care on a lien. You are billed nothing while your case is open, and we are paid from the settlement.</p>
+      <div class="row-cta">
+        <a class="btn btn-primary" href="#">
+          <svg class="btn-ico" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M5 4h14v16l-7-4-7 4z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></svg>
+          Request a consultation
+        </a>
+        <a class="btn btn-quiet" href="#">See how liens work</a>
+      </div>
+      <div class="plane">
+        <p>Same day for new auto-accident patients. Your estimate comes to you in writing before an examination begins.</p>
+      </div>
+    </div>
+    <svg class="seam" viewBox="0 0 1200 54" preserveAspectRatio="none" aria-hidden="true">
+      <path class="seam-back" d="M0 16 C 300 54 900 54 1200 12 L1200 54 L0 54 Z"/>
+      <path class="seam-front" d="M0 24 C 320 56 880 56 1200 20 L1200 54 L0 54 Z"/>
+    </svg>
+    <p class="note">Nothing in this band is waiting for a photograph. The bloom sets the light direction, the grain removes the plastic flatness, the scrim locks the reversed type above the AA floor by construction, and the glass plane gives the availability line its own elevation instead of floating an icon bubble over an image the way the current hero does.</p>
+  </section>
+
+  <section class="zone">
+    <p class="zone-label">Signature move 2: the stat band that interrupts the reading column</p>
+    <div class="deep surface-dark stage">
+      <span class="scrim"></span>
+      <h2 class="h-band">$0 out of pocket to start</h2>
+      <p class="lead">Nothing is billed to you while the case is open. If the case is not accepted, is lost, or settles for less than the bill, the balance is written off and you owe nothing.</p>
+      <div class="plane">
+        <p>The terms live in the same block as the claim, at the same elevation, never a footnote a plane below it. That placement is the design decision this practice most needs to be seen making.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="zone">
+    <p class="zone-label">The material set: what the dark surface is made of</p>
+    <div class="mat-grid">
+      <div class="mat">
+        <span class="mat-art deep surface-dark">
+          <svg viewBox="0 0 96 72" fill="none" aria-hidden="true">
+            <path d="M6 60 C 30 22 66 22 90 52" stroke="#4fb4e4" stroke-width="2" stroke-linecap="round"/>
+            <path d="M6 66 C 30 34 66 34 90 60" stroke="#28c8f8" stroke-width="2" stroke-linecap="round" opacity="0.55"/>
+            <circle cx="20" cy="20" r="9" stroke="#28c8f8" stroke-width="2"/>
+          </svg>
+        </span>
+        <div class="mat-body">
+          <p class="mat-name">Layer 1, the base</p>
+          <p class="mat-note">A 158 degree gradient across three dark tokens, so the plane is lit from one corner instead of filled flat.</p>
+        </div>
+      </div>
+      <div class="mat">
+        <span class="mat-art deep surface-dark">
+          <svg viewBox="0 0 96 72" fill="none" aria-hidden="true">
+            <circle cx="34" cy="34" r="24" stroke="#28c8f8" stroke-width="2" opacity="0.9"/>
+            <circle cx="34" cy="34" r="15" stroke="#28c8f8" stroke-width="2" opacity="0.55"/>
+            <circle cx="34" cy="34" r="6" fill="#28c8f8" opacity="0.8"/>
+            <path d="M66 12v48M78 22v28" stroke="#4fb4e4" stroke-width="2" stroke-linecap="round" opacity="0.5"/>
+          </svg>
+        </span>
+        <div class="mat-body">
+          <p class="mat-name">Layer 2, the bloom</p>
+          <p class="mat-note">Two radial washes in the practice's cyan and deep blue, held at the texture opacity token, off the top left corner.</p>
+        </div>
+      </div>
+      <div class="mat">
+        <span class="mat-art deep surface-dark">
+          <svg viewBox="0 0 96 72" fill="none" aria-hidden="true">
+            <path d="M10 18h76M10 26h76M10 34h76M10 42h76M10 50h76" stroke="#8a949d" stroke-width="1" stroke-dasharray="2 5" opacity="0.85"/>
+            <path d="M10 22h76M10 38h76" stroke="#28c8f8" stroke-width="1" stroke-dasharray="1 7" opacity="0.7"/>
+          </svg>
+        </span>
+        <div class="mat-body">
+          <p class="mat-name">Layer 3, the grain</p>
+          <p class="mat-note">A token-built noise veil at the faint opacity token. No asset, no file to source, and nothing that can decay into a stock wash.</p>
+        </div>
+      </div>
+      <div class="mat">
+        <span class="mat-art" style="background:var(--ds-surface-sunken)">
+          <svg viewBox="0 0 96 72" fill="none" aria-hidden="true">
+            <rect x="10" y="40" width="60" height="20" rx="3" fill="#e3e7eb"/>
+            <rect x="18" y="28" width="60" height="20" rx="3" fill="#c9d1d8"/>
+            <rect x="26" y="16" width="60" height="20" rx="3" fill="#2898d0"/>
+          </svg>
+        </span>
+        <div class="mat-body">
+          <p class="mat-name">The elevation ladder</p>
+          <p class="mat-note">Three planes, three shadows: paper at rest, the panel lifted, the glass plane floating. Every shadow is ink tinted, never pure black.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="zone">
+    <p class="zone-label">Type scale specimen</p>
+    <div class="type-row">
+      <p class="type-spec">Display: Source Serif 4, 600, tracking -0.021em, leading 1.01</p>
+      <h3 class="h-type-a">The price in writing, before we examine you</h3>
+    </div>
+    <div class="type-row">
+      <p class="type-spec">Display quiet: Source Serif 4, 400</p>
+      <p class="h-type-b">Care on a lien. You are billed nothing while your case is open.</p>
+    </div>
+    <div class="type-row">
+      <p class="type-spec">Body: Inter 400, 17px, leading 1.62</p>
+      <p class="lead">Long form reading is the load bearing job on this site. The terms block, the FAQ and five condition pages all have to survive sustained reading by someone in pain, often on a phone, often at night, which is exactly why the depth is spent on the dark punctuation and the reading canvas is left calm.</p>
+    </div>
+    <div class="type-row">
+      <p class="type-spec">Numerals: Inter 600, tabular</p>
+      <p class="numerals">0123456789 &middot; (415) 877-9400 &middot; 55 Mitchell Blvd, Ste 10</p>
+      <p class="note">The money string is deliberately absent from this specimen. It is the one figure this practice is allowed to publish, and the offer rule says it may only appear beside its terms, so it never gets shown as loose sample text.</p>
+    </div>
+  </section>
+
+  <section class="zone">
+    <p class="zone-label">UI atoms</p>
+    <div class="atom-row">
+      <a class="btn btn-primary" href="#">
+        <svg class="btn-ico" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M5 4h14v16l-7-4-7 4z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></svg>
+        Request a consultation
+      </a>
+      <a class="btn btn-quiet" href="#">Check your coverage</a>
+      <span class="tag">
+        <svg class="tag-ico" viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="2"/><path d="M12 7v5l3 2" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+        Same day for new auto-accident patients
+      </span>
+      <input class="field" type="text" placeholder="Your phone number" aria-label="Your phone number">
+    </div>
+    <div class="atom-row" style="margin-top:26px">
+      <div class="plate">
+        <h3 class="h-plate">
+          <svg class="plate-ico" viewBox="0 0 24 24" fill="none" aria-hidden="true"><rect x="4" y="3" width="16" height="18" rx="2" stroke="#2898d0" stroke-width="2"/><path d="M8 9h8M8 13h8M8 17h5" stroke="#28c8f8" stroke-width="2" stroke-linecap="round"/></svg>
+          Get your estimate in writing
+        </h3>
+        <p>The panel is the one light surface that is allowed real elevation: a layered shadow, a hairline edge and an inset top highlight, so a document on this site looks like an object you can pick up.</p>
+      </div>
+    </div>
+    <p class="note">Buttons take a solid fill and a soft accent glow, never a gradient on a rounded corner. Every control clears the 48px tap floor, focus is a visible cyan ring, and motion is a 200ms named property transition that reduced motion switches off entirely.</p>
+  </section>
+
+</div>
+
+</body>
+</html>

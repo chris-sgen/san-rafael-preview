@@ -1,0 +1,854 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>san-rafael-auto-accident-injury — Token Lock Card (complete token API)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:wght@400;500;600;700&family=Times+New+Roman:wght@400;500;600;700&family=SFMono-Regular:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="san-rafael-auto-accident-injury-tokens.css">
+<link rel="stylesheet" href="san-rafael-auto-accident-injury-structural.css">
+
+<style>
+
+:root{
+  --tc-pad: clamp(16px,3vw,40px);
+  --tc-gap: clamp(14px,2vw,22px);
+}
+*,*::before,*::after{box-sizing:border-box;}
+html{-webkit-text-size-adjust:100%;}
+body{
+  margin:0; font-family:var(--ds-font-body, system-ui, sans-serif); color:var(--ds-ink,#111);
+  background:var(--ds-bg-warm, var(--ds-bg-surface,#eee));
+  -webkit-font-smoothing:antialiased; line-height:1.55; padding:var(--tc-pad);
+}
+.wrap{max-width:1200px; margin-inline:auto;}
+.tc-head{margin:0 0 6px; font-family:var(--ds-font-display,inherit); font-size:clamp(30px,5vw,52px); line-height:1.02; letter-spacing:var(--ds-tracking-disp,-0.02em); color:var(--ds-ink);}
+.tc-sub{color:var(--ds-ink-soft,#555); max-width:62ch; margin:0 0 4px; font-size:15px;}
+.tc-meta{color:var(--ds-ink-soft,#555); font-size:12.5px; letter-spacing:0.04em; margin:0 0 22px;}
+.tc-meta b{color:var(--ds-accent,#06c);}
+.disclaimer{font-size:11.5px; color:var(--ds-ink-soft,#666); border-left:3px solid var(--ds-line,#ccc); padding:6px 10px; margin:0 0 26px; background:var(--ds-accent-soft,rgba(0,0,0,0.04)); border-radius:var(--ds-r-sm,6px);}
+.tc-card{
+  background:var(--ds-bg-surface,#fff); border:1px solid var(--ds-line,#ddd);
+  border-radius:var(--ds-r-lg,14px); padding:var(--tc-pad); margin:0 0 var(--tc-gap);
+  box-shadow:var(--ds-shadow-card,0 1px 3px rgba(0,0,0,0.1));
+}
+.tc-card h2{font-family:var(--ds-font-display,inherit); font-size:clamp(19px,2.4vw,26px); margin:0 0 4px; letter-spacing:0.01em; color:var(--ds-ink);}
+.tc-card h2 .dim, .dim{font-family:var(--ds-font-mono,monospace); font-weight:400; font-size:12px; letter-spacing:0.02em; color:var(--ds-ink-soft,#777);}
+.tc-card h4{margin:14px 0 8px; font-size:13px; letter-spacing:0.08em; text-transform:uppercase; color:var(--ds-ink-soft,#666);}
+code{font-family:var(--ds-font-mono,ui-monospace,monospace); font-size:12px;}
+
+.flipgrid{display:grid; grid-template-columns:1fr 1fr; gap:var(--tc-gap);}
+@media(max-width:760px){ .flipgrid{grid-template-columns:1fr;} }
+.flippane{border-radius:var(--ds-r-md,10px); padding:18px; border:1px solid var(--ds-line);}
+.flippane.light{background:#fff; color:#111;}
+.flippane h3{margin:0 0 12px; font-size:12px; letter-spacing:0.14em; text-transform:uppercase; opacity:.7;}
+
+.cgrid{display:grid; grid-template-columns:repeat(auto-fill,minmax(280px,1fr)); gap:12px;}
+.crow{display:flex; gap:12px; align-items:flex-start; padding:8px; border:1px solid var(--ds-line); border-radius:var(--ds-r-sm,6px); background:var(--ds-bg-surface-2,#fff);}
+.cswatches{display:flex; gap:4px; flex:0 0 auto;}
+.cs{width:30px; height:46px; border-radius:5px; border:1px solid rgba(0,0,0,0.12); display:block;}
+.cs-na{background:repeating-linear-gradient(45deg,#eee,#eee 4px,#ddd 4px,#ddd 8px);}
+.cmeta{min-width:0;}
+.cname{font-size:11.5px; color:var(--ds-ink); word-break:break-all; display:block;}
+.crole{display:inline-block; font-size:10.5px; color:var(--ds-ink-soft); letter-spacing:0.02em; margin:2px 0;}
+.cvals{font-size:11px; color:var(--ds-ink-soft); margin-top:2px;}
+.csep{opacity:.6;}
+.cnote{margin-top:4px;}
+.cr{display:inline-block; font-family:var(--ds-font-mono,monospace); font-size:10px; padding:1px 6px; border-radius:999px; margin-right:4px; letter-spacing:0.02em;}
+.cr.aaa{background:#0a7d3422; color:#0a7d34;} .cr.aa{background:#0a6b9d22; color:#0a6b9d;} .cr.low{background:#c0392b22; color:#c0392b;} .cr.na{background:#8884; color:#666;}
+
+.tspec{padding:10px 0; border-bottom:1px dashed var(--ds-line);}
+.tspec:last-child{border-bottom:0;}
+.tspec-label{font-size:11px; color:var(--ds-ink-soft); margin-bottom:2px;}
+.tspec-sample{color:var(--ds-ink); overflow:hidden; text-overflow:ellipsis; white-space:nowrap;}
+
+.sprow{display:flex; align-items:center; gap:12px; padding:5px 0;}
+.spbar{height:14px; background:var(--ds-accent,#06c); border-radius:3px; flex:0 0 auto;}
+.sname{flex:0 0 130px; color:var(--ds-ink);}
+.sval{color:var(--ds-ink-soft); margin-left:auto;}
+
+.rdgrid{display:flex; flex-wrap:wrap; gap:18px;}
+.rdrow{display:flex; flex-direction:column; align-items:center; gap:6px; text-align:center;}
+.rdbox{width:72px; height:72px; background:var(--ds-accent-soft,#eef); border:2px solid var(--ds-accent,#06c);}
+
+.shgrid{display:grid; grid-template-columns:repeat(auto-fill,minmax(220px,1fr)); gap:24px; padding:6px 0;}
+.shrow{display:flex; flex-direction:column; gap:10px;}
+.shbox{height:72px; border-radius:var(--ds-r-md,10px); background:var(--ds-bg-surface-2,#fff);}
+.shmeta{font-size:11px;} .shmeta .sval{display:block; color:var(--ds-ink-soft); margin-top:2px; word-break:break-all;}
+
+.motgrid{display:grid; grid-template-columns:1fr 1fr; gap:24px;}
+@media(max-width:620px){ .motgrid{grid-template-columns:1fr;} }
+.motchip{display:flex; align-items:center; gap:10px; width:100%; text-align:left; background:var(--ds-bg-surface-2,#fff); border:1px solid var(--ds-line); border-radius:var(--ds-r-sm,6px); padding:8px 10px; margin-bottom:8px; cursor:pointer; color:var(--ds-ink);}
+.motdot{width:16px; height:16px; border-radius:50%; background:var(--ds-accent,#06c); flex:0 0 auto; transition:transform var(--d,240ms) var(--ds-ease,ease);}
+.motchip:hover .motdot{transform:translateX(180px);}
+.motdot-e{transition-duration:600ms; transition-timing-function:var(--e,ease);}
+.motchip:hover .motdot-e{transform:translateX(180px);}
+
+.ztable,.opgrid{display:grid; grid-template-columns:repeat(auto-fill,minmax(220px,1fr)); gap:6px 18px;}
+.srow{display:flex; justify-content:space-between; gap:10px; padding:4px 0; border-bottom:1px dashed var(--ds-line);}
+.oprow{display:flex; align-items:center; gap:10px; padding:4px 0;}
+.opbox{width:40px; height:24px; background:repeating-linear-gradient(45deg,#bbb,#bbb 4px,#ddd 4px,#ddd 8px); border-radius:4px; position:relative; overflow:hidden;}
+.opfill{position:absolute; inset:0; background:var(--ds-accent,#06c);}
+.texgrid{display:grid; grid-template-columns:repeat(auto-fill,minmax(160px,1fr)); gap:14px;}
+.texcell{text-align:center;}
+.texswatch{height:90px; border-radius:var(--ds-r-md,10px); border:1px solid var(--ds-line); margin-bottom:6px;}
+
+.statedemo{display:grid; grid-template-columns:repeat(auto-fill,minmax(220px,1fr)); gap:18px;}
+.statecol{display:flex; flex-direction:column; align-items:flex-start; gap:8px;}
+.statehint{font-family:var(--ds-font-mono,monospace); font-size:10.5px; color:var(--ds-ink-soft); letter-spacing:0.02em;}
+.tc-btn{
+  font-family:var(--ds-font-body,inherit); font-weight:600; font-size:14px; cursor:pointer;
+  color:var(--ds-on-accent,#fff); background:var(--ds-accent-bright,#06c); border:1px solid transparent;
+  padding:10px 20px; border-radius:var(--ds-r-pill,var(--ds-r-control,8px));
+  box-shadow:var(--ds-shadow-rest,0 2px 6px rgba(0,0,0,.15));
+  transition:transform var(--ds-dur-fast,160ms) var(--ds-ease-out,ease), box-shadow var(--ds-dur-fast,160ms) var(--ds-ease-out,ease), background var(--ds-dur-fast,160ms) var(--ds-ease-out,ease);
+}
+.tc-btn:hover{ transform:translateY(-2px); box-shadow:var(--ds-shadow-lift,0 10px 24px rgba(0,0,0,.25)); background:var(--ds-accent-strong,var(--ds-accent-bright,#06c)); }
+.tc-btn:active{ transform:translateY(0) scale(.98); }
+.tc-btn:focus-visible{ outline:2px solid var(--ds-accent); outline-offset:2px; box-shadow:var(--ds-glow); }
+.tc-btn:focus:not(:focus-visible){ outline:none; }
+.tc-btn[disabled], .tc-btn[aria-disabled="true"]{ opacity:var(--ds-opacity-disabled,.45); cursor:not-allowed; box-shadow:none; }
+.tc-btn[disabled]:hover, .tc-btn[aria-disabled="true"]:hover{ transform:none; box-shadow:none; background:var(--ds-accent-soft,rgba(0,0,0,.06)); color:var(--ds-ink-soft); border-color:var(--ds-divider,var(--ds-line)); }
+.tc-link{
+  font-family:var(--ds-font-body,inherit); font-weight:600; font-size:14px; color:var(--ds-accent); text-decoration:none;
+  display:inline-flex; align-items:center; gap:6px; border-radius:var(--ds-r-control,6px); padding:2px 0;
+  transition:color var(--ds-dur-fast,160ms) var(--ds-ease-out,ease);
+}
+.tc-link span{ transition:transform var(--ds-dur-fast,160ms) var(--ds-ease-out,ease); }
+.tc-link:hover{ color:var(--ds-accent-strong,var(--ds-accent)); }
+.tc-link:hover span{ transform:translateX(4px); }
+.tc-link:focus-visible{ outline:2px solid var(--ds-accent); outline-offset:3px; box-shadow:var(--ds-glow); }
+.tc-link:focus:not(:focus-visible){ outline:none; box-shadow:none; }
+.tc-statecard{
+  display:flex; flex-direction:column; gap:5px; width:100%; cursor:pointer;
+  background:var(--ds-bg-surface-2,#fff); border:1px solid var(--ds-line); border-radius:var(--ds-r-surface,var(--ds-r-md,12px));
+  padding:16px; box-shadow:var(--ds-shadow-card,0 1px 3px rgba(0,0,0,.1));
+  transition:transform var(--ds-dur,240ms) var(--ds-ease,ease), box-shadow var(--ds-dur,240ms) var(--ds-ease,ease);
+}
+.tc-statecard:hover{ transform:translateY(-4px); box-shadow:var(--ds-shadow-lift,0 12px 28px rgba(0,0,0,.22)); }
+.tc-statecard:active{ transform:translateY(0) scale(.99); }
+.tc-statecard:focus-visible{ outline:2px solid var(--ds-accent); outline-offset:2px; box-shadow:var(--ds-glow); }
+.tc-statecard:focus:not(:focus-visible){ outline:none; box-shadow:var(--ds-shadow-card,0 1px 3px rgba(0,0,0,.1)); }
+.tc-statecard__k{ font-family:var(--ds-font-display,inherit); font-size:17px; color:var(--ds-ink); letter-spacing:0.01em; }
+.tc-statecard__d{ font-size:13px; color:var(--ds-ink-soft); }
+
+.tc-anim{display:grid; grid-template-columns:repeat(auto-fill,minmax(180px,1fr)); gap:14px; margin-bottom:6px;}
+.tc-anim__tile{
+  display:flex; flex-direction:column; gap:7px; text-align:left; cursor:pointer;
+  background:var(--ds-bg-surface-2,#fff); border:1px solid var(--ds-line); border-radius:var(--ds-r-surface,var(--ds-r-md,12px));
+  padding:12px; color:var(--ds-ink);
+  transition:border-color var(--ds-dur-fast,160ms) var(--ds-ease-out,ease);
+}
+.tc-anim__tile:hover{ border-color:var(--ds-accent); }
+.tc-anim__tile:focus-visible{ outline:2px solid var(--ds-accent); outline-offset:2px; box-shadow:var(--ds-glow); }
+.tc-anim__tile:focus:not(:focus-visible){ outline:none; box-shadow:none; }
+.tc-anim__stage{ height:84px; display:flex; align-items:center; justify-content:center; overflow:hidden; border-radius:var(--ds-r-control,6px); background:var(--ds-bg-warm,rgba(0,0,0,.04)); }
+.tc-anim__chip{
+  font-family:var(--ds-font-display,inherit); font-size:18px; letter-spacing:0.02em; color:var(--ds-on-accent,#fff);
+  background:var(--ds-accent-bright,#06c); padding:10px 18px; border-radius:var(--ds-r-control,6px);
+  opacity:1;  
+  transition:transform var(--ds-dur-slow,600ms) var(--ds-ease-out,cubic-bezier(.2,.6,.2,1));
+  will-change:transform;
+}
+
+.tc-a-base{ transform:translateY(14px); }
+.tc-a--from-left{ transform:translateX(-18px); }
+.tc-a--from-right{ transform:translateX(18px); }
+.tc-a--scale{ transform:scale(.965); transform-origin:center; }
+.tc-anim__chip.is-in{ transform:none; }
+@media (prefers-reduced-motion:reduce){ .tc-anim__chip{ transform:none !important; transition:none; } }
+.tc-count{ display:flex; flex-wrap:wrap; gap:22px; align-items:flex-start; }
+.tc-count__demo{ display:flex; flex-direction:column; gap:6px; flex:0 0 auto; }
+.tc-count__n{ font-family:var(--ds-font-mono,monospace); font-weight:700; font-size:clamp(40px,6vw,64px); line-height:1; color:var(--ds-accent); letter-spacing:-0.01em; }
+.tc-count__n small{ font-size:0.5em; opacity:.8; margin-left:2px; }
+.tc-count__lbl{ font-family:var(--ds-font-mono,monospace); font-size:11px; letter-spacing:0.14em; text-transform:uppercase; color:var(--ds-ink-soft); }
+.tc-count__replay{ font-size:12px; }
+.tc-count__spec{ flex:1 1 320px; min-width:280px; font-size:12px; }
+
+.imgtreat{ background:var(--ds-bg-surface-2,#fff); border:1px solid var(--ds-line); border-left:3px solid var(--ds-accent-bright,var(--ds-accent)); border-radius:var(--ds-r-control,6px); padding:10px 14px; margin:0 0 14px; }
+.imgtreat__k{ display:block; font-family:var(--ds-font-mono,monospace); font-size:10.5px; letter-spacing:0.1em; text-transform:uppercase; color:var(--ds-ink-soft); margin-bottom:4px; }
+.imgtreat__v{ display:block; font-size:12px; color:var(--ds-ink); word-break:break-word; line-height:1.6; }
+.imgneg{ margin:0 0 14px; padding-left:18px; }
+.imgneg li{ font-size:12.5px; color:var(--ds-ink-soft); margin:3px 0; }
+.imggrid{ display:grid; grid-template-columns:repeat(auto-fill,minmax(200px,1fr)); gap:14px; margin-bottom:14px; }
+.imgcell{ margin:0; background:var(--ds-bg-surface-2,#fff); border:1px solid var(--ds-line); border-radius:var(--ds-r-surface,var(--ds-r-md,12px)); overflow:hidden; }
+.imgthumb{ display:block; width:100%; aspect-ratio:16/10; object-fit:cover; background:var(--ds-bg-warm,#222); }
+.imgthumb--missing{ display:flex; align-items:center; justify-content:center; color:var(--ds-ink-soft); font-family:var(--ds-font-mono,monospace); font-size:11px; letter-spacing:0.08em; text-transform:uppercase; background:repeating-linear-gradient(45deg,var(--ds-bg-warm,#222),var(--ds-bg-warm,#222) 8px,var(--ds-bg-surface-2,#333) 8px,var(--ds-bg-surface-2,#333) 16px); }
+.imgcell figcaption{ padding:9px 11px; display:flex; flex-direction:column; gap:3px; }
+.imgid{ font-size:11.5px; color:var(--ds-ink); word-break:break-all; }
+.imgsize{ font-family:var(--ds-font-mono,monospace); font-size:10px; letter-spacing:0.04em; color:var(--ds-accent); }
+.imgrole{ font-size:11px; color:var(--ds-ink-soft); line-height:1.4; }
+.imgextend{ background:var(--ds-accent-soft,rgba(0,0,0,.04)); border-radius:var(--ds-r-control,6px); padding:10px 14px; }
+.imgextend__k{ font-family:var(--ds-font-mono,monospace); font-size:10.5px; letter-spacing:0.1em; text-transform:uppercase; color:var(--ds-accent); }
+
+.chromeframes{ display:grid; grid-template-columns:minmax(0,2.4fr) minmax(0,1fr); gap:var(--tc-gap); align-items:start; }
+@media(max-width:900px){ .chromeframes{ grid-template-columns:1fr; } }
+.cf{ border:1px solid var(--ds-line); border-radius:var(--ds-r-surface,var(--ds-r-md,12px)); overflow:hidden; background:var(--ds-bg-surface-2,#111); }
+.cf-label{ font-family:var(--ds-font-mono,monospace); font-size:10.5px; letter-spacing:0.14em; color:var(--ds-ink-soft); padding:8px 12px; border-bottom:1px solid var(--ds-line); background:var(--ds-bg-warm,rgba(0,0,0,.04)); }
+
+.cf-vp{ position:relative; overflow:hidden; }
+.cf-if{ border:0; display:block; transform-origin:top left; background:var(--ds-bg-surface,#0E1426); }
+
+.cf-desk{ --cf-s-desk:0.30; }
+.cf-desk .cf-vp{ width:calc(1440px * var(--cf-s-desk)); height:calc(874px * var(--cf-s-desk)); }
+.cf-if--desk{ width:1440px; height:874px; transform:scale(var(--cf-s-desk)); }
+
+.cf-mob{ --cf-s-mob:0.525; }
+.cf-mob .cf-vp{ width:calc(375px * var(--cf-s-mob)); height:calc(822px * var(--cf-s-mob)); }
+.cf-if--mob{ width:375px; height:822px; transform:scale(var(--cf-s-mob)); }
+@media(max-width:900px){
+  
+  .cf-desk{ --cf-s-desk:calc((100vw - 2*var(--tc-pad) - 4px)/1440); }
+}
+</style>
+</head>
+<body class="surface-dark">
+<div class="wrap">
+  <h1 class="tc-head">san-rafael-auto-accident-injury · Token Lock Card</h1>
+  <p class="tc-sub">The COMPLETE token API this build styles from — every color, type step, space, radius, shadow, motion value, and the dual-surface flip. Lock this and the whole styling system is visible, not just the identity.</p>
+  <p class="tc-meta">Parsed from <b>_design/san-rafael-auto-accident-injury-tokens.css</b> · <b>128</b> tokens across <b>11</b> families · dual surface: <b>:root</b> (light) + <b>.surface-dark</b></p>
+  <p class="disclaimer">This card complements the brand-card (identity). Contrast badges are <b>static sRGB estimates</b> from the parsed token values — they cannot see runtime gradients/compositing; the authoritative read is <code>verify-design-foundation</code> + a rendered <code>client-visual-verify</code> pass.</p>
+
+  <section class="tc-card">
+    <h2>Color — palette + roles <span class="dim">32 tokens · light swatch / dark swatch</span></h2>
+    <div class="cgrid">
+      <div class="crow">
+    <div class="cswatches">
+      <span class="cs" style="background:#14171a" title="light: #14171a"></span>
+      <span class="cs" style="background:#ffffff" title="dark: #ffffff"></span>
+    </div>
+    <div class="cmeta">
+      <code class="cname">--ds-ink</code>
+      <span class="crole">primary text</span>
+      <div class="cvals"><code>#14171a</code> <span class="csep">/ dark</span> <code>#ffffff</code></div>
+      <div class="cnote"><span class="cr aaa">on light bg 17.37:1 AAA</span> <span class="cr aaa">on dark bg 17.99:1 AAA</span></div>
+    </div>
+  </div>
+<div class="crow">
+    <div class="cswatches">
+      <span class="cs" style="background:#4a5259" title="light: #4a5259"></span>
+      <span class="cs" style="background:#aeb9c2" title="dark: #aeb9c2"></span>
+    </div>
+    <div class="cmeta">
+      <code class="cname">--ds-ink-soft</code>
+      <span class="crole">secondary text</span>
+      <div class="cvals"><code>#4a5259</code> <span class="csep">/ dark</span> <code>#aeb9c2</code></div>
+      <div class="cnote"><span class="cr aaa">on light bg 7.67:1 AAA</span> <span class="cr aaa">on dark bg 9.01:1 AAA</span></div>
+    </div>
+  </div>
+<div class="crow">
+    <div class="cswatches">
+      <span class="cs" style="background:#606971" title="light: #606971"></span>
+      <span class="cs" style="background:#8a949d" title="dark: #8a949d"></span>
+    </div>
+    <div class="cmeta">
+      <code class="cname">--ds-ink-faint</code>
+      
+      <div class="cvals"><code>#606971</code> <span class="csep">/ dark</span> <code>#8a949d</code></div>
+      <div class="cnote"><span class="cr aa">on light bg 5.4:1 AA</span> <span class="cr aa">on dark bg 5.83:1 AA</span></div>
+    </div>
+  </div>
+<div class="crow">
+    <div class="cswatches">
+      <span class="cs" style="background:#ffffff" title="light: #ffffff"></span>
+      <span class="cs" style="background:#14171a" title="dark: #14171a"></span>
+    </div>
+    <div class="cmeta">
+      <code class="cname">--ds-ink-invert</code>
+      
+      <div class="cvals"><code>#ffffff</code> <span class="csep">/ dark</span> <code>#14171a</code></div>
+      <div class="cnote"><span class="cr low">on light bg 1.04:1 low</span> <span class="cr low">on dark bg 1:1 low</span></div>
+    </div>
+  </div>
+<div class="crow">
+    <div class="cswatches">
+      <span class="cs" style="background:#e3e7eb" title="light: #e3e7eb"></span>
+      <span class="cs" style="background:#2b3238" title="dark: #2b3238"></span>
+    </div>
+    <div class="cmeta">
+      <code class="cname">--ds-line</code>
+      <span class="crole">hairline</span>
+      <div class="cvals"><code>#e3e7eb</code> <span class="csep">/ dark</span> <code>#2b3238</code></div>
+      
+    </div>
+  </div>
+<div class="crow">
+    <div class="cswatches">
+      <span class="cs" style="background:#c9d1d8" title="light: #c9d1d8"></span>
+      <span class="cs" style="background:#3d464e" title="dark: #3d464e"></span>
+    </div>
+    <div class="cmeta">
+      <code class="cname">--ds-line-strong</code>
+      <span class="crole">heavier rule</span>
+      <div class="cvals"><code>#c9d1d8</code> <span class="csep">/ dark</span> <code>#3d464e</code></div>
+      
+    </div>
+  </div>
+<div class="crow">
+    <div class="cswatches">
+      <span class="cs" style="background:#2898d0" title="light: #2898d0"></span>
+      <span class="cs" style="background:#4fb4e4" title="dark: #4fb4e4"></span>
+    </div>
+    <div class="cmeta">
+      <code class="cname">--ds-accent</code>
+      <span class="crole">links / small accent text</span>
+      <div class="cvals"><code>var(--ds-brand-primary)</code></div>
+      <div class="cnote"><span class="cr aa">on light 3.12:1 AA</span> <span class="cr aaa">on dark 7.69:1 AAA</span></div>
+    </div>
+  </div>
+<div class="crow">
+    <div class="cswatches">
+      <span class="cs" style="background:#0f3f5c" title="light: #0f3f5c"></span>
+      <span class="cs" style="background:#bfe6f8" title="dark: #bfe6f8"></span>
+    </div>
+    <div class="cmeta">
+      <code class="cname">--ds-accent-ink</code>
+      <span class="crole">accent text a11y</span>
+      <div class="cvals"><code>var(--ds-brand-primary-ink)</code></div>
+      
+    </div>
+  </div>
+<div class="crow">
+    <div class="cswatches">
+      <span class="cs" style="background:#d6f2fd" title="light: #d6f2fd"></span>
+      <span class="cs" style="background:#123a4d" title="dark: #123a4d"></span>
+    </div>
+    <div class="cmeta">
+      <code class="cname">--ds-accent-soft</code>
+      <span class="crole">accent tint wash</span>
+      <div class="cvals"><code>var(--ds-brand-accent-soft)</code></div>
+      
+    </div>
+  </div>
+<div class="crow">
+    <div class="cswatches">
+      <span class="cs" style="background:#1d6f9b" title="light: #1d6f9b"></span>
+      <span class="cs" style="background:#2898d0" title="dark: #2898d0"></span>
+    </div>
+    <div class="cmeta">
+      <code class="cname">--ds-accent-strong</code>
+      <span class="crole">pressed / hover accent</span>
+      <div class="cvals"><code>var(--ds-brand-primary-deep)</code></div>
+      <div class="cnote"><span class="cr aaa">on light 5.33:1 AAA</span> <span class="cr aaa">on dark 5.56:1 AAA</span></div>
+    </div>
+  </div>
+<div class="crow">
+    <div class="cswatches">
+      <span class="cs" style="background:#28c8f8" title="light: #28c8f8"></span>
+      <span class="cs" style="background:#28c8f8" title="dark: #28c8f8"></span>
+    </div>
+    <div class="cmeta">
+      <code class="cname">--ds-accent-bright</code>
+      <span class="crole">large accent / borders / icons</span>
+      <div class="cvals"><code>var(--ds-brand-accent)</code></div>
+      <div class="cnote"><span class="cr low">on light 1.89:1 low</span> <span class="cr aaa">on dark 9.17:1 AAA</span></div>
+    </div>
+  </div>
+<div class="crow">
+    <div class="cswatches">
+      <span class="cs" style="background:#ffffff" title="light: #ffffff"></span>
+      <span class="cs" style="background:#0c0e10" title="dark: #0c0e10"></span>
+    </div>
+    <div class="cmeta">
+      <code class="cname">--ds-on-accent</code>
+      <span class="crole">text ON an accent fill</span>
+      <div class="cvals"><code>var(--ds-brand-on-primary)</code></div>
+      <div class="cnote"><span class="cr low">on accent fill 1.96:1 low</span></div>
+    </div>
+  </div>
+<div class="crow">
+    <div class="cswatches">
+      <span class="cs" style="background:#ffffff" title="light: #ffffff"></span>
+      <span class="cs" style="background:#14171a" title="dark: #14171a"></span>
+    </div>
+    <div class="cmeta">
+      <code class="cname">--ds-ink-on-dark</code>
+      <span class="crole">text on dark chip</span>
+      <div class="cvals"><code>var(--ds-ink-invert)</code></div>
+      <div class="cnote"><span class="cr low">on light bg 1.04:1 low</span> <span class="cr low">on dark bg 1:1 low</span></div>
+    </div>
+  </div>
+<div class="crow">
+    <div class="cswatches">
+      <span class="cs" style="background:#fafbfc" title="light: #fafbfc"></span>
+      <span class="cs" style="background:#14171a" title="dark: #14171a"></span>
+    </div>
+    <div class="cmeta">
+      <code class="cname">--ds-bg-surface</code>
+      <span class="crole">page ground</span>
+      <div class="cvals"><code>var(--ds-surface)</code></div>
+      
+    </div>
+  </div>
+<div class="crow">
+    <div class="cswatches">
+      <span class="cs" style="background:#ffffff" title="light: #ffffff"></span>
+      <span class="cs" style="background:#1c2126" title="dark: #1c2126"></span>
+    </div>
+    <div class="cmeta">
+      <code class="cname">--ds-bg-surface-2</code>
+      <span class="crole">raised card</span>
+      <div class="cvals"><code>var(--ds-surface-2)</code></div>
+      
+    </div>
+  </div>
+<div class="crow">
+    <div class="cswatches">
+      <span class="cs" style="background:#f1f4f6" title="light: #f1f4f6"></span>
+      <span class="cs" style="background:#0f1215" title="dark: #0f1215"></span>
+    </div>
+    <div class="cmeta">
+      <code class="cname">--ds-bg-warm</code>
+      <span class="crole">sunk band</span>
+      <div class="cvals"><code>var(--ds-surface-sunken)</code></div>
+      
+    </div>
+  </div>
+<div class="crow">
+    <div class="cswatches">
+      <span class="cs" style="background:#e3e7eb" title="light: #e3e7eb"></span>
+      <span class="cs" style="background:#2b3238" title="dark: #2b3238"></span>
+    </div>
+    <div class="cmeta">
+      <code class="cname">--ds-divider</code>
+      <span class="crole">divider rule</span>
+      <div class="cvals"><code>var(--ds-line)</code></div>
+      
+    </div>
+  </div>
+<div class="crow">
+    <div class="cswatches">
+      <span class="cs" style="background:rgba(255,255,255,.14)" title="light: rgba(255,255,255,.14)"></span>
+      <span class="cs" style="background:rgba(255,255,255,.14)" title="dark: rgba(255,255,255,.14)"></span>
+    </div>
+    <div class="cmeta">
+      <code class="cname">--ds-glass-border</code>
+      <span class="crole">glass edge</span>
+      <div class="cvals"><code>rgba(255,255,255,.14)</code></div>
+      
+    </div>
+  </div>
+<div class="crow">
+    <div class="cswatches">
+      <span class="cs" style="background:#14171a" title="light: #14171a"></span>
+      <span class="cs" style="background:#ffffff" title="dark: #ffffff"></span>
+    </div>
+    <div class="cmeta">
+      <code class="cname">--ink</code>
+      <span class="crole">primary text</span>
+      <div class="cvals"><code>var(--ds-ink)</code></div>
+      <div class="cnote"><span class="cr aaa">on light bg 17.37:1 AAA</span> <span class="cr aaa">on dark bg 17.99:1 AAA</span></div>
+    </div>
+  </div>
+<div class="crow">
+    <div class="cswatches">
+      <span class="cs" style="background:#4a5259" title="light: #4a5259"></span>
+      <span class="cs" style="background:#aeb9c2" title="dark: #aeb9c2"></span>
+    </div>
+    <div class="cmeta">
+      <code class="cname">--ink-soft</code>
+      <span class="crole">secondary text</span>
+      <div class="cvals"><code>var(--ds-ink-soft)</code></div>
+      <div class="cnote"><span class="cr aaa">on light bg 7.67:1 AAA</span> <span class="cr aaa">on dark bg 9.01:1 AAA</span></div>
+    </div>
+  </div>
+<div class="crow">
+    <div class="cswatches">
+      <span class="cs" style="background:#606971" title="light: #606971"></span>
+      <span class="cs" style="background:#8a949d" title="dark: #8a949d"></span>
+    </div>
+    <div class="cmeta">
+      <code class="cname">--ink-faint</code>
+      
+      <div class="cvals"><code>var(--ds-ink-faint)</code></div>
+      <div class="cnote"><span class="cr aa">on light bg 5.4:1 AA</span> <span class="cr aa">on dark bg 5.83:1 AA</span></div>
+    </div>
+  </div>
+<div class="crow">
+    <div class="cswatches">
+      <span class="cs" style="background:#2898d0" title="light: #2898d0"></span>
+      <span class="cs" style="background:#4fb4e4" title="dark: #4fb4e4"></span>
+    </div>
+    <div class="cmeta">
+      <code class="cname">--accent</code>
+      <span class="crole">links / small accent text</span>
+      <div class="cvals"><code>var(--ds-accent)</code></div>
+      <div class="cnote"><span class="cr aa">on light 3.12:1 AA</span> <span class="cr aaa">on dark 7.69:1 AAA</span></div>
+    </div>
+  </div>
+<div class="crow">
+    <div class="cswatches">
+      <span class="cs" style="background:#d6f2fd" title="light: #d6f2fd"></span>
+      <span class="cs" style="background:#123a4d" title="dark: #123a4d"></span>
+    </div>
+    <div class="cmeta">
+      <code class="cname">--accent-soft</code>
+      <span class="crole">accent tint wash</span>
+      <div class="cvals"><code>var(--ds-accent-soft)</code></div>
+      
+    </div>
+  </div>
+<div class="crow">
+    <div class="cswatches">
+      <span class="cs" style="background:#28c8f8" title="light: #28c8f8"></span>
+      <span class="cs" style="background:#28c8f8" title="dark: #28c8f8"></span>
+    </div>
+    <div class="cmeta">
+      <code class="cname">--accent-hot</code>
+      
+      <div class="cvals"><code>var(--ds-accent-bright)</code></div>
+      
+    </div>
+  </div>
+<div class="crow">
+    <div class="cswatches">
+      <span class="cs" style="background:rgba(40,200,248,.14)" title="light: rgba(40,200,248,.14)"></span>
+      <span class="cs" style="background:rgba(40,200,248,.14)" title="dark: rgba(40,200,248,.14)"></span>
+    </div>
+    <div class="cmeta">
+      <code class="cname">--accent-tint-14</code>
+      
+      <div class="cvals"><code>rgba(40,200,248,.14)</code></div>
+      
+    </div>
+  </div>
+<div class="crow">
+    <div class="cswatches">
+      <span class="cs" style="background:rgba(40,200,248,.22)" title="light: rgba(40,200,248,.22)"></span>
+      <span class="cs" style="background:rgba(40,200,248,.22)" title="dark: rgba(40,200,248,.22)"></span>
+    </div>
+    <div class="cmeta">
+      <code class="cname">--accent-tint-22</code>
+      
+      <div class="cvals"><code>rgba(40,200,248,.22)</code></div>
+      
+    </div>
+  </div>
+<div class="crow">
+    <div class="cswatches">
+      <span class="cs" style="background:#fafbfc" title="light: #fafbfc"></span>
+      <span class="cs" style="background:#14171a" title="dark: #14171a"></span>
+    </div>
+    <div class="cmeta">
+      <code class="cname">--bg</code>
+      
+      <div class="cvals"><code>var(--ds-bg-surface)</code></div>
+      
+    </div>
+  </div>
+<div class="crow">
+    <div class="cswatches">
+      <span class="cs" style="background:#ffffff" title="light: #ffffff"></span>
+      <span class="cs" style="background:#1c2126" title="dark: #1c2126"></span>
+    </div>
+    <div class="cmeta">
+      <code class="cname">--bg-2</code>
+      
+      <div class="cvals"><code>var(--ds-bg-surface-2)</code></div>
+      
+    </div>
+  </div>
+<div class="crow">
+    <div class="cswatches">
+      <span class="cs" style="background:#f1f4f6" title="light: #f1f4f6"></span>
+      <span class="cs" style="background:#0f1215" title="dark: #0f1215"></span>
+    </div>
+    <div class="cmeta">
+      <code class="cname">--bg-warm</code>
+      <span class="crole">sunk band</span>
+      <div class="cvals"><code>var(--ds-bg-warm)</code></div>
+      
+    </div>
+  </div>
+<div class="crow">
+    <div class="cswatches">
+      <span class="cs" style="background:#e3e7eb" title="light: #e3e7eb"></span>
+      <span class="cs" style="background:#2b3238" title="dark: #2b3238"></span>
+    </div>
+    <div class="cmeta">
+      <code class="cname">--line</code>
+      <span class="crole">hairline</span>
+      <div class="cvals"><code>var(--ds-line)</code></div>
+      
+    </div>
+  </div>
+<div class="crow">
+    <div class="cswatches">
+      <span class="cs" style="background:#c9d1d8" title="light: #c9d1d8"></span>
+      <span class="cs" style="background:#3d464e" title="dark: #3d464e"></span>
+    </div>
+    <div class="cmeta">
+      <code class="cname">--line-2</code>
+      
+      <div class="cvals"><code>var(--ds-line-strong)</code></div>
+      
+    </div>
+  </div>
+<div class="crow">
+    <div class="cswatches">
+      <span class="cs" style="background:#ffffff" title="light: #ffffff"></span>
+      <span class="cs" style="background:#0c0e10" title="dark: #0c0e10"></span>
+    </div>
+    <div class="cmeta">
+      <code class="cname">--on-accent</code>
+      <span class="crole">text ON an accent fill</span>
+      <div class="cvals"><code>var(--ds-on-accent)</code></div>
+      <div class="cnote"><span class="cr low">on accent fill 1.96:1 low</span></div>
+    </div>
+  </div>
+    </div>
+  </section>
+
+  <section class="tc-card">
+    <h2>Type — specimens at scale <span class="dim">6 steps · display vs body vs mono</span></h2>
+    <div class="tspec">
+      <div class="tspec-label"><code>--ds-fs-display</code> <span class="dim">var(--ds-step-hero)</span></div>
+      <div class="tspec-sample" style="font-size:var(--ds-step-hero);font-family:var(--ds-font-display);line-height:var(--ds-lh-tight,1.05);letter-spacing:var(--ds-tracking-disp,-0.01em)">Built from the system</div>
+    </div>
+<div class="tspec">
+      <div class="tspec-label"><code>--ds-fs-h1</code> <span class="dim">var(--ds-step-hero)</span></div>
+      <div class="tspec-sample" style="font-size:var(--ds-step-hero);font-family:var(--ds-font-display);line-height:var(--ds-lh-tight,1.05);letter-spacing:var(--ds-tracking-disp,-0.01em)">Built from the system</div>
+    </div>
+<div class="tspec">
+      <div class="tspec-label"><code>--ds-fs-h2</code> <span class="dim">var(--ds-step-h2)</span></div>
+      <div class="tspec-sample" style="font-size:var(--ds-step-h2);font-family:var(--ds-font-display);line-height:var(--ds-lh-tight,1.05);letter-spacing:var(--ds-tracking-disp,-0.01em)">Built from the system</div>
+    </div>
+<div class="tspec">
+      <div class="tspec-label"><code>--ds-fs-h3</code> <span class="dim">var(--ds-step-h3)</span></div>
+      <div class="tspec-sample" style="font-size:var(--ds-step-h3);font-family:var(--ds-font-body);line-height:var(--ds-lh-tight,1.05);letter-spacing:normal">Built from the system</div>
+    </div>
+<div class="tspec">
+      <div class="tspec-label"><code>--ds-fs-body</code> <span class="dim">var(--ds-step-body)</span></div>
+      <div class="tspec-sample" style="font-size:var(--ds-step-body);font-family:var(--ds-font-body);line-height:var(--ds-lh-tight,1.05);letter-spacing:normal">Built from the system</div>
+    </div>
+<div class="tspec">
+      <div class="tspec-label"><code>--ds-fs-caption</code> <span class="dim">var(--ds-step-fine)</span></div>
+      <div class="tspec-sample" style="font-size:var(--ds-step-fine);font-family:var(--ds-font-body);line-height:var(--ds-lh-tight,1.05);letter-spacing:normal">Built from the system</div>
+    </div>
+<div class="tspec"><div class="tspec-label"><code>--ds-font-mono</code> <span class="dim">mono / numerals</span></div><div class="tspec-sample" style="font-family:var(--ds-font-mono);font-size:18px;letter-spacing:var(--ds-tracking-label,0.12em)">0123456789 · SPEC-RAMP · D-04</div></div>
+    <h4>Tracking &amp; line-height</h4><div class="srow"><code class="sname">--ds-tracking-disp</code><code class="sval">var(--ds-track-display)</code></div>
+<div class="srow"><code class="sname">--ds-tracking-label</code><code class="sval">var(--ds-track-eyebrow)</code></div>
+<div class="srow"><code class="sname">--ds-lh-tight</code><code class="sval">var(--ds-leading-tight)</code></div>
+<div class="srow"><code class="sname">--ds-lh-body</code><code class="sval">var(--ds-leading-body)</code></div>
+    <h4>Font families</h4><div class="srow"><code class="sname">--ds-font-display</code><code class="sval">&quot;Source Serif 4&quot;,Georgia,&quot;Times New Roman&quot;,serif</code></div>
+<div class="srow"><code class="sname">--ds-font-body</code><code class="sval">Inter,system-ui,-apple-system,sans-serif</code></div>
+<div class="srow"><code class="sname">--ds-font-mono</code><code class="sval">ui-monospace,&quot;SFMono-Regular&quot;,Menlo,monospace</code></div>
+  </section>
+
+  <section class="tc-card">
+    <h2>Spacing scale <span class="dim">8 steps + 2 layout</span></h2>
+    <div class="sprow"><code class="sname">--ds-space-band</code><span class="spbar" style="width:0px"></span><code class="sval">clamp(3.5rem,7vw,6rem)</code></div>
+<div class="sprow"><code class="sname">--ds-space-gap</code><span class="spbar" style="width:1.5px"></span><code class="sval">1.5rem</code></div>
+<div class="sprow"><code class="sname">--ds-space-tight</code><span class="spbar" style="width:0.5px"></span><code class="sval">0.5rem</code></div>
+<div class="sprow"><code class="sname">--ds-space-xs</code><span class="spbar" style="width:0.5px"></span><code class="sval">var(--ds-space-tight)</code></div>
+<div class="sprow"><code class="sname">--ds-space-sm</code><span class="spbar" style="width:14px"></span><code class="sval">14px</code></div>
+<div class="sprow"><code class="sname">--ds-space-md</code><span class="spbar" style="width:1.5px"></span><code class="sval">var(--ds-space-gap)</code></div>
+<div class="sprow"><code class="sname">--ds-space-lg</code><span class="spbar" style="width:40px"></span><code class="sval">40px</code></div>
+<div class="sprow"><code class="sname">--ds-space-xl</code><span class="spbar" style="width:64px"></span><code class="sval">64px</code></div>
+    <h4>Layout</h4><div class="srow"><code class="sname">--ds-section-py</code><code class="sval">var(--ds-space-band)</code></div>
+<div class="srow"><code class="sname">--ds-container-max</code><code class="sval">1180px</code></div>
+  </section>
+
+  <section class="tc-card">
+    <h2>Radius <span class="dim">4 steps</span></h2>
+    <div class="rdgrid"><div class="rdrow"><div class="rdbox" style="border-radius:6px"></div><code class="sname">--ds-r-control</code><code class="sval">6px</code></div>
+<div class="rdrow"><div class="rdbox" style="border-radius:14px"></div><code class="sname">--ds-r-surface</code><code class="sval">14px</code></div>
+<div class="rdrow"><div class="rdbox" style="border-radius:999px"></div><code class="sname">--ds-r-pill</code><code class="sval">999px</code></div>
+<div class="rdrow"><div class="rdbox" style="border-radius:var(--ds-r-surface)"></div><code class="sname">--r-lg</code><code class="sval">var(--ds-r-surface)</code></div></div>
+  </section>
+
+  <section class="tc-card">
+    <h2>Shadow / elevation <span class="dim">9 tokens</span></h2>
+    <div class="shgrid"><div class="shrow"><div class="shbox" style="box-shadow:0 2px 6px rgba(20,23,26,.09),0 18px 44px rgba(20,23,26,.10)"></div><div class="shmeta"><code class="sname">--ds-shadow-lift</code><code class="sval">0 2px 6px rgba(20,23,26,.09),0 18px 44px rgba(20,23,26,.10)</code></div></div>
+<div class="shrow"><div class="shbox" style="box-shadow:var(--ds-shadow)"></div><div class="shmeta"><code class="sname">--ds-shadow-card</code><code class="sval">var(--ds-shadow)</code></div></div>
+<div class="shrow"><div class="shbox" style="box-shadow:0 1px 2px rgba(20,23,26,.06)"></div><div class="shmeta"><code class="sname">--ds-shadow-rest</code><code class="sval">0 1px 2px rgba(20,23,26,.06)</code></div></div>
+<div class="shrow"><div class="shbox" style="box-shadow:0 0 48px rgba(40,200,248,.40)"></div><div class="shmeta"><code class="sname">--ds-glow</code><code class="sval">0 0 48px rgba(40,200,248,.40)</code></div></div>
+<div class="shrow"><div class="shbox" style="box-shadow:radial-gradient(60% 70% at 72% 14%,rgba(40,200,248,.16),transparent 70%)"></div><div class="shmeta"><code class="sname">--ds-glow-wash</code><code class="sval">radial-gradient(60% 70% at 72% 14%,rgba(40,200,248,.16),transparent 70%)</code></div></div>
+<div class="shrow"><div class="shbox" style="box-shadow:inset 0 1px 0 rgba(255,255,255,.10)"></div><div class="shmeta"><code class="sname">--ds-inset-hi</code><code class="sval">inset 0 1px 0 rgba(255,255,255,.10)</code></div></div>
+<div class="shrow"><div class="shbox" style="box-shadow:var(--ds-glow)"></div><div class="shmeta"><code class="sname">--shadow-accent</code><code class="sval">var(--ds-glow)</code></div></div>
+<div class="shrow"><div class="shbox" style="box-shadow:var(--ds-shadow-lift)"></div><div class="shmeta"><code class="sname">--shadow-cinematic</code><code class="sval">var(--ds-shadow-lift)</code></div></div>
+<div class="shrow"><div class="shbox" style="box-shadow:var(--ds-shadow-rest)"></div><div class="shmeta"><code class="sname">--shadow-rest</code><code class="sval">var(--ds-shadow-rest)</code></div></div></div>
+  </section>
+
+  <section class="tc-card">
+    <h2>Motion <span class="dim">4 durations · 3 easings</span></h2>
+    <div class="motgrid"><div class="motcol"><h4>Durations <span class="dim">(hover a chip)</span></h4><button class="motchip" style="--d:.2s"><span class="motdot"></span><code class="sname">--ds-dur-fast</code><code class="sval">.2s</code></button>
+<button class="motchip" style="--d:220ms"><span class="motdot"></span><code class="sname">--ds-dur</code><code class="sval">220ms</code></button>
+<button class="motchip" style="--d:.6s"><span class="motdot"></span><code class="sname">--ds-dur-slow</code><code class="sval">.6s</code></button>
+<button class="motchip" style="--d:1.4s"><span class="motdot"></span><code class="sname">--ds-dur-data</code><code class="sval">1.4s</code></button></div><div class="motcol"><h4>Easings <span class="dim">(hover a chip)</span></h4><button class="motchip" style="--e:cubic-bezier(.2,.7,.3,1)"><span class="motdot motdot-e"></span><code class="sname">--ds-ease</code><code class="sval">cubic-bezier(.2,.7,.3,1)</code></button>
+<button class="motchip" style="--e:cubic-bezier(.16,1,.3,1)"><span class="motdot motdot-e"></span><code class="sname">--ds-ease-out</code><code class="sval">cubic-bezier(.16,1,.3,1)</code></button>
+<button class="motchip" style="--e:var(--ds-ease)"><span class="motdot motdot-e"></span><code class="sname">--ease</code><code class="sval">var(--ds-ease)</code></button></div></div>
+  </section>
+
+  <section class="tc-card"><h2>Z-index scale <span class="dim">8 steps · structural orchestration, not raw numbers</span></h2>
+  <div class="ztable"><div class="srow"><code class="sname">--ds-z-below</code><code class="sval">-1</code></div><div class="srow"><code class="sname">--ds-z-base</code><code class="sval">0</code></div><div class="srow"><code class="sname">--ds-z-raised</code><code class="sval">1</code></div><div class="srow"><code class="sname">--ds-z-sticky</code><code class="sval">1000</code></div><div class="srow"><code class="sname">--ds-z-overlay</code><code class="sval">1040</code></div><div class="srow"><code class="sname">--ds-z-drawer</code><code class="sval">1050</code></div><div class="srow"><code class="sname">--ds-z-modal</code><code class="sval">1060</code></div><div class="srow"><code class="sname">--ds-z-toast</code><code class="sval">1080</code></div></div></section>
+  <section class="tc-card"><h2>Opacity scale <span class="dim">6 semantic steps</span></h2>
+  <div class="opgrid"><div class="oprow"><div class="opbox"><div class="opfill" style="opacity:.72"></div></div><code class="sname">--ds-opacity-muted</code><code class="sval">.72</code></div><div class="oprow"><div class="opbox"><div class="opfill" style="opacity:.45"></div></div><code class="sname">--ds-opacity-disabled</code><code class="sval">.45</code></div><div class="oprow"><div class="opbox"><div class="opfill" style="opacity:.12"></div></div><code class="sname">--ds-opacity-faint</code><code class="sval">.12</code></div><div class="oprow"><div class="opbox"><div class="opfill" style="opacity:.55"></div></div><code class="sname">--ds-opacity-scrim</code><code class="sval">.55</code></div><div class="oprow"><div class="opbox"><div class="opfill" style="opacity:.40"></div></div><code class="sname">--ds-opacity-texture</code><code class="sval">.40</code></div><div class="oprow"><div class="opbox"><div class="opfill" style="opacity:.85"></div></div><code class="sname">--ds-opacity-veil</code><code class="sval">.85</code></div></div></section>
+  <section class="tc-card"><h2>Material / texture <span class="dim">4 signature surface tokens</span></h2>
+  <div class="texgrid"><div class="texcell"><div class="texswatch" style="background:radial-gradient(60% 70% at 72% 14%,rgba(40,200,248,.16),transparent 70%);background-size:var(--ds-grid-size,28px 28px)"></div><code class="sname">--ds-glow-wash</code></div><div class="texcell"><div class="texswatch" style="background:linear-gradient(rgba(40,200,248,.10) 1px,transparent 1px),linear-gradient(90deg,rgba(40,200,248,.10) 1px,transparent 1px);background-size:var(--ds-grid-size,28px 28px)"></div><code class="sname">--ds-grid</code></div><div class="texcell"><div class="texswatch" style="background:44px 44px;background-size:var(--ds-grid-size,28px 28px)"></div><code class="sname">--ds-grid-size</code></div><div class="texcell"><div class="texswatch" style="background:linear-gradient(135deg, #2898d0, #28c8f8);background-size:var(--ds-grid-size,28px 28px)"></div><code class="sname">--grad-accent</code></div></div></section>
+
+  <section class="tc-card">
+    <h2>Dual-surface flip <span class="dim">the SAME --ds-* names, flipped values</span></h2>
+    <p class="dim" style="margin:0 0 14px">A token never inherits the wrong surface: every FLIP_REQUIRED family is re-declared in <code>.surface-dark</code>. Left = light <code>:root</code>; right = dark <code>.surface-dark</code>.</p>
+    <div class="flipgrid">
+      <div class="flippane light" style="background:#fff;color:#0E1426;border-color:#ccc">
+        <h3 style="color:#475264">:root · light</h3>
+        
+    <div style="background:#ffffff; border:1px solid #e3e7eb; border-radius:var(--ds-r-md,10px); padding:16px; box-shadow:var(--ds-shadow-card)">
+      <div style="font-family:var(--ds-font-display); font-size:26px; line-height:1.05; color:#0E1426; letter-spacing:-0.01em">Headline specimen</div>
+      <p style="color:#475264; font-size:14px; margin:8px 0 14px">Body copy in the system's body font, on this surface's card token. The hairline, accent, and shadow all come from this surface's flip.</p>
+      <span style="display:inline-block; background:#28c8f8; color:#ffffff; font-weight:600; font-size:13px; padding:8px 16px; border-radius:var(--ds-r-pill,999px)">Primary CTA</span>
+      <span style="display:inline-block; margin-left:8px; border:1px solid #2898d0; color:#2898d0; font-size:13px; padding:7px 15px; border-radius:var(--ds-r-pill,999px)">Secondary</span>
+      <div style="margin-top:14px; height:1px; background:#e3e7eb"></div>
+      <div style="margin-top:10px; font-size:11px; color:#2898d0; letter-spacing:0.14em; text-transform:uppercase; font-family:var(--ds-font-mono,monospace)">accent · light</div>
+    </div>
+      </div>
+      <div class="flippane surface-dark" style="background:var(--ds-bg-surface);color:var(--ds-ink);border-color:var(--ds-line)">
+        <h3 style="color:var(--ds-ink-soft)">.surface-dark · dark</h3>
+        
+    <div style="background:var(--ds-bg-surface-2); border:1px solid var(--ds-line); border-radius:var(--ds-r-md,10px); padding:16px; box-shadow:var(--ds-shadow-card)">
+      <div style="font-family:var(--ds-font-display); font-size:26px; line-height:1.05; color:var(--ds-ink); letter-spacing:-0.01em">Headline specimen</div>
+      <p style="color:var(--ds-ink-soft); font-size:14px; margin:8px 0 14px">Body copy in the system's body font, on this surface's card token. The hairline, accent, and shadow all come from this surface's flip.</p>
+      <span style="display:inline-block; background:var(--ds-accent-bright); color:var(--ds-on-accent); font-weight:600; font-size:13px; padding:8px 16px; border-radius:var(--ds-r-pill,999px)">Primary CTA</span>
+      <span style="display:inline-block; margin-left:8px; border:1px solid var(--ds-accent); color:var(--ds-accent); font-size:13px; padding:7px 15px; border-radius:var(--ds-r-pill,999px)">Secondary</span>
+      <div style="margin-top:14px; height:1px; background:var(--ds-line)"></div>
+      <div style="margin-top:10px; font-size:11px; color:var(--ds-accent); letter-spacing:0.14em; text-transform:uppercase; font-family:var(--ds-font-mono,monospace)">accent · dark</div>
+    </div>
+      </div>
+    </div>
+  </section>
+
+  
+  <section class="tc-card">
+    <h2>Interaction states <span class="dim">hover · focus-visible · active · disabled — LIVE</span></h2>
+    <p class="dim" style="margin:0 0 14px">Real, interactive elements styled from the locked tokens. <b>Hover</b> for the lift, <b>Tab</b> to a control for the keyboard-only focus ring (teal outline + <code>--ds-glow</code> halo), <b>press &amp; hold</b> for the tactile settle. The disabled row is inert (consumes <code>--ds-opacity-disabled = .45</code>).</p>
+    <div class="statedemo">
+      <div class="statecol">
+        <h4>Button</h4>
+        <button class="tc-btn">Request a Quote</button>
+        <span class="statehint">hover · focus · :active press</span>
+      </div>
+      <div class="statecol">
+        <h4>Link</h4>
+        <a class="tc-link" href="#interaction" tabindex="0">View capabilities <span aria-hidden="true">&rarr;</span></a>
+        <span class="statehint">hover nudge · focus ring</span>
+      </div>
+      <div class="statecol">
+        <h4>Card (pressable)</h4>
+        <div class="tc-statecard" tabindex="0" role="button">
+          <span class="tc-statecard__k">Automation line</span>
+          <span class="tc-statecard__d">Robotics for yield, hands for the finish.</span>
+        </div>
+        <span class="statehint">hover lift · focus ring · :active settle</span>
+      </div>
+      <div class="statecol">
+        <h4>Disabled</h4>
+        <button class="tc-btn" disabled aria-disabled="true">Unavailable</button>
+        <span class="statehint">opacity --ds-opacity-disabled · not-allowed · no lift</span>
+      </div>
+    </div>
+  </section>
+  <section class="tc-card">
+    <h2>Animation system <span class="dim">entry-type catalog · transform-only · .6s + ease-out</span></h2>
+    <p class="dim" style="margin:0 0 14px">The named entry-animation catalog — every type is <b>transform-only</b> (opacity stays 1, so content is visible on load and the renders-on-load gate passes). <b>Click a tile to replay</b> the entrance. Each is <code>.bw-rise</code> (base, owns opacity + the transition + the <code>.is-in</code> lander) composed with one variant that swaps the start transform.</p>
+    <div class="tc-anim" id="tcAnim">
+      <button class="tc-anim__tile" data-anim="tc-a-base">
+      <div class="tc-anim__stage"><div class="tc-anim__chip tc-a-base">Rise</div></div>
+      <code class="sname">.bw-rise</code>
+      <span class="statehint">translateY(14px) settle — the default editorial UP rise</span>
+    </button>
+      <button class="tc-anim__tile" data-anim="tc-a--from-left">
+      <div class="tc-anim__stage"><div class="tc-anim__chip tc-a--from-left">From left</div></div>
+      <code class="sname">.bw-rise--from-left</code>
+      <span class="statehint">translateX(-18px) settle — slide in from the LEFT</span>
+    </button>
+      <button class="tc-anim__tile" data-anim="tc-a--from-right">
+      <div class="tc-anim__stage"><div class="tc-anim__chip tc-a--from-right">From right</div></div>
+      <code class="sname">.bw-rise--from-right</code>
+      <span class="statehint">translateX(18px) settle — slide in from the RIGHT</span>
+    </button>
+      <button class="tc-anim__tile" data-anim="tc-a--scale">
+      <div class="tc-anim__stage"><div class="tc-anim__chip tc-a--scale">Scale</div></div>
+      <code class="sname">.bw-rise--scale</code>
+      <span class="statehint">scale(.965) settle — subtle scale-IN, opacity stays 1</span>
+    </button>
+    </div>
+    <h4>Count-up spec <span class="dim">JS numeral tween · reads --ds-dur-data</span></h4>
+    <div class="tc-count">
+      <div class="tc-count__demo">
+        <span class="tc-count__n" data-count="2" data-suffix="M+" id="tcCount">2<small>M+</small></span>
+        <span class="tc-count__lbl">units / yr</span>
+        <button class="tc-link tc-count__replay" id="tcCountReplay" type="button">replay count-up</button>
+      </div>
+      <p class="dim tc-count__spec">Numerals (<code>.bw-stat__n</code> / <code>.bw-metric__n</code> / <code>.bw-kpi__n</code>) carry <code>data-count</code> + optional <code>data-prefix</code>/<code>data-suffix</code>; the markup already holds the FINAL value as text (renders-on-load-safe). On scroll-into-view a rAF tween eases 0&rarr;final with an ease-out cubic over <code>--ds-dur-data = 1.4s</code> (read at runtime). reduced-motion / no-JS &rarr; the final value paints immediately. The number never fades; only its TEXT counts.</p>
+    </div>
+  </section>
+  
+  <section class="tc-card">
+    <h2>The feel <span class="dim">confirmed FEEL specimen · 4 band fragments — live</span></h2>
+    <p class="dim" style="margin:0 0 14px">The owner-confirmed feel specimen (<code>feel-specimen.html</code>) — the band fragments the dynamic templates compose FROM, embedded live at both breakpoints. Fragments: <code>frag</code> · <code>frag</code> · <code>frag</code> · <code>frag</code>.</p>
+    <div class="chromeframes">
+      <div class="cf cf-desk">
+        <div class="cf-label">DESKTOP · 1440</div>
+        <div class="cf-vp"><iframe class="cf-if cf-if--desk" src="feel-specimen.html" title="confirmed feel specimen — desktop 1440" loading="lazy" scrolling="no"></iframe></div>
+      </div>
+      <div class="cf cf-mob">
+        <div class="cf-label">MOBILE · 375</div>
+        <div class="cf-vp"><iframe class="cf-if cf-if--mob" src="feel-specimen.html" title="confirmed feel specimen — mobile 375" loading="lazy" scrolling="no"></iframe></div>
+      </div>
+    </div>
+  </section>
+  
+
+</div>
+<script>
+
+(function(){
+  var root = document.getElementById('tcAnim');
+  if(!root) return;
+  function play(chip){ if(!chip) return; chip.classList.remove('is-in'); void chip.offsetWidth; chip.classList.add('is-in'); }
+  root.querySelectorAll('.tc-anim__tile').forEach(function(tile){
+    var chip = tile.querySelector('.tc-anim__chip');
+    tile.addEventListener('click', function(){ play(chip); });
+  });
+  // initial settle (so the catalog lands on load like the real page does)
+  if(!window.matchMedia || !window.matchMedia('(prefers-reduced-motion:reduce)').matches){
+    requestAnimationFrame(function(){ root.querySelectorAll('.tc-anim__chip').forEach(play); });
+  } else {
+    root.querySelectorAll('.tc-anim__chip').forEach(function(c){ c.classList.add('is-in'); });
+  }
+})();
+
+(function(){
+  var el = document.getElementById('tcCount');
+  var replay = document.getElementById('tcCountReplay');
+  if(!el) return;
+  var final = parseFloat(el.getAttribute('data-count') || '0');
+  var prefix = el.getAttribute('data-prefix') || '';
+  var suffix = el.getAttribute('data-suffix') || '';
+  function durData(){
+    var raw = getComputedStyle(document.documentElement).getPropertyValue('--ds-dur-data').trim();
+    if(/ms$/.test(raw)) return parseFloat(raw);
+    if(/s$/.test(raw)) return parseFloat(raw)*1000;
+    var n = parseFloat(raw); return isNaN(n) ? 1400 : n;
+  }
+  function paint(v){ el.innerHTML = prefix + v + (suffix ? '<small>'+suffix+'</small>' : ''); }
+  function run(){
+    if(window.matchMedia && window.matchMedia('(prefers-reduced-motion:reduce)').matches){ paint(final); return; }
+    var dur = durData(), t0 = null;
+    function step(ts){ if(t0===null) t0=ts; var p=Math.min(1,(ts-t0)/dur); var e=1-Math.pow(1-p,3);
+      var cur = final % 1 === 0 ? Math.round(final*e) : (final*e).toFixed(1);
+      paint(cur); if(p<1) requestAnimationFrame(step); else paint(final); }
+    requestAnimationFrame(step);
+  }
+  if('IntersectionObserver' in window){
+    var io = new IntersectionObserver(function(ents){ ents.forEach(function(en){ if(en.isIntersecting){ run(); io.disconnect(); } }); }, { threshold:0.3 });
+    io.observe(el);
+  } else { run(); }
+  if(replay) replay.addEventListener('click', run);
+})();
+</script>
+</body>
+</html>

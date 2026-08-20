@@ -1,0 +1,302 @@
+
+
+:root{
+  
+  --ds-brand-primary:#2898d0;
+  --ds-brand-primary-deep:#1d6f9b;
+  --ds-brand-primary-ink:#0f3f5c;
+  --ds-brand-accent:#28c8f8;
+  --ds-brand-accent-soft:#d6f2fd;
+  --ds-brand-on-primary:#ffffff;
+
+  
+  --ds-ink:#14171a;
+  --ds-ink-soft:#4a5259;
+  
+  --ds-ink-faint:#606971;
+  --ds-ink-invert:#ffffff;
+
+  
+  --ds-surface:#fafbfc;
+  --ds-surface-2:#ffffff;
+  --ds-surface-sunken:#f1f4f6;
+  --ds-surface-deep:#14171a;
+
+  
+  --ds-line:#e3e7eb;
+  --ds-line-strong:#c9d1d8;
+
+  
+  --ds-positive:#1c7a5e;
+  --ds-caution:#8a5a00;
+  --ds-critical:#a32020;
+
+  
+  --ds-font-display:"Source Serif 4",Georgia,"Times New Roman",serif;
+  --ds-font-body:Inter,system-ui,-apple-system,sans-serif;
+  --ds-font-mono:ui-monospace,"SFMono-Regular",Menlo,monospace;
+  --ds-step-hero:clamp(2.9rem,7.5vw,6rem);
+  --ds-step-h2:clamp(1.9rem,3.6vw,3rem);
+  --ds-step-h3:1.35rem;
+  --ds-step-body:1.0625rem;
+  --ds-step-fine:0.8125rem;
+  --ds-leading-tight:1.01;
+  --ds-leading-body:1.62;
+  --ds-track-display:-0.021em;
+  --ds-track-eyebrow:0.14em;
+
+  
+  --ds-space-band:clamp(3.5rem,7vw,6rem);
+  --ds-space-gap:1.5rem;
+  --ds-space-tight:0.5rem;
+  --ds-measure:66ch;
+
+  
+  --ds-r-control:6px;
+  --ds-r-surface:14px;
+  --ds-r-pill:999px;
+
+  
+  --ds-shadow:0 1px 2px rgba(20,23,26,.07),0 8px 24px rgba(20,23,26,.06);
+  --ds-shadow-lift:0 2px 6px rgba(20,23,26,.09),0 18px 44px rgba(20,23,26,.10);
+
+  
+  --ds-ease:cubic-bezier(.2,.7,.3,1);
+  --ds-dur:220ms;
+  --ds-dur-fast:.2s;
+  --ds-dur-slow:.6s;
+  --ds-ease-out:cubic-bezier(.16,1,.3,1);
+  --ds-dur-data:1.4s;
+
+  
+  --ds-z-below:-1;
+  --ds-z-base:0;
+  --ds-z-raised:1;
+  --ds-z-sticky:1000;
+  --ds-z-overlay:1040;
+  --ds-z-drawer:1050;
+  --ds-z-modal:1060;
+  --ds-z-toast:1080;
+
+  
+  --ds-opacity-muted:.72;
+  --ds-opacity-disabled:.45;
+  --ds-opacity-faint:.12;
+  --ds-opacity-scrim:.55;
+  --ds-opacity-texture:.40;
+  --ds-opacity-veil:.85;
+
+  
+  --ds-tap:48px;
+
+  
+  
+  --ds-primary:        var(--ds-brand-primary);
+  --ds-primary-deep:   var(--ds-brand-primary-deep);
+  --ds-primary-soft:   var(--ds-brand-accent-soft);
+  --ds-accent:         var(--ds-brand-primary);
+  --ds-accent-ink:     var(--ds-brand-primary-ink);
+  --ds-accent-soft:    var(--ds-brand-accent-soft);
+  --ds-accent-strong:  var(--ds-brand-primary-deep);
+  --ds-accent-bright:  var(--ds-brand-accent);
+  --ds-on-accent:      var(--ds-brand-on-primary);
+  --ds-ink-on-dark:    var(--ds-ink-invert);
+  --ds-bg-surface:     var(--ds-surface);
+  --ds-bg-surface-2:   var(--ds-surface-2);
+  --ds-bg-warm:        var(--ds-surface-sunken);
+  --ds-divider:        var(--ds-line);
+  --ds-hairline:       var(--ds-line);
+  
+  --ds-fs-display:     var(--ds-step-hero);
+  --ds-fs-h1:          var(--ds-step-hero);
+  --ds-fs-h2:          var(--ds-step-h2);
+  --ds-fs-h3:          var(--ds-step-h3);
+  --ds-fs-body:        var(--ds-step-body);
+  --ds-fs-caption:     var(--ds-step-fine);
+  --ds-lh-tight:       var(--ds-leading-tight);
+  --ds-lh-body:        var(--ds-leading-body);
+  --ds-tracking-disp:  var(--ds-track-display);
+  --ds-tracking-label: var(--ds-track-eyebrow);
+  
+  --ds-section-py:     var(--ds-space-band);
+  --ds-space-xs:       var(--ds-space-tight);
+  --ds-space-sm:       14px;
+  --ds-space-md:       var(--ds-space-gap);
+  --ds-space-lg:       40px;
+  --ds-space-xl:       64px;
+  --ds-container-max:  1180px;
+  
+  --ds-shadow-card:    var(--ds-shadow);
+  --ds-shadow-rest:    0 1px 2px rgba(20,23,26,.06);
+  
+  --ds-glow:           0 0 48px rgba(40,200,248,.40);
+  --ds-glow-wash:      radial-gradient(60% 70% at 72% 14%,rgba(40,200,248,.16),transparent 70%);
+  --ds-grid:           linear-gradient(rgba(40,200,248,.10) 1px,transparent 1px),linear-gradient(90deg,rgba(40,200,248,.10) 1px,transparent 1px);
+  --ds-grid-size:      44px 44px;
+  --ds-inset-hi:       inset 0 1px 0 rgba(255,255,255,.10);
+  --ds-glass-border:   rgba(255,255,255,.14);
+
+  
+  --ink: var(--ds-ink); --ink-soft: var(--ds-ink-soft); --ink-faint: var(--ds-ink-faint);
+  --accent: var(--ds-accent); --accent-soft: var(--ds-accent-soft);
+  --accent-hot: var(--ds-accent-bright);
+  --accent-tint-14: rgba(40,200,248,.14); --accent-tint-22: rgba(40,200,248,.22);
+  --bg: var(--ds-bg-surface); --bg-2: var(--ds-bg-surface-2); --bg-warm: var(--ds-bg-warm);
+  --card-bg: var(--ds-bg-surface-2); --card-border: var(--ds-line);
+  --ease: var(--ds-ease); --font: var(--ds-font-body); --mono: var(--ds-font-mono);
+  --glass-inset: var(--ds-inset-hi); --grad-accent: linear-gradient(135deg, var(--ds-accent), var(--ds-accent-bright));
+  --line: var(--ds-line); --line-2: var(--ds-line-strong);
+  --on-accent: var(--ds-on-accent); --pad: var(--ds-section-py); --r-lg: var(--ds-r-surface);
+  --shadow: var(--ds-shadow); --shadow-accent: var(--ds-glow);
+  --shadow-cinematic: var(--ds-shadow-lift); --shadow-rest: var(--ds-shadow-rest);
+}
+
+.surface-dark{
+  
+  --ds-brand-primary:#4fb4e4;
+  --ds-brand-primary-deep:#2898d0;
+  --ds-brand-primary-ink:#bfe6f8;
+  --ds-brand-accent:#28c8f8;
+  --ds-brand-accent-soft:#123a4d;
+  --ds-brand-on-primary:#0c0e10;
+
+  
+  --ds-ink:#ffffff;
+  --ds-ink-soft:#aeb9c2;
+  --ds-ink-faint:#8a949d;
+  --ds-ink-invert:#14171a;
+
+  
+  --ds-surface:#14171a;
+  --ds-surface-2:#1c2126;
+  --ds-surface-sunken:#0f1215;
+  --ds-surface-deep:#0c0e10;
+
+  
+  --ds-line:#2b3238;
+  --ds-line-strong:#3d464e;
+
+  
+  --ds-positive:#4fc3a1;
+  --ds-caution:#e0a54a;
+  --ds-critical:#e8736b;
+
+  
+  --ds-font-display:"Source Serif 4",Georgia,"Times New Roman",serif;
+  --ds-font-body:Inter,system-ui,-apple-system,sans-serif;
+  --ds-font-mono:ui-monospace,"SFMono-Regular",Menlo,monospace;
+  --ds-step-hero:clamp(2.9rem,7.5vw,6rem);
+  --ds-step-h2:clamp(1.9rem,3.6vw,3rem);
+  --ds-step-h3:1.35rem;
+  --ds-step-body:1.0625rem;
+  --ds-step-fine:0.8125rem;
+  --ds-leading-tight:1.01;
+  --ds-leading-body:1.62;
+  --ds-track-display:-0.021em;
+  --ds-track-eyebrow:0.14em;
+
+  
+  --ds-space-band:clamp(3.5rem,7vw,6rem);
+  --ds-space-gap:1.5rem;
+  --ds-space-tight:0.5rem;
+  --ds-measure:66ch;
+
+  
+  --ds-r-control:6px;
+  --ds-r-surface:14px;
+  --ds-r-pill:999px;
+
+  
+  --ds-shadow:0 1px 2px rgba(0,0,0,.5),0 12px 32px rgba(0,0,0,.45);
+  --ds-shadow-lift:0 2px 8px rgba(0,0,0,.55),0 22px 56px rgba(0,0,0,.5);
+
+  
+  --ds-ease:cubic-bezier(.2,.7,.3,1);
+  --ds-dur:220ms;
+  --ds-dur-fast:.2s;
+  --ds-dur-slow:.6s;
+  --ds-ease-out:cubic-bezier(.16,1,.3,1);
+  --ds-dur-data:1.4s;
+
+  
+  --ds-z-below:-1;
+  --ds-z-base:0;
+  --ds-z-raised:1;
+  --ds-z-sticky:1000;
+  --ds-z-overlay:1040;
+  --ds-z-drawer:1050;
+  --ds-z-modal:1060;
+  --ds-z-toast:1080;
+
+  
+  --ds-opacity-muted:.72;
+  --ds-opacity-disabled:.45;
+  --ds-opacity-faint:.12;
+  --ds-opacity-scrim:.55;
+  --ds-opacity-texture:.40;
+  --ds-opacity-veil:.85;
+
+  
+  --ds-tap:48px;
+
+  
+  
+  --ds-primary:        var(--ds-brand-primary);
+  --ds-primary-deep:   var(--ds-brand-primary-deep);
+  --ds-primary-soft:   var(--ds-brand-accent-soft);
+  --ds-accent:         var(--ds-brand-primary);
+  --ds-accent-ink:     var(--ds-brand-primary-ink);
+  --ds-accent-soft:    var(--ds-brand-accent-soft);
+  --ds-accent-strong:  var(--ds-brand-primary-deep);
+  --ds-accent-bright:  var(--ds-brand-accent);
+  --ds-on-accent:      var(--ds-brand-on-primary);
+  --ds-ink-on-dark:    var(--ds-ink-invert);
+  --ds-bg-surface:     var(--ds-surface);
+  --ds-bg-surface-2:   var(--ds-surface-2);
+  --ds-bg-warm:        var(--ds-surface-sunken);
+  --ds-divider:        var(--ds-line);
+  --ds-hairline:       var(--ds-line);
+  
+  --ds-fs-display:     var(--ds-step-hero);
+  --ds-fs-h1:          var(--ds-step-hero);
+  --ds-fs-h2:          var(--ds-step-h2);
+  --ds-fs-h3:          var(--ds-step-h3);
+  --ds-fs-body:        var(--ds-step-body);
+  --ds-fs-caption:     var(--ds-step-fine);
+  --ds-lh-tight:       var(--ds-leading-tight);
+  --ds-lh-body:        var(--ds-leading-body);
+  --ds-tracking-disp:  var(--ds-track-display);
+  --ds-tracking-label: var(--ds-track-eyebrow);
+  
+  --ds-section-py:     var(--ds-space-band);
+  --ds-space-xs:       var(--ds-space-tight);
+  --ds-space-sm:       14px;
+  --ds-space-md:       var(--ds-space-gap);
+  --ds-space-lg:       40px;
+  --ds-space-xl:       64px;
+  --ds-container-max:  1180px;
+  
+  --ds-shadow-card:    var(--ds-shadow);
+  --ds-shadow-rest:    0 1px 2px rgba(20,23,26,.06);
+  
+  --ds-glow:           0 0 48px rgba(40,200,248,.40);
+  --ds-glow-wash:      radial-gradient(60% 70% at 72% 14%,rgba(40,200,248,.16),transparent 70%);
+  --ds-grid:           linear-gradient(rgba(40,200,248,.10) 1px,transparent 1px),linear-gradient(90deg,rgba(40,200,248,.10) 1px,transparent 1px);
+  --ds-grid-size:      44px 44px;
+  --ds-inset-hi:       inset 0 1px 0 rgba(255,255,255,.10);
+  --ds-glass-border:   rgba(255,255,255,.14);
+
+  
+  --ink: var(--ds-ink); --ink-soft: var(--ds-ink-soft); --ink-faint: var(--ds-ink-faint);
+  --accent: var(--ds-accent); --accent-soft: var(--ds-accent-soft);
+  --accent-hot: var(--ds-accent-bright);
+  --accent-tint-14: rgba(40,200,248,.14); --accent-tint-22: rgba(40,200,248,.22);
+  --bg: var(--ds-bg-surface); --bg-2: var(--ds-bg-surface-2); --bg-warm: var(--ds-bg-warm);
+  --card-bg: var(--ds-bg-surface-2); --card-border: var(--ds-line);
+  --ease: var(--ds-ease); --font: var(--ds-font-body); --mono: var(--ds-font-mono);
+  --glass-inset: var(--ds-inset-hi); --grad-accent: linear-gradient(135deg, var(--ds-accent), var(--ds-accent-bright));
+  --line: var(--ds-line); --line-2: var(--ds-line-strong);
+  --on-accent: var(--ds-on-accent); --pad: var(--ds-section-py); --r-lg: var(--ds-r-surface);
+  --shadow: var(--ds-shadow); --shadow-accent: var(--ds-glow);
+  --shadow-cinematic: var(--ds-shadow-lift); --shadow-rest: var(--ds-shadow-rest);
+}

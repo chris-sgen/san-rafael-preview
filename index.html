@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>San Rafael Auto Accident Injury - design preview</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:wght@400;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="design/san-rafael-auto-accident-injury-tokens.css">
+<style>
+  *,*::before,*::after{box-sizing:border-box}
+  body{margin:0;background:var(--ds-surface-deep);color:var(--ds-ink-invert);
+       font-family:var(--ds-font-body);line-height:1.55;
+       background-image:linear-gradient(158deg,var(--ds-surface-2) 0%,var(--ds-surface-deep) 52%,var(--ds-surface-sunken) 100%);
+       background-attachment:fixed;min-height:100vh;padding:clamp(20px,5vw,64px)}
+  .wrap{max-width:1080px;margin-inline:auto}
+  h1{font-family:var(--ds-font-display);font-size:clamp(30px,5vw,52px);line-height:1.02;
+     letter-spacing:var(--ds-track-display);margin:0 0 10px;color:#fff}
+  .sub{color:var(--ds-ink-soft);max-width:62ch;margin:0 0 6px;font-size:15px}
+  .meta{color:var(--ds-ink-faint);font-size:12.5px;letter-spacing:.04em;margin:0 0 34px}
+  .note{border:1px solid var(--ds-line);border-radius:var(--ds-r-surface);
+        padding:14px 18px;margin:0 0 34px;font-size:13.5px;color:var(--ds-ink-soft);
+        background:var(--ds-surface-2)}
+  h2{font-family:var(--ds-font-display);font-size:22px;margin:34px 0 4px;color:#fff}
+  .h2sub{color:var(--ds-ink-faint);font-size:12.5px;margin:0 0 16px}
+  .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:14px}
+  a.card{display:block;text-decoration:none;color:inherit;
+         border:1px solid var(--ds-line);border-radius:var(--ds-r-surface);
+         padding:18px 20px;background:var(--ds-surface-2);
+         transition:transform .18s ease,border-color .18s ease,box-shadow .18s ease}
+  a.card:hover{transform:translateY(-2px);border-color:var(--ds-brand-primary);
+               box-shadow:0 10px 30px rgba(0,0,0,.35)}
+  a.card:focus-visible{outline:2px solid var(--ds-brand-primary);outline-offset:3px}
+  .k{font-family:var(--ds-font-display);font-size:17px;color:#fff;margin:0 0 4px}
+  .d{font-size:13px;color:var(--ds-ink-soft);margin:0}
+  .tag{display:inline-block;font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;
+       color:var(--ds-brand-accent);margin-bottom:8px}
+  footer{margin-top:48px;padding-top:20px;border-top:1px solid var(--ds-line);
+         color:var(--ds-ink-faint);font-size:12px}
+</style>
+</head>
+<body class="surface-dark">
+<div class="wrap">
+  <h1>San Rafael Auto Accident Injury</h1>
+  <p class="sub">Design preview for the site build. These are the locked foundation artifacts, in the
+  order the build produced them: identity, then body feel, then the token system.</p>
+  <p class="meta">Private client work - preview only, not the live site</p>
+
+  <div class="note">
+    This is a <strong>design preview</strong>, not the finished website. It carries the styling system
+    and the identity tournament, not page content. Build notes have been stripped from these copies;
+    the annotated originals live in the private working repo.
+  </div>
+
+  <h2>Stage 3 - System</h2>
+  <p class="h2sub">Signed off. The complete token API the whole build styles from.</p>
+  <div class="grid">
+    <a class="card" href="design/token-card.html">
+      <span class="tag">Locked</span>
+      <p class="k">Token lock card</p>
+      <p class="d">Every colour, type step, space, radius, shadow and motion value, with the dual-surface light/dark flip.</p>
+    </a>
+  </div>
+
+  <h2>Stage 2 - Feel</h2>
+  <p class="h2sub">Approved. How the body of the site behaves.</p>
+  <div class="grid">
+    <a class="card" href="design/feel-specimen.html">
+      <span class="tag">Approved</span>
+      <p class="k">Feel specimen</p>
+      <p class="d">Figure and ground, section rhythm, the lit dark material, and the restrained scroll reveal.</p>
+    </a>
+  </div>
+
+  <h2>Stage 1 - Brand card</h2>
+  <p class="h2sub">Concept B was picked. A and C are kept so the choice stays legible.</p>
+  <div class="grid">
+    <a class="card" href="design/tournament/brand-card/concept-b-depth.html">
+      <span class="tag">Picked</span>
+      <p class="k">B - Depth</p>
+      <p class="d">Material led. The dark plane as a lit surface rather than a slot waiting for a photograph.</p>
+    </a>
+    <a class="card" href="design/tournament/brand-card/concept-a-impact.html">
+      <span class="tag">Not picked</span>
+      <p class="k">A - Impact</p>
+      <p class="d">Type led. Scale and contrast carry the identity.</p>
+    </a>
+    <a class="card" href="design/tournament/brand-card/concept-c-evidence.html">
+      <span class="tag">Not picked</span>
+      <p class="k">C - Evidence</p>
+      <p class="d">Structure led. The identity expressed through indexing and order.</p>
+    </a>
+  </div>
+
+  <footer>Chrome concepts are being built and will appear here once reviewed.</footer>
+</div>
+</body>
+</html>

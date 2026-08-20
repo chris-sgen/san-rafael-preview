@@ -1,0 +1,585 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Brand Card C: EVIDENCE</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Space+Grotesk:wght@500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../../san-rafael-auto-accident-injury-tokens.css">
+<link rel="stylesheet" href="../../san-rafael-auto-accident-injury-structural.css">
+
+<style>
+
+:root,.surface-dark{
+  --ds-font-display:"Space Grotesk",Inter,system-ui,sans-serif;
+  --ds-font-body:Inter,system-ui,-apple-system,sans-serif;
+  --ds-font-mono:"Space Mono",ui-monospace,"SFMono-Regular",Menlo,monospace;
+  
+  --ds-r-surface:0px;
+  --ds-r-control:2px;
+}
+
+*,*::before,*::after{box-sizing:border-box}
+body{
+  margin:0;
+  background:var(--ds-surface);
+  color:var(--ds-ink);
+  font-family:var(--ds-font-body);
+  font-size:var(--ds-step-body);
+  line-height:var(--ds-leading-body);
+  -webkit-font-smoothing:antialiased;
+}
+.wrap{max-width:1140px;margin:0 auto;padding:0 24px}
+.sect{padding:var(--ds-space-band) 0}
+
+.sect-label{
+  display:flex;align-items:center;gap:20px;
+  font-family:var(--ds-font-mono);font-weight:700;
+  font-size:var(--ds-step-fine);line-height:1;
+  text-transform:uppercase;letter-spacing:var(--ds-track-eyebrow);
+  color:var(--ds-ink-soft);
+  margin:0 0 var(--ds-space-gap);
+}
+.sect-label::after{content:"";flex:1;height:1px;background:var(--ds-line)}
+
+.card-head{padding:var(--ds-space-band) 0 var(--ds-space-gap)}
+.eyebrow{
+  font-family:var(--ds-font-mono);font-weight:700;
+  font-size:var(--ds-step-fine);letter-spacing:var(--ds-track-eyebrow);
+  text-transform:uppercase;color:var(--ds-brand-primary-deep);
+  margin:0 0 var(--ds-space-tight);
+}
+.h-card-title{
+  font-family:var(--ds-font-display);font-weight:700;
+  font-size:var(--ds-step-h2);line-height:var(--ds-leading-tight);
+  letter-spacing:var(--ds-track-display);
+  margin:0;max-width:26ch;
+}
+.lead{color:var(--ds-ink-soft);max-width:62ch;margin:var(--ds-space-gap) 0 0}
+p.note{
+  font-family:var(--ds-font-mono);font-size:var(--ds-step-fine);line-height:1.75;
+  color:var(--ds-ink-faint);
+  border-left:2px solid var(--ds-brand-accent);
+  padding-left:16px;max-width:74ch;margin:var(--ds-space-gap) 0 0;
+}
+
+.doc-field{
+  position:relative;isolation:isolate;
+  padding:clamp(2.25rem,5vw,3.5rem) clamp(1.25rem,4vw,3.25rem);
+  background-color:var(--ds-surface-deep);
+  
+  background-image:
+    repeating-linear-gradient(to bottom,var(--ds-line) 0 1px,transparent 1px 32px),
+    repeating-linear-gradient(to right,var(--ds-line) 0 1px,transparent 1px 120px);
+  border:1px solid var(--ds-line-strong);
+  border-radius:var(--ds-r-surface);
+}
+
+.doc-field::before{
+  content:"";position:absolute;inset:0;z-index:var(--ds-z-below);pointer-events:none;
+  background-image:radial-gradient(95% 75% at 84% 0%,var(--ds-brand-primary) 0%,transparent 66%);
+  opacity:var(--ds-opacity-faint);
+}
+.doc-inner{position:relative;z-index:var(--ds-z-raised)}
+
+.is-lifted{box-shadow:var(--ds-shadow-lift),inset 0 1px 0 var(--ds-line-strong)}
+
+.is-cut{clip-path:polygon(0 0,calc(100% - 38px) 0,100% 38px,100% 100%,0 100%)}
+
+.band-holder{position:relative;padding-top:19px}
+.docket{
+  position:absolute;top:0;left:clamp(1.25rem,4vw,3.25rem);z-index:var(--ds-z-raised);
+  display:inline-flex;align-items:center;gap:10px;margin:0;
+  padding:9px 16px;
+  background-color:var(--ds-brand-primary);color:var(--ds-brand-on-primary);
+  font-family:var(--ds-font-mono);font-weight:700;
+  font-size:var(--ds-step-fine);line-height:1;
+  text-transform:uppercase;letter-spacing:.08em;
+  box-shadow:var(--ds-shadow-lift);
+}
+
+.grain-layer{
+  position:absolute;inset:0;width:100%;height:100%;
+  z-index:var(--ds-z-raised);pointer-events:none;
+  opacity:.06;mix-blend-mode:overlay;
+}
+
+.reg-mark{position:absolute;width:20px;height:20px;color:var(--ds-brand-accent);opacity:.75;z-index:var(--ds-z-raised)}
+.reg-tl{top:12px;left:12px}
+.reg-tr{top:12px;right:12px}
+.reg-bl{bottom:12px;left:12px}
+.reg-br{bottom:12px;right:12px}
+
+.tick-rail{
+  height:16px;
+  border-bottom:1px solid var(--ds-line-strong);
+  background-image:
+    repeating-linear-gradient(to right,var(--ds-line-strong) 0 1px,transparent 1px 10px),
+    repeating-linear-gradient(to right,var(--ds-brand-accent) 0 1px,transparent 1px 100px);
+  background-size:100% 6px,100% 12px;
+  background-position:left bottom,left bottom;
+  background-repeat:repeat-x;
+}
+
+.seam-tab{display:block;width:100%;height:38px;margin-bottom:-1px}
+.seam-tab path{fill:var(--ds-surface-deep)}
+
+.leader{flex:1;min-width:20px;height:1px;border-bottom:1px dotted var(--ds-line-strong)}
+.doc-meta{
+  display:flex;align-items:center;gap:12px;flex-wrap:wrap;
+  font-family:var(--ds-font-mono);font-size:var(--ds-step-fine);
+  letter-spacing:.06em;text-transform:uppercase;
+  color:var(--ds-ink-faint);
+  margin:16px 0 var(--ds-space-gap);
+}
+
+.h-hero{
+  font-family:var(--ds-font-display);font-weight:700;
+  font-size:var(--ds-step-hero);line-height:var(--ds-leading-tight);
+  letter-spacing:var(--ds-track-display);
+  color:var(--ds-ink);margin:0;max-width:15ch;
+}
+.h-stat{
+  font-family:var(--ds-font-display);font-weight:700;
+  font-size:var(--ds-step-hero);line-height:var(--ds-leading-tight);
+  letter-spacing:var(--ds-track-display);
+  color:var(--ds-ink);margin:0;max-width:13ch;
+}
+
+.ledger{margin:var(--ds-space-gap) 0 0;padding:0}
+.ledger-row{
+  display:grid;grid-template-columns:minmax(150px,230px) 1fr;
+  gap:16px;padding:14px 0;border-top:1px solid var(--ds-line);
+}
+.ledger-key{
+  display:flex;align-items:center;gap:10px;margin:0;
+  font-family:var(--ds-font-mono);font-size:var(--ds-step-fine);
+  text-transform:uppercase;letter-spacing:.06em;
+  color:var(--ds-ink-faint);
+}
+.ledger-key::after{content:"";flex:1;height:0;border-bottom:1px dotted var(--ds-line-strong)}
+.ledger-val{margin:0;color:var(--ds-ink)}
+
+.atom-row{display:flex;flex-wrap:wrap;gap:var(--ds-space-gap);align-items:center;margin-top:var(--ds-space-gap)}
+.btn{
+  display:inline-flex;align-items:center;justify-content:center;gap:10px;
+  min-height:var(--ds-tap);padding:0 24px;
+  border-radius:var(--ds-r-control);border:1px solid transparent;
+  font-family:var(--ds-font-display);font-weight:600;
+  font-size:var(--ds-step-body);line-height:1;
+  text-decoration:none;cursor:pointer;
+  transition:background-color var(--ds-dur-fast) var(--ds-ease),
+             border-color var(--ds-dur-fast) var(--ds-ease),
+             transform var(--ds-dur-fast) var(--ds-ease);
+}
+
+.btn-primary{
+  background-color:var(--ds-brand-primary);
+  background-clip:padding-box;
+  border-color:var(--ds-brand-primary-deep);
+  color:var(--ds-brand-on-primary);
+}
+.btn-primary:hover{background-color:var(--ds-brand-primary-deep);transform:translateY(-1px)}
+.btn-ghost{background-color:var(--ds-surface-2);border-color:var(--ds-line-strong);color:var(--ds-ink)}
+.btn-ghost:hover{border-color:var(--ds-brand-primary)}
+.btn:focus-visible,.field:focus-visible,.link-go:focus-visible{outline:3px solid var(--ds-brand-accent);outline-offset:2px}
+.btn-ico{width:18px;height:18px;flex:none}
+
+.field{
+  min-height:var(--ds-tap);min-width:250px;padding:0 14px;
+  background:var(--ds-surface-2);color:var(--ds-ink);
+  border:1px solid var(--ds-line-strong);border-radius:var(--ds-r-control);
+  font-family:var(--ds-font-mono);font-size:var(--ds-step-fine);
+  letter-spacing:.05em;text-transform:uppercase;
+}
+.tag{
+  display:inline-flex;align-items:center;gap:8px;
+  min-height:34px;padding:0 12px;
+  background:var(--ds-brand-accent-soft);color:var(--ds-brand-primary-ink);
+  border:1px solid var(--ds-brand-primary);border-radius:var(--ds-r-pill);
+  font-family:var(--ds-font-mono);font-weight:700;
+  font-size:var(--ds-step-fine);text-transform:uppercase;letter-spacing:.05em;
+}
+.tag-ico{width:14px;height:14px;flex:none}
+.link-go{
+  display:inline-flex;align-items:center;gap:8px;min-height:44px;
+  color:var(--ds-brand-primary-deep);font-weight:600;
+  text-decoration:underline;text-underline-offset:4px;
+}
+
+.record{
+  max-width:470px;margin-top:var(--ds-space-gap);
+  background:var(--ds-surface-2);
+  border:1px solid var(--ds-line-strong);
+  border-top:3px solid var(--ds-brand-primary);
+  border-radius:var(--ds-r-surface);
+  padding:22px;
+  box-shadow:var(--ds-shadow);
+}
+.record-meta{
+  display:flex;align-items:center;gap:12px;margin:0 0 12px;
+  font-family:var(--ds-font-mono);font-size:var(--ds-step-fine);
+  text-transform:uppercase;letter-spacing:.06em;color:var(--ds-ink-faint);
+}
+.h-record-title{
+  display:flex;align-items:center;gap:10px;
+  font-family:var(--ds-font-display);font-weight:600;
+  font-size:var(--ds-step-h3);line-height:1.25;
+  margin:0 0 8px;max-width:24ch;
+}
+.record-ico{width:22px;height:22px;flex:none;color:var(--ds-brand-primary)}
+.record-copy{margin:0 0 12px;color:var(--ds-ink-soft)}
+
+.swatch-grid{
+  display:grid;grid-template-columns:repeat(auto-fill,minmax(196px,1fr));
+  border-top:1px solid var(--ds-line);border-left:1px solid var(--ds-line);
+}
+.swatch{
+  background:transparent;
+  border-right:1px solid var(--ds-line);
+  border-bottom:1px solid var(--ds-line);
+}
+.swatch-chip{display:block;height:76px;border-bottom:1px solid var(--ds-line)}
+.swatch-meta{padding:12px 14px}
+.swatch-role{margin:0;font-weight:600;font-size:var(--ds-step-fine);color:var(--ds-ink)}
+.swatch-hex{margin:5px 0 0;font-family:var(--ds-font-mono);font-size:var(--ds-step-fine);color:var(--ds-ink-faint)}
+.swatch-use{margin:5px 0 0;font-size:var(--ds-step-fine);color:var(--ds-ink-soft);line-height:1.5}
+
+.type-row{border-top:1px solid var(--ds-line);padding:var(--ds-space-gap) 0}
+.type-spec{
+  margin:0 0 10px;font-family:var(--ds-font-mono);font-size:var(--ds-step-fine);
+  text-transform:uppercase;letter-spacing:.08em;color:var(--ds-ink-faint);
+}
+.h-type-display{
+  font-family:var(--ds-font-display);font-weight:700;
+  font-size:var(--ds-step-h2);line-height:var(--ds-leading-tight);
+  letter-spacing:var(--ds-track-display);margin:0;max-width:20ch;
+}
+.type-mono{
+  margin:0;font-family:var(--ds-font-mono);font-weight:700;
+  font-size:1.35rem;letter-spacing:.08em;color:var(--ds-ink);
+}
+
+.motif-grid{
+  display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));
+  border-top:1px solid var(--ds-line);border-left:1px solid var(--ds-line);
+}
+.motif{
+  border-right:1px solid var(--ds-line);border-bottom:1px solid var(--ds-line);
+  padding:22px 18px;background:transparent;
+  transition:background-color var(--ds-dur) var(--ds-ease-out);
+}
+.motif:hover{background-color:var(--ds-surface-sunken)}
+.motif svg{width:44px;height:44px;display:block;color:var(--ds-brand-primary)}
+.motif-code{margin:14px 0 4px;font-family:var(--ds-font-mono);font-size:var(--ds-step-fine);color:var(--ds-brand-primary-deep);letter-spacing:.08em}
+.motif-name{margin:0;font-size:var(--ds-step-fine);color:var(--ds-ink-soft);line-height:1.5}
+
+.material-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:var(--ds-space-gap);margin-top:var(--ds-space-gap)}
+.material-swatch{position:relative;isolation:isolate;min-height:118px;padding:14px;border:1px solid var(--ds-line-strong);background-color:var(--ds-surface-deep)}
+.material-swatch p{margin:0;position:relative;z-index:var(--ds-z-raised);font-family:var(--ds-font-mono);font-size:var(--ds-step-fine);text-transform:uppercase;letter-spacing:.06em;color:var(--ds-ink-soft)}
+.mat-rules{background-image:repeating-linear-gradient(to bottom,var(--ds-line) 0 1px,transparent 1px 12px)}
+.mat-bloom{background-image:radial-gradient(72% 82% at 80% 104%,var(--ds-brand-primary) 0%,transparent 72%)}
+.mat-ticks{background-image:repeating-linear-gradient(to right,var(--ds-brand-accent) 0 1px,transparent 1px 22px);background-size:100% 26px;background-position:left bottom;background-repeat:repeat-x}
+
+.logo-lockup{display:flex;align-items:center;gap:16px;flex-wrap:wrap}
+.logo-mark{
+  width:54px;height:54px;flex:none;display:grid;place-items:center;
+  background:var(--ds-brand-primary);color:var(--ds-brand-on-primary);
+  box-shadow:var(--ds-shadow);
+}
+.logo-mark svg{width:30px;height:30px}
+.h-logo-word{
+  font-family:var(--ds-font-display);font-weight:700;
+  font-size:1.2rem;line-height:1.2;letter-spacing:var(--ds-track-display);
+  margin:0;max-width:32ch;
+}
+.logo-sub{margin:5px 0 0;font-family:var(--ds-font-mono);font-size:var(--ds-step-fine);color:var(--ds-ink-faint);letter-spacing:.04em}
+
+.strip{
+  display:flex;flex-wrap:wrap;align-items:center;gap:14px;
+  padding:20px clamp(1.25rem,4vw,2.5rem);
+  background-color:var(--ds-surface-sunken);
+  border-top:2px solid var(--ds-brand-primary);
+  font-family:var(--ds-font-mono);font-size:var(--ds-step-fine);
+  text-transform:uppercase;letter-spacing:.06em;color:var(--ds-ink-soft);
+}
+.strip p{margin:0}
+
+@media (max-width:720px){
+  .wrap{padding:0 18px}
+  .ledger-row{grid-template-columns:1fr;gap:6px}
+  .docket{left:1.25rem}
+}
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{transition-duration:0ms !important;animation-duration:0ms !important}
+}
+</style>
+</head>
+<body>
+
+<div class="wrap">
+
+  <header class="card-head">
+    <p class="eyebrow">Brand card C of 3</p>
+    <h1 class="h-card-title">EVIDENCE: the structure is the hero</h1>
+    <p class="lead">This practice competes on being checkable. Its real differentiator is the estimate written before the examination and the narrative report an attorney can read, so the design language is documentary: a visible measured structure, ruled columns, tabular alignment, mono data accents, and framing that reads like a record rather than an advertisement. The measured signature hero is dark and there is no photograph to carry it, so the dark hero is built as a dark DOCUMENT: a ruled field with a tab cut into its top edge, corner registration marks and a real grain, never an image slot waiting for a picture that will not arrive.</p>
+    <p class="note">Type: Space Grotesk over Inter (TYPOGRAPHY-PAIRINGS.md #39), with Space Mono bound to the mono token for every label, figure and reference. Palette anchored on the practice's own logo, which C7 §2 records as the only mark the practice owns.</p>
+  </header>
+
+  <section class="sect">
+    <p class="sect-label">01 / Logo lockup</p>
+    <div class="logo-lockup">
+      <span class="logo-mark">
+        <svg viewBox="0 0 40 40" fill="none" aria-hidden="true">
+          <path d="M4 3.5h22.5L36 13v23.5H4z" stroke="currentColor" stroke-width="2.6" stroke-linejoin="round"/>
+          <path d="M26.5 3.5V13H36" stroke="#28c8f8" stroke-width="2.2" stroke-linejoin="round"/>
+          <path d="M11 21h18M11 26.5h18M11 32h11" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/>
+        </svg>
+      </span>
+      <div>
+        <p class="h-logo-word">San Rafael Auto Accident Injury</p>
+        <p class="logo-sub">Chiropractic Center / 55 Mitchell Blvd, Ste 10</p>
+      </div>
+    </div>
+    <p class="note">The mark is the record itself: a filed sheet with the corner cut, three rules inside it, and the logo cyan reserved for the cut. It survives at 24px, it needs no photograph, and it repeats as the seam, the tick and the registration mark everywhere else on this card.</p>
+  </section>
+
+  <section class="sect">
+    <p class="sect-label">02 / Palette, by the role each colour plays</p>
+    <div class="swatch-grid">
+      <div class="swatch">
+        <span class="swatch-chip" style="background:#2898d0"></span>
+        <div class="swatch-meta">
+          <p class="swatch-role">Primary</p>
+          <p class="swatch-hex">#2898d0</p>
+          <p class="swatch-use">Actions, links, the record header rule. Sampled from the logo, 11,193px dominant.</p>
+        </div>
+      </div>
+      <div class="swatch">
+        <span class="swatch-chip" style="background:#1d6f9b"></span>
+        <div class="swatch-meta">
+          <p class="swatch-role">Primary deep</p>
+          <p class="swatch-hex">#1d6f9b</p>
+          <p class="swatch-use">Button hover, the numbered mono codes, text links on light ground.</p>
+        </div>
+      </div>
+      <div class="swatch">
+        <span class="swatch-chip" style="background:#28c8f8"></span>
+        <div class="swatch-meta">
+          <p class="swatch-role">Accent, measurement only</p>
+          <p class="swatch-hex">#28c8f8</p>
+          <p class="swatch-use">The major tick, the registration mark, the cut corner. It never fills a surface.</p>
+        </div>
+      </div>
+      <div class="swatch">
+        <span class="swatch-chip" style="background:#14171a"></span>
+        <div class="swatch-meta">
+          <p class="swatch-role">Surface deep</p>
+          <p class="swatch-hex">#14171a</p>
+          <p class="swatch-use">The dark document ground. C7 measured 42.9% of the page as dark; this is that share.</p>
+        </div>
+      </div>
+      <div class="swatch">
+        <span class="swatch-chip" style="background:#fafbfc;border-bottom:1px solid #e3e7eb"></span>
+        <div class="swatch-meta">
+          <p class="swatch-role">Surface</p>
+          <p class="swatch-hex">#fafbfc</p>
+          <p class="swatch-use">The reading canvas. The terms block, the FAQ and the condition pages all live here.</p>
+        </div>
+      </div>
+      <div class="swatch">
+        <span class="swatch-chip" style="background:#4a5259"></span>
+        <div class="swatch-meta">
+          <p class="swatch-role">Ink soft</p>
+          <p class="swatch-hex">#4a5259</p>
+          <p class="swatch-use">Secondary copy at 7.4:1. This is what replaces the low contrast grey being left behind.</p>
+        </div>
+      </div>
+      <div class="swatch">
+        <span class="swatch-chip" style="background:#c9d1d8"></span>
+        <div class="swatch-meta">
+          <p class="swatch-role">Line strong</p>
+          <p class="swatch-hex">#c9d1d8</p>
+          <p class="swatch-use">Every hairline, tick, leader and frame. In this concept the line is a first class colour.</p>
+        </div>
+      </div>
+      <div class="swatch">
+        <span class="swatch-chip" style="background:#d6f2fd"></span>
+        <div class="swatch-meta">
+          <p class="swatch-role">Accent soft</p>
+          <p class="swatch-hex">#d6f2fd</p>
+          <p class="swatch-use">The one tinted wash, used for the availability chip and nothing else.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="sect">
+    <p class="sect-label">03 / Signature move one: the dark hero, built as a dark document</p>
+    <svg class="seam-tab" viewBox="0 0 1200 38" preserveAspectRatio="none" aria-hidden="true">
+      <path d="M0 38V14h372V0h300v14h528v24z"/>
+    </svg>
+    <div class="doc-field is-lifted surface-dark">
+      <svg class="grain-layer" aria-hidden="true" focusable="false">
+        <filter id="grain-hero"><feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="3" stitchTiles="stitch"/></filter>
+        <rect width="100%" height="100%" filter="url(#grain-hero)"/>
+      </svg>
+      <svg class="reg-mark reg-tl" viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="M10 0v6M10 14v6M0 10h6M14 10h6" stroke="currentColor" stroke-width="1.4"/><circle cx="10" cy="10" r="5" stroke="currentColor" stroke-width="1"/></svg>
+      <svg class="reg-mark reg-tr" viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="M10 0v6M10 14v6M0 10h6M14 10h6" stroke="currentColor" stroke-width="1.4"/><circle cx="10" cy="10" r="5" stroke="currentColor" stroke-width="1"/></svg>
+      <svg class="reg-mark reg-bl" viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="M10 0v6M10 14v6M0 10h6M14 10h6" stroke="currentColor" stroke-width="1.4"/><circle cx="10" cy="10" r="5" stroke="currentColor" stroke-width="1"/></svg>
+      <svg class="reg-mark reg-br" viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="M10 0v6M10 14v6M0 10h6M14 10h6" stroke="currentColor" stroke-width="1.4"/><circle cx="10" cy="10" r="5" stroke="currentColor" stroke-width="1"/></svg>
+      <div class="doc-inner">
+        <div class="tick-rail"></div>
+        <p class="doc-meta">Intake 01 <span class="leader"></span> Auto collision <span class="leader"></span> San Rafael, CA</p>
+        <h2 class="h-hero">Hit by a car in San Rafael?</h2>
+        <p class="lead">Care on a lien. You are billed nothing while your case is open, and we are paid from the settlement.</p>
+        <div class="atom-row">
+          <a class="btn btn-primary" href="#">
+            <svg class="btn-ico" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M5 3h9l5 5v13H5z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/><path d="M14 3v5h5M9 13h6M9 17h4" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+            Request a consultation
+          </a>
+          <a class="btn btn-ghost" href="#">See how liens work</a>
+        </div>
+      </div>
+    </div>
+    <p class="note">The seam is cut as a file tab rather than an arc, the ground is a 32px ruled baseline field crossed by column rules, the corners carry registration marks, and a turbulence grain sits over the whole plate. Nothing here is waiting for a photograph, so nothing here can quietly decay back into a stock plate.</p>
+  </section>
+
+  <section class="sect">
+    <p class="sect-label">04 / Signature move two: the big stat band, docketed and cut like a filed record</p>
+    <div class="band-holder">
+    <p class="docket">Docket / terms in the same block</p>
+    <div class="doc-field is-cut surface-dark">
+      <svg class="grain-layer" aria-hidden="true" focusable="false">
+        <filter id="grain-band"><feTurbulence type="fractalNoise" baseFrequency="0.85" numOctaves="3" stitchTiles="stitch"/></filter>
+        <rect width="100%" height="100%" filter="url(#grain-band)"/>
+      </svg>
+      <div class="doc-inner">
+        <p class="doc-meta">Terms <span class="leader"></span> Lien agreement <span class="leader"></span> Plain language</p>
+        <h2 class="h-stat">$0 out of pocket to start</h2>
+        <dl class="ledger">
+          <div class="ledger-row">
+            <dt class="ledger-key">While the case is open</dt>
+            <dd class="ledger-val">You are billed nothing.</dd>
+          </div>
+          <div class="ledger-row">
+            <dt class="ledger-key">Who pays, and when</dt>
+            <dd class="ledger-val">Care is on a lien. We are paid from the settlement.</dd>
+          </div>
+          <div class="ledger-row">
+            <dt class="ledger-key">If the case does not pay</dt>
+            <dd class="ledger-val">If the case is not accepted, is lost, or settles for less than the bill, the balance is written off and you owe nothing.</dd>
+          </div>
+        </dl>
+      </div>
+    </div>
+    </div>
+    <p class="note">The money line and its terms are one block, never a loud band with a footnote. The docket tab straddles the band's top edge so the record breaks its own boundary, and the top right corner is cut, which is the same geometry as the mark.</p>
+  </section>
+
+  <section class="sect">
+    <p class="sect-label">05 / Type scale</p>
+    <div class="type-row">
+      <p class="type-spec">Display / Space Grotesk 700 / tracking -0.03em</p>
+      <h3 class="h-type-display">The price in writing, before we examine you</h3>
+    </div>
+    <div class="type-row">
+      <p class="type-spec">Body / Inter 400 / leading 1.62</p>
+      <p class="lead">Long form reading is the load bearing job. The terms block, the thirteen item FAQ and five condition pages all have to survive sustained reading by someone in pain, often on a phone, often at night. Inter is here to be unremarkable at 17px and to stay legible reversed out of the dark document.</p>
+    </div>
+    <div class="type-row">
+      <p class="type-spec">Data / Space Mono 700 / uppercase / tracking 0.08em</p>
+      <p class="type-mono">0123456789 ( ) $ % . : / SPECIMEN</p>
+      <p class="lead">The mono face is the documentary register. It is reserved for labels, figures, references and form rows, so a number always looks like a number and never like a headline.</p>
+    </div>
+  </section>
+
+  <section class="sect">
+    <p class="sect-label">06 / UI atoms</p>
+    <div class="atom-row">
+      <a class="btn btn-primary" href="#">Request a consultation</a>
+      <a class="btn btn-ghost" href="#">Check your coverage</a>
+      <span class="tag">
+        <svg class="tag-ico" viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="2"/><path d="M12 7v5l3 2" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+        Same day for new auto accident patients
+      </span>
+      <input class="field" type="text" placeholder="Date of the collision" aria-label="Date of the collision">
+    </div>
+    <div class="record">
+      <p class="record-meta">Record 01 <span class="leader"></span> Lien</p>
+      <h3 class="h-record-title">
+        <svg class="record-ico" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M5 3h9l5 5v13H5z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/><path d="M14 3v5h5" stroke="#28c8f8" stroke-width="2" stroke-linejoin="round"/><path d="M9 13h6M9 17h4" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+        What a lien means
+      </h3>
+      <p class="record-copy">You are billed nothing while your case is open, and we are paid from the settlement.</p>
+      <a class="link-go" href="#">Get your estimate in writing</a>
+    </div>
+    <p class="note">Controls carry a 2px radius and a solid fill, never a gradient. Every button and field clears 48px, above the 44px floor the vertical requires, and the availability chip states the only scope that is true: new auto accident patients.</p>
+  </section>
+
+  <section class="sect">
+    <p class="sect-label">07 / The material set, drawn rather than photographed</p>
+    <div class="motif-grid">
+      <div class="motif">
+        <svg viewBox="0 0 44 44" fill="none" aria-hidden="true">
+          <path d="M7 5h20l10 10v24H7z" stroke="currentColor" stroke-width="2.2" stroke-linejoin="round"/>
+          <path d="M27 5v10h10" stroke="#28c8f8" stroke-width="2" stroke-linejoin="round"/>
+          <path d="M13 22h18M13 28h18M13 34h9" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+        </svg>
+        <p class="motif-code">M / 01</p>
+        <p class="motif-name">The written estimate: a filed sheet with the corner cut.</p>
+      </div>
+      <div class="motif">
+        <svg viewBox="0 0 44 44" fill="none" aria-hidden="true">
+          <path d="M22 4v36" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/>
+          <path d="M14 9h16M12 16h20M13 23h18M15 30h14M17 37h10" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+          <path d="M35 16v7M35 16h-4M35 23h-4" stroke="#28c8f8" stroke-width="1.8" stroke-linecap="round"/>
+        </svg>
+        <p class="motif-code">M / 02</p>
+        <p class="motif-name">The measured spine: the axis, ticked and bracketed.</p>
+      </div>
+      <div class="motif">
+        <svg viewBox="0 0 44 44" fill="none" aria-hidden="true">
+          <path d="M22 4v8M22 32v8M4 22h8M32 22h8" stroke="#28c8f8" stroke-width="2" stroke-linecap="round"/>
+          <circle cx="22" cy="22" r="10" stroke="currentColor" stroke-width="2.2"/>
+          <circle cx="22" cy="22" r="3" stroke="currentColor" stroke-width="2"/>
+        </svg>
+        <p class="motif-code">M / 03</p>
+        <p class="motif-name">The registration mark: proof the plate is aligned.</p>
+      </div>
+      <div class="motif">
+        <svg viewBox="0 0 44 44" fill="none" aria-hidden="true">
+          <path d="M4 33h36" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+          <path d="M8 33v-6M14 33v-3M20 33v-3M26 33v-3M32 33v-3M38 33v-6" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+          <path d="M8 33v-6M38 33v-6" stroke="#28c8f8" stroke-width="2" stroke-linecap="round"/>
+          <path d="M6 12h32v8H6z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
+        </svg>
+        <p class="motif-code">M / 04</p>
+        <p class="motif-name">The tick rail: the measure that runs under every band.</p>
+      </div>
+    </div>
+
+    <div class="material-grid">
+      <div class="material-swatch mat-rules surface-dark"><p>Ruled field / 32px baseline</p></div>
+      <div class="material-swatch mat-bloom surface-dark"><p>Accent bloom / faint opacity</p></div>
+      <div class="material-swatch mat-ticks surface-dark"><p>Tick rail / 22px minor</p></div>
+    </div>
+    <p class="note">Four drawn motifs and three material layers. Together they are the whole visual supply of this identity, which is the point: nothing on this card asks for a photograph, and C7 records that there is not one to give.</p>
+  </section>
+
+  <section class="sect">
+    <div class="strip">
+      <p>Concept C / EVIDENCE</p>
+      <span class="leader"></span>
+      <p>Space Grotesk + Inter + Space Mono</p>
+      <span class="leader"></span>
+      <p>Light canvas, dark record</p>
+    </div>
+  </section>
+
+</div>
+
+</body>
+</html>

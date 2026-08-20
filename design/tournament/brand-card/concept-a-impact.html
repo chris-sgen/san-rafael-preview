@@ -1,0 +1,217 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Brand Card A: IMPACT</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;700;800&family=Archivo+Black&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../../san-rafael-auto-accident-injury-tokens.css">
+<link rel="stylesheet" href="../../san-rafael-auto-accident-injury-structural.css">
+
+<style>
+
+*,*::before,*::after{box-sizing:border-box}
+body{margin:0;background:var(--ds-surface);color:var(--ds-ink);font-family:var(--ds-font-body);font-size:var(--ds-step-body);line-height:var(--ds-leading-body);-webkit-font-smoothing:antialiased}
+.wrap{max-width:1120px;margin:0 auto;padding:0 24px}
+.sect{padding:var(--ds-space-band) 0;border-top:1px solid var(--ds-line)}
+.sect-label{font-family:var(--ds-font-mono);font-size:var(--ds-step-fine);letter-spacing:var(--ds-track-eyebrow);text-transform:uppercase;color:var(--ds-ink-soft);margin:0 0 var(--ds-space-gap)}
+.card-head{padding:var(--ds-space-band) 0 var(--ds-space-gap)}
+.eyebrow{font-family:var(--ds-font-body);font-size:var(--ds-step-fine);letter-spacing:var(--ds-track-eyebrow);text-transform:uppercase;color:var(--ds-brand-primary-deep);margin:0 0 var(--ds-space-tight)}
+.h-card-title{font-family:var(--ds-font-display);font-size:var(--ds-step-h2);line-height:var(--ds-leading-tight);letter-spacing:var(--ds-track-display);margin:0;max-width:24ch}
+.lead{color:var(--ds-ink-soft);max-width:58ch;margin:var(--ds-space-gap) 0 0}
+
+.material-grid{
+  background-color:var(--ds-surface);
+  background-image:
+    linear-gradient(to right, var(--ds-line) 1px, transparent 1px),
+    linear-gradient(to bottom, var(--ds-line) 1px, transparent 1px);
+  background-size:56px 56px;
+  position:relative;
+  isolation:isolate;
+}
+.material-grid::before{
+  content:"";position:absolute;inset:0;z-index:var(--ds-z-below);
+  background-image:radial-gradient(60% 70% at 18% 0%, var(--ds-brand-primary) 0%, transparent 70%);
+  opacity:var(--ds-opacity-faint);
+  pointer-events:none;
+}
+.material-grid > *{position:relative;z-index:var(--ds-z-raised)}
+
+.hero-demo{padding:clamp(3rem,8vw,6rem) clamp(1.5rem,4vw,3.5rem);border-radius:var(--ds-r-surface);overflow:hidden}
+.hero-rule{width:88px;height:5px;background:var(--ds-brand-accent);margin:0 0 var(--ds-space-gap);border-radius:var(--ds-r-pill)}
+.h-hero{font-family:var(--ds-font-display);font-size:var(--ds-step-hero);line-height:var(--ds-leading-tight);letter-spacing:var(--ds-track-display);color:var(--ds-ink);margin:0;max-width:16ch}
+.hero-cta-row{display:flex;flex-wrap:wrap;gap:var(--ds-space-gap);margin-top:calc(var(--ds-space-gap) * 1.5)}
+
+.divider-arc{display:block;width:100%;height:56px;margin-bottom:-1px}
+.divider-arc path{fill:var(--ds-surface-deep)}
+
+.band{padding:var(--ds-space-band) clamp(1.5rem,4vw,3.5rem);border-radius:var(--ds-r-surface);overflow:hidden}
+.h-stat{font-family:var(--ds-font-display);font-size:var(--ds-step-hero);line-height:var(--ds-leading-tight);letter-spacing:var(--ds-track-display);color:var(--ds-ink);margin:0;max-width:14ch}
+
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:10px;min-height:var(--ds-tap);padding:0 26px;border-radius:var(--ds-r-control);font-family:var(--ds-font-body);font-weight:700;font-size:var(--ds-step-body);line-height:1;text-decoration:none;border:2px solid transparent;cursor:pointer;transition:background-color var(--ds-dur-fast) var(--ds-ease),border-color var(--ds-dur-fast) var(--ds-ease),transform var(--ds-dur-fast) var(--ds-ease)}
+.btn-primary{background-color:var(--ds-brand-primary);color:var(--ds-brand-on-primary)}
+.btn-primary:hover{background-color:var(--ds-brand-primary-deep);transform:translateY(-1px)}
+.btn-ghost{background-color:transparent;color:var(--ds-ink);border-color:var(--ds-line-strong)}
+.btn-ghost:hover{border-color:var(--ds-brand-primary)}
+.btn:focus-visible{outline:3px solid var(--ds-brand-accent);outline-offset:2px}
+.btn-ico{width:18px;height:18px;flex:none}
+
+.field{min-height:var(--ds-tap);min-width:240px;padding:0 14px;border:1px solid var(--ds-line-strong);border-radius:var(--ds-r-control);background:var(--ds-surface-2);color:var(--ds-ink);font-family:var(--ds-font-body);font-size:var(--ds-step-body)}
+
+.tag{display:inline-flex;align-items:center;gap:8px;min-height:32px;padding:0 12px;border-radius:var(--ds-r-pill);background:var(--ds-brand-accent-soft);color:var(--ds-brand-primary-ink);font-size:var(--ds-step-fine);font-weight:700}
+.tag-ico{width:14px;height:14px;flex:none}
+
+.swatch-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(168px,1fr));gap:var(--ds-space-gap)}
+.swatch{border:1px solid var(--ds-line);border-radius:var(--ds-r-surface);overflow:hidden;background:var(--ds-surface-2);box-shadow:var(--ds-shadow)}
+.swatch-chip{height:76px;display:block}
+.swatch-meta{padding:12px 14px}
+.swatch-role{font-weight:700;font-size:var(--ds-step-fine);margin:0}
+.swatch-hex{font-family:var(--ds-font-mono);font-size:var(--ds-step-fine);color:var(--ds-ink-soft);margin:2px 0 0}
+
+.type-row{border-top:1px solid var(--ds-line);padding:var(--ds-space-gap) 0}
+.type-spec{font-family:var(--ds-font-mono);font-size:var(--ds-step-fine);color:var(--ds-ink-faint);margin:0 0 8px}
+.h-type-display{font-family:var(--ds-font-display);font-size:var(--ds-step-h2);line-height:var(--ds-leading-tight);letter-spacing:var(--ds-track-display);margin:0;max-width:22ch}
+
+.atom-row{display:flex;flex-wrap:wrap;gap:var(--ds-space-gap);align-items:center}
+
+.panel{border:1px solid var(--ds-line);border-radius:var(--ds-r-surface);background:var(--ds-surface-2);padding:22px;box-shadow:var(--ds-shadow-lift);max-width:420px}
+.h-panel-title{font-family:var(--ds-font-display);font-size:var(--ds-step-h3);line-height:1.2;margin:0 0 8px;max-width:20ch;display:flex;align-items:center;gap:10px}
+.panel-ico{width:22px;height:22px;flex:none}
+.panel-copy{color:var(--ds-ink-soft);margin:0}
+
+.motif-row{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:var(--ds-space-gap)}
+.motif{border:1px solid var(--ds-line);border-radius:var(--ds-r-surface);background:var(--ds-surface-2);padding:20px;box-shadow:var(--ds-shadow);text-align:center}
+.motif svg{width:40px;height:40px;display:block;margin:0 auto 10px}
+.motif-name{font-size:var(--ds-step-fine);color:var(--ds-ink-soft);margin:0}
+
+.logo-lockup{display:flex;align-items:center;gap:14px;flex-wrap:wrap}
+.logo-mark{width:48px;height:48px;border-radius:var(--ds-r-control);background:var(--ds-brand-primary);display:grid;place-items:center;box-shadow:var(--ds-shadow)}
+.logo-mark svg{width:26px;height:26px}
+.h-logo-word{font-family:var(--ds-font-display);font-size:1.15rem;line-height:1.15;letter-spacing:var(--ds-track-display);margin:0;max-width:30ch}
+.logo-sub{font-size:var(--ds-step-fine);color:var(--ds-ink-soft);margin:3px 0 0}
+
+p.note-strict{border-left:3px solid var(--ds-brand-accent);padding:2px 0 2px 16px;color:var(--ds-ink-soft);max-width:58ch;margin:var(--ds-space-gap) 0 0}
+
+@media (max-width:640px){.wrap{padding:0 18px}.hero-demo,.band{padding-left:1.25rem;padding-right:1.25rem}}
+@media (prefers-reduced-motion:reduce){*,*::before,*::after{transition-duration:0ms !important;animation-duration:0ms !important}}
+</style>
+</head>
+<body>
+
+<div class="wrap">
+  <header class="card-head">
+    <p class="eyebrow">Brand card A of 3</p>
+    <h1 class="h-card-title">IMPACT: the type is the hero</h1>
+    <p class="lead">The brand's measured signature is a full-bleed dark hero with large display type over a photograph. That photograph is stock and cannot ship. This concept keeps the energy and drops the photo: the hero is built from type scale, a measured grid material and pure contrast, so it never needs an image, and it cannot quietly decay back into a stock-photo look.</p>
+    <p class="note-strict">Type: Archivo Black over Archivo (typography menu #35). Palette anchored on the practice's own logo rather than a library family, because C7 records it as the only mark the practice owns.</p>
+  </header>
+
+  <section class="sect">
+    <p class="sect-label">Logo lockup</p>
+    <div class="logo-lockup">
+      <div class="logo-mark">
+        <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+          <path d="M12 3v18M8 6h8M7.5 10h9M8 14h8M9 18h6" stroke="#ffffff" stroke-width="2" stroke-linecap="round"/>
+        </svg>
+      </div>
+      <div>
+        <p class="h-logo-word">San Rafael Auto Accident Injury</p>
+        <p class="logo-sub">Chiropractic Center, a Pain Relief Clinic of Marin practice</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="sect">
+    <p class="sect-label">Palette, with the role each colour plays</p>
+    <div class="swatch-grid">
+      <div class="swatch"><span class="swatch-chip" style="background:#2898d0"></span><div class="swatch-meta"><p class="swatch-role">Primary: actions, links</p><p class="swatch-hex">#2898d0 · the logo's dominant</p></div></div>
+      <div class="swatch"><span class="swatch-chip" style="background:#1d6f9b"></span><div class="swatch-meta"><p class="swatch-role">Primary deep: hover, eyebrow</p><p class="swatch-hex">#1d6f9b</p></div></div>
+      <div class="swatch"><span class="swatch-chip" style="background:#28c8f8"></span><div class="swatch-meta"><p class="swatch-role">Accent: the hero rule</p><p class="swatch-hex">#28c8f8 · the logo's cyan</p></div></div>
+      <div class="swatch"><span class="swatch-chip" style="background:#14171a"></span><div class="swatch-meta"><p class="swatch-role">Deep: the dark punctuation</p><p class="swatch-hex">#14171a · 42.9% of the page</p></div></div>
+      <div class="swatch"><span class="swatch-chip" style="background:#fafbfc;border-bottom:1px solid #e3e7eb"></span><div class="swatch-meta"><p class="swatch-role">Surface: the reading canvas</p><p class="swatch-hex">#fafbfc</p></div></div>
+      <div class="swatch"><span class="swatch-chip" style="background:#4a5259"></span><div class="swatch-meta"><p class="swatch-role">Ink soft: secondary copy</p><p class="swatch-hex">#4a5259 · 7.4:1, fixes the old grey</p></div></div>
+    </div>
+  </section>
+
+  <section class="sect">
+    <p class="sect-label">Signature move 1: the dark hero, carried by type and a measured grid</p>
+    <svg class="divider-arc" viewBox="0 0 1200 56" preserveAspectRatio="none" aria-hidden="true">
+      <path d="M0 56 Q600 -18 1200 56 Z"/>
+    </svg>
+    <div class="hero-demo material-grid surface-dark">
+      <div class="hero-rule"></div>
+      <h2 class="h-hero">Hit by a car in San Rafael?</h2>
+      <p class="lead">Care on a lien. You are billed nothing while your case is open, and we are paid from the settlement.</p>
+      <div class="hero-cta-row">
+        <a class="btn btn-primary" href="#">
+          <svg class="btn-ico" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h9" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+          Request a consultation
+        </a>
+        <a class="btn btn-ghost" href="#">See how liens work</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="sect">
+    <p class="sect-label">Signature move 2: the band that interrupts the reading column</p>
+    <div class="band material-grid surface-dark">
+      <h2 class="h-stat">$0 out of pocket to start</h2>
+      <p class="lead">Nothing is billed to you while the case is open. If the case is not accepted, is lost, or settles for less than the bill, the balance is written off and you owe nothing.</p>
+    </div>
+  </section>
+
+  <section class="sect">
+    <p class="sect-label">Motif set: drawn, not photographed</p>
+    <div class="motif-row">
+      <div class="motif">
+        <svg viewBox="0 0 40 40" fill="none" aria-hidden="true"><rect x="7" y="4" width="26" height="32" rx="3" stroke="#2898d0" stroke-width="2"/><path d="M13 13h14M13 20h14M13 27h8" stroke="#28c8f8" stroke-width="2" stroke-linecap="round"/></svg>
+        <p class="motif-name">The written estimate</p>
+      </div>
+      <div class="motif">
+        <svg viewBox="0 0 40 40" fill="none" aria-hidden="true"><path d="M20 5v30M14 10h12M13 17h14M14 24h12M16 31h8" stroke="#2898d0" stroke-width="2" stroke-linecap="round"/></svg>
+        <p class="motif-name">Spine and alignment</p>
+      </div>
+      <div class="motif">
+        <svg viewBox="0 0 40 40" fill="none" aria-hidden="true"><path d="M20 5l13 5v11c0 8-6 13-13 15C13 34 7 29 7 21V10z" stroke="#2898d0" stroke-width="2" stroke-linejoin="round"/><path d="M15 20l4 4 7-8" stroke="#28c8f8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        <p class="motif-name">Coverage checked</p>
+      </div>
+      <div class="motif">
+        <svg viewBox="0 0 40 40" fill="none" aria-hidden="true"><circle cx="20" cy="20" r="14" stroke="#2898d0" stroke-width="2"/><path d="M20 12v9l6 4" stroke="#28c8f8" stroke-width="2" stroke-linecap="round"/></svg>
+        <p class="motif-name">Same day, new crash patients</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="sect">
+    <p class="sect-label">Type scale</p>
+    <div class="type-row"><p class="type-spec">Display: Archivo Black</p><h3 class="h-type-display">The price in writing, before we examine you</h3></div>
+    <div class="type-row"><p class="type-spec">Body: Archivo 400 / 1.62</p><p class="lead">Long-form reading is the load-bearing job here. The terms block, the FAQ and five condition pages all have to survive sustained reading by someone in pain, often on a phone, often at night.</p></div>
+  </section>
+
+  <section class="sect">
+    <p class="sect-label">UI atoms</p>
+    <div class="atom-row">
+      <a class="btn btn-primary" href="#">Request a consultation</a>
+      <a class="btn btn-ghost" href="#">Check your coverage</a>
+      <span class="tag">
+        <svg class="tag-ico" viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="2"/><path d="M12 7v5l3 2" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+        Same day for new crash patients
+      </span>
+      <input class="field" type="text" placeholder="Your phone number" aria-label="Your phone number">
+    </div>
+    <div class="atom-row" style="margin-top:24px">
+      <div class="panel">
+        <h3 class="h-panel-title">
+          <svg class="panel-ico" viewBox="0 0 24 24" fill="none" aria-hidden="true"><rect x="4" y="3" width="16" height="18" rx="2" stroke="#2898d0" stroke-width="2"/><path d="M8 9h8M8 13h8M8 17h5" stroke="#28c8f8" stroke-width="2" stroke-linecap="round"/></svg>
+          What a lien means
+        </h3>
+        <p class="panel-copy">You are not billed while the claim is open. The practice is paid from the settlement.</p>
+      </div>
+    </div>
+  </section>
+</div>
+
+</body>
+</html>
