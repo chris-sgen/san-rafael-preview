@@ -1,0 +1,1114 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Chrome concept C: The Clinical Record</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,300;8..60,400;8..60,600;8..60,700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../../../san-rafael-auto-accident-injury-tokens.css">
+<link rel="stylesheet" href="../../../san-rafael-auto-accident-injury-structural.css">
+
+<style>
+
+.ch{
+  position:sticky;
+  top:0;
+  z-index:var(--ds-z-sticky);
+  background-color:var(--ds-surface-2);
+  border-bottom:1px solid var(--ds-line);
+}
+
+.ch[data-scrolled="true"]{
+  background-color:var(--ds-surface-2);
+  background-color:color-mix(in srgb,var(--ds-surface-2) 88%,transparent);
+  -webkit-backdrop-filter:blur(16px) saturate(140%);
+  backdrop-filter:blur(16px) saturate(140%);
+  box-shadow:var(--ds-shadow-rest);
+}
+
+.ch__frame{
+  display:grid;
+  align-items:center;
+  column-gap:var(--ds-space-gap);
+  grid-template-columns:auto minmax(0,1fr) auto;
+  padding-top:12px;
+  padding-bottom:12px;
+  transition:padding-top var(--ds-dur) var(--ds-ease),padding-bottom var(--ds-dur) var(--ds-ease);
+}
+.ch__burger{grid-row:1;grid-column:1}
+.ch__mark{grid-row:1;grid-column:2}
+.ch__phone{grid-row:1;grid-column:3;justify-self:end}
+.ch__mark{
+  justify-self:center;
+  display:block;
+  padding:2px 4px;
+  text-align:center;
+  text-decoration:none;
+}
+.ch__mark-name{
+  display:block;
+  font-family:var(--ds-font-display);
+  font-weight:600;
+  font-size:clamp(1rem,2.4vw,1.5rem);
+  line-height:1.06;
+  letter-spacing:var(--ds-track-display);
+  color:var(--ds-ink);
+  transition:font-size var(--ds-dur) var(--ds-ease);
+}
+.ch__mark-sub{
+  display:block;
+  margin-top:4px;
+  font-family:var(--ds-font-body);
+  font-size:var(--ds-step-fine);
+  font-weight:600;
+  letter-spacing:var(--ds-track-eyebrow);
+  text-transform:uppercase;
+  color:var(--ds-ink-faint);
+}
+
+.ch__phone{
+  display:inline-flex;
+  align-items:center;
+  gap:9px;
+  min-height:var(--ds-tap);
+  color:var(--ds-ink);
+  font-size:var(--ds-step-fine);
+  font-weight:600;
+  font-variant-numeric:tabular-nums;
+  text-decoration:none;
+  white-space:nowrap;
+  transition:color var(--ds-dur-fast) var(--ds-ease);
+}
+.ch__phone:hover{color:var(--ds-brand-primary-deep)}
+.ch__phone .ico{width:18px;height:18px;color:var(--ds-brand-primary-deep)}
+.ch__burger{
+  display:none;
+  align-items:center;
+  justify-content:center;
+  width:var(--ds-tap);
+  height:var(--ds-tap);
+  padding:0;
+  border:1px solid var(--ds-ink-faint);
+  border-radius:var(--ds-r-control);
+  background-color:var(--ds-surface-2);
+  color:var(--ds-ink);
+  cursor:pointer;
+  transition:border-color var(--ds-dur-fast) var(--ds-ease),color var(--ds-dur-fast) var(--ds-ease);
+}
+.ch__burger:hover{border-color:var(--ds-brand-primary-deep);color:var(--ds-brand-primary-deep)}
+
+.ch__cta,.ix{
+  position:relative;
+  grid-row:2;
+  grid-column:1 / -1;
+  margin-top:12px;
+  padding-top:12px;
+  border-top:1px solid var(--ds-line);
+  transition:margin-top var(--ds-dur) var(--ds-ease),padding-top var(--ds-dur) var(--ds-ease);
+}
+.ch__cta::before,.ix::before{
+  content:"";
+  position:absolute;
+  left:0;
+  top:-1px;
+  width:84px;
+  height:1px;
+  background-color:var(--ds-brand-accent);
+  box-shadow:0 0 0 1px var(--ds-brand-accent);
+  box-shadow:0 0 12px 1px color-mix(in srgb,var(--ds-brand-accent) 55%,transparent);
+}
+.ix{display:none;min-width:0}
+.ix__list{
+  display:flex;
+  align-items:stretch;
+  justify-content:space-between;
+  gap:clamp(8px,0.9vw,22px);
+}
+.ix__item{position:static;display:flex;align-items:stretch}
+.ix__link{
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  gap:3px;
+  min-height:var(--ds-tap);
+  padding:10px 0 12px;
+  font-family:var(--ds-font-body);
+  font-size:clamp(0.75rem,0.56rem+0.28vw,0.8125rem);
+  font-weight:600;
+  line-height:1.15;
+  letter-spacing:0.012em;
+  color:var(--ds-ink);
+  text-decoration:none;
+  white-space:nowrap;
+  border-bottom:2px solid transparent;
+  transition:color var(--ds-dur-fast) var(--ds-ease),border-color var(--ds-dur-fast) var(--ds-ease);
+}
+
+.ix__link::before{
+  content:attr(data-idx);
+  font-family:var(--ds-font-mono);
+  font-size:0.6875rem;
+  font-weight:500;
+  letter-spacing:var(--ds-track-eyebrow);
+  color:var(--ds-ink-faint);
+}
+.ix__link:hover{color:var(--ds-brand-primary-deep)}
+.ix__link:hover::before{color:var(--ds-brand-primary-deep)}
+.ix__link[aria-current="page"]{
+  color:var(--ds-brand-primary-deep);
+  border-bottom-color:var(--ds-brand-primary-deep);
+}
+.ix__caret{
+  display:inline-flex;
+  align-items:flex-end;
+  justify-content:center;
+  width:24px;
+  min-height:var(--ds-tap);
+  padding:0 0 14px;
+  border:0;
+  background-color:transparent;
+  color:var(--ds-ink-faint);
+  cursor:pointer;
+  transition:color var(--ds-dur-fast) var(--ds-ease),transform var(--ds-dur-fast) var(--ds-ease);
+}
+.ix__caret:hover{color:var(--ds-brand-primary-deep)}
+.ix__caret[aria-expanded="true"]{color:var(--ds-brand-primary-deep);transform:rotate(180deg)}
+.ix__caret .ico{width:14px;height:14px}
+.ch__cta{padding-bottom:2px}
+.ch__cta .btn{
+  display:flex;
+  width:100%;
+  min-height:var(--ds-tap);
+  padding:0 18px;
+  font-size:var(--ds-step-fine);
+  white-space:nowrap;
+}
+
+.mega{
+  position:absolute;
+  left:0;
+  right:0;
+  top:100%;
+  z-index:var(--ds-z-overlay);
+  background-color:var(--ds-surface-2);
+  border-top:1px solid var(--ds-line);
+  border-bottom:1px solid var(--ds-line);
+  box-shadow:var(--ds-shadow);
+}
+.mega[hidden]{display:none}
+.mega__inner{
+  display:grid;
+  grid-template-columns:minmax(200px,0.85fr) minmax(0,2.5fr);
+  gap:var(--ds-space-gap);
+  padding:calc(var(--ds-space-gap) * 1.15) 0 calc(var(--ds-space-gap) * 1.25);
+}
+.mega__head p{max-width:34ch}
+.mega__title{
+  font-family:var(--ds-font-display);
+  font-weight:600;
+  font-size:var(--ds-step-h3);
+  line-height:1.2;
+  letter-spacing:var(--ds-track-display);
+  color:var(--ds-ink);
+  margin-bottom:var(--ds-space-tight);
+}
+.mega__note{font-size:var(--ds-step-fine);color:var(--ds-ink-soft)}
+.mega__toc{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(240px,1fr));
+  gap:0 clamp(20px,2.4vw,44px);
+  align-content:start;
+}
+.mega__row{
+  display:flex;
+  align-items:center;
+  gap:12px;
+  min-height:var(--ds-tap);
+  padding:4px 0;
+  border-bottom:1px solid var(--ds-line);
+  color:var(--ds-ink);
+  text-decoration:none;
+  transition:color var(--ds-dur-fast) var(--ds-ease),border-color var(--ds-dur-fast) var(--ds-ease);
+}
+.mega__row:hover{color:var(--ds-brand-primary-deep);border-bottom-color:var(--ds-brand-primary-deep)}
+.mega__row:hover .arrow{transform:translateX(4px)}
+.mega__n{
+  flex:none;
+  min-width:2.6em;
+  font-family:var(--ds-font-mono);
+  font-size:var(--ds-step-fine);
+  letter-spacing:var(--ds-track-eyebrow);
+  color:var(--ds-ink-faint);
+}
+.mega__l{font-size:var(--ds-step-fine);font-weight:600}
+
+.mega__lead{
+  flex:1 1 auto;
+  height:1px;
+  margin:0 4px;
+  border-bottom:1px dotted var(--ds-line-strong);
+}
+.mega__row .arrow{width:14px;height:14px;color:var(--ds-brand-primary-deep)}
+
+.drawer-scrim{
+  position:fixed;
+  inset:0;
+  z-index:var(--ds-z-overlay);
+  background-color:var(--ds-surface-deep);
+  opacity:0;
+  visibility:hidden;
+  transition:opacity var(--ds-dur) var(--ds-ease),visibility var(--ds-dur) var(--ds-ease);
+}
+.drawer-scrim[data-open="true"]{opacity:var(--ds-opacity-scrim);visibility:visible}
+.drawer{
+  position:fixed;
+  top:0;
+  right:0;
+  bottom:0;
+  z-index:var(--ds-z-drawer);
+  display:flex;
+  flex-direction:column;
+  width:min(390px,92vw);
+  background-color:var(--ds-surface-2);
+  border-left:1px solid var(--ds-line);
+  box-shadow:var(--ds-shadow-lift);
+  transform:translateX(101%);
+  visibility:hidden;
+  transition:transform var(--ds-dur) var(--ds-ease-out),visibility var(--ds-dur) var(--ds-ease-out);
+}
+.drawer[data-open="true"]{transform:translateX(0);visibility:visible}
+.drawer__head{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:var(--ds-space-gap);
+  padding:14px 20px;
+  border-bottom:1px solid var(--ds-line);
+}
+.drawer__head .mono-label{margin:0}
+.drawer__close{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  width:var(--ds-tap);
+  height:var(--ds-tap);
+  padding:0;
+  border:1px solid var(--ds-ink-faint);
+  border-radius:var(--ds-r-control);
+  background-color:var(--ds-surface-2);
+  color:var(--ds-ink);
+  cursor:pointer;
+  transition:border-color var(--ds-dur-fast) var(--ds-ease),color var(--ds-dur-fast) var(--ds-ease);
+}
+.drawer__close:hover{border-color:var(--ds-brand-primary-deep);color:var(--ds-brand-primary-deep)}
+.drawer__nav{flex:1 1 auto;overflow-y:auto;padding:4px 20px 20px}
+.d-item{border-bottom:1px solid var(--ds-line)}
+.d-link,.d-trigger{
+  display:flex;
+  align-items:center;
+  gap:12px;
+  width:100%;
+  min-height:var(--ds-tap);
+  padding:13px 0;
+  border:0;
+  background-color:transparent;
+  font-family:var(--ds-font-body);
+  font-size:var(--ds-step-body);
+  font-weight:600;
+  line-height:1.3;
+  text-align:left;
+  color:var(--ds-ink);
+  text-decoration:none;
+  cursor:pointer;
+  transition:color var(--ds-dur-fast) var(--ds-ease);
+}
+.d-link::before,.d-trigger::before{
+  content:attr(data-idx);
+  flex:none;
+  min-width:2.4em;
+  font-family:var(--ds-font-mono);
+  font-size:var(--ds-step-fine);
+  font-weight:500;
+  letter-spacing:var(--ds-track-eyebrow);
+  color:var(--ds-ink-faint);
+}
+.d-link:hover,.d-trigger:hover{color:var(--ds-brand-primary-deep)}
+.d-label{flex:1 1 auto}
+.d-mark{width:16px;height:16px;flex:none;color:var(--ds-ink-faint);transition:transform var(--ds-dur-fast) var(--ds-ease)}
+.d-item[data-open="true"] .d-mark{transform:rotate(180deg);color:var(--ds-brand-primary-deep)}
+.d-sub{display:grid;grid-template-rows:1fr;transition:grid-template-rows var(--ds-dur) var(--ds-ease-out)}
+.d-item[data-open="false"] .d-sub{grid-template-rows:0fr}
+.d-sub__inner{overflow:hidden}
+.d-sub__list{padding:0 0 10px 2.4em}
+.d-sub__link{
+  display:flex;
+  align-items:center;
+  gap:10px;
+  min-height:var(--ds-tap);
+  padding:2px 0;
+  border-bottom:1px solid var(--ds-line);
+  font-size:var(--ds-step-fine);
+  color:var(--ds-ink-soft);
+  text-decoration:none;
+  transition:color var(--ds-dur-fast) var(--ds-ease),border-color var(--ds-dur-fast) var(--ds-ease);
+}
+.d-sub__list li:last-child .d-sub__link{border-bottom:0}
+.d-sub__link:hover{color:var(--ds-brand-primary-deep);border-bottom-color:var(--ds-brand-primary-deep)}
+.d-sub__n{
+  flex:none;
+  min-width:2.2em;
+  font-family:var(--ds-font-mono);
+  font-size:0.6875rem;
+  letter-spacing:var(--ds-track-eyebrow);
+  color:var(--ds-ink-faint);
+}
+.drawer__foot{
+  flex:none;
+  display:grid;
+  gap:var(--ds-space-tight);
+  padding:16px 20px calc(16px + env(safe-area-inset-bottom,0px));
+  border-top:1px solid var(--ds-line);
+  background-color:var(--ds-surface-sunken);
+}
+.drawer__foot p{font-size:var(--ds-step-fine);color:var(--ds-ink-soft)}
+
+.mast{
+  background-color:var(--ds-surface-sunken);
+  border-top:1px solid var(--ds-line);
+  padding:var(--ds-space-band) 0 calc(var(--ds-space-band) * 0.5);
+}
+.mast__head{padding-bottom:var(--ds-space-gap)}
+.mast__name{
+  font-family:var(--ds-font-display);
+  font-weight:600;
+  font-size:clamp(1.6rem,4.2vw,2.6rem);
+  line-height:1.02;
+  letter-spacing:var(--ds-track-display);
+  color:var(--ds-ink);
+  max-width:20ch;
+}
+.mast__name span{
+  display:block;
+  margin-top:8px;
+  font-family:var(--ds-font-body);
+  font-size:var(--ds-step-fine);
+  font-weight:600;
+  letter-spacing:var(--ds-track-eyebrow);
+  text-transform:uppercase;
+  color:var(--ds-ink-faint);
+}
+.mast__credit{
+  margin-top:var(--ds-space-gap);
+  max-width:62ch;
+  color:var(--ds-ink-soft);
+  font-size:var(--ds-step-fine);
+}
+.mast__cols{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(168px,1fr));
+  gap:calc(var(--ds-space-gap) * 1.2) var(--ds-space-gap);
+  padding-top:var(--ds-space-gap);
+  border-top:1px solid var(--ds-line);
+}
+.mast__ct{
+  margin-bottom:10px;
+  font-family:var(--ds-font-mono);
+  font-size:var(--ds-step-fine);
+  letter-spacing:var(--ds-track-eyebrow);
+  text-transform:uppercase;
+  color:var(--ds-ink-faint);
+}
+.mast__list li + li{margin-top:2px}
+.mast__link{
+  display:inline-flex;
+  align-items:center;
+  min-height:38px;
+  font-size:var(--ds-step-fine);
+  color:var(--ds-ink-soft);
+  text-decoration:none;
+  transition:color var(--ds-dur-fast) var(--ds-ease);
+}
+.mast__link:hover{color:var(--ds-brand-primary-deep);text-decoration:underline;text-underline-offset:3px}
+.mast__fact{
+  display:block;
+  padding:7px 0;
+  font-size:var(--ds-step-fine);
+  color:var(--ds-ink-soft);
+  font-style:normal;
+}
+.mast__fact--phone{
+  display:inline-flex;
+  align-items:center;
+  min-height:var(--ds-tap);
+  color:var(--ds-ink);
+  font-weight:600;
+  font-variant-numeric:tabular-nums;
+  text-decoration:none;
+}
+.mast__fact--phone:hover{color:var(--ds-brand-primary-deep)}
+.mast__legal{
+  display:flex;
+  flex-wrap:wrap;
+  align-items:center;
+  justify-content:space-between;
+  gap:var(--ds-space-gap);
+  margin-top:var(--ds-space-band);
+  padding-top:var(--ds-space-gap);
+  border-top:1px solid var(--ds-line);
+}
+.mast__legal p{font-size:var(--ds-step-fine);color:var(--ds-ink-faint);max-width:70ch}
+.mast__top{
+  display:inline-flex;
+  align-items:center;
+  gap:8px;
+  min-height:var(--ds-tap);
+  font-size:var(--ds-step-fine);
+  font-weight:600;
+  color:var(--ds-brand-primary-deep);
+  text-decoration:none;
+}
+.mast__top:hover{text-decoration:underline;text-underline-offset:4px}
+.mast__top .arrow{transform:rotate(-90deg);width:16px;height:16px}
+.mast__top:hover .arrow{transform:rotate(-90deg) translateX(4px)}
+
+.precta{border-top:1px solid var(--ds-line)}
+.precta .cta-band__body p{max-width:56ch}
+
+.pv__note{max-width:70ch}
+.pv__row{display:flex;flex-wrap:wrap;gap:var(--ds-space-tight);margin-top:var(--ds-space-gap)}
+.pv__frame{
+  margin-top:var(--ds-space-gap);
+  padding:14px 16px;
+  border:1px dashed var(--ds-line-strong);
+  border-radius:var(--ds-r-control);
+  background-color:var(--ds-surface-2);
+}
+.pv__frame p{font-size:var(--ds-step-fine);color:var(--ds-ink-soft);max-width:70ch}
+
+.ch[data-scrolled="true"] .ch__frame{padding-top:4px;padding-bottom:6px}
+.ch[data-scrolled="true"] .ch__mark-sub{display:none}
+.ch[data-scrolled="true"] .ch__mark-name{font-size:1rem}
+.ch[data-scrolled="true"] .ch__cta,.ch[data-scrolled="true"] .ix{margin-top:6px;padding-top:8px}
+
+@media (min-width:1280px){
+  .ch__frame{grid-template-columns:minmax(0,1fr) auto minmax(0,1fr)}
+  .ch__burger{display:none}
+  .ch__phone{grid-row:1;grid-column:1;justify-self:start}
+  .ch__mark{grid-row:1;grid-column:2}
+  .ch__cta{
+    grid-row:1;
+    grid-column:3;
+    justify-self:end;
+    width:auto;
+    margin-top:0;
+    padding-top:0;
+    padding-bottom:0;
+    border-top:0;
+  }
+  .ch__cta::before{display:none}
+  .ch__cta .btn{width:auto}
+  .ix{display:block}
+  .ch[data-scrolled="true"] .ch__cta{margin-top:0;padding-top:0}
+  .ch[data-scrolled="true"] .ch__phone span{display:none}
+  .ch[data-scrolled="true"] .ch__phone{gap:0;justify-content:center;width:var(--ds-tap)}
+  .ch[data-scrolled="true"] .ix__link{padding-top:7px;padding-bottom:9px}
+  .ch[data-scrolled="true"] .ix__caret{padding-bottom:11px}
+}
+
+@media (max-width:1279px){
+  .mega{display:none}
+  .ch__burger{display:inline-flex}
+  
+  .ch__mark-sub{display:none}
+  .ch__frame{padding-top:10px;padding-bottom:10px}
+  .ch__cta{margin-top:10px;padding-top:10px}
+}
+@media (max-width:560px){
+  .ch__phone span{display:none}
+  .ch__phone{gap:0;justify-content:center;width:var(--ds-tap)}
+  .mast__cols{grid-template-columns:repeat(auto-fit,minmax(148px,1fr))}
+}
+@media (max-width:900px){
+  .mega__inner{grid-template-columns:1fr}
+}
+
+@media (prefers-reduced-motion:reduce){
+  .ch__frame,.ch__mark-name,.ch__cta,.ix,.drawer,.drawer-scrim,.d-sub{transition:none !important}
+  .ix__caret,.d-mark,.mast__top .arrow{transition:none !important}
+}
+</style>
+</head>
+
+<body id="top">
+
+<a class="skip-link" href="#main">Skip to the page</a>
+
+<header class="ch" id="ch" data-scrolled="false">
+  <div class="container container--wide">
+
+    
+    <div class="ch__frame">
+
+      <button class="ch__burger" id="burger" type="button" aria-expanded="false" aria-controls="drawer" aria-label="Open the site index">
+        <svg viewBox="0 0 24 24" fill="none" aria-hidden="true" width="22" height="22"><path d="M4 7h16M4 12h16M4 17h16" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+      </button>
+
+      <a class="ch__mark" href="index.html">
+        <span class="ch__mark-name">San Rafael Auto Accident Injury</span>
+        <span class="ch__mark-sub">Chiropractic Center</span>
+      </a>
+
+      <a class="ch__phone" href="tel:+14158779400">
+        <svg class="ico" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M6 3h3l2 5-2.5 1.5a12 12 0 0 0 5 5L15 12l5 2v3a2 2 0 0 1-2.2 2A16.5 16.5 0 0 1 4 6.2 2 2 0 0 1 6 4z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></svg>
+        <span>Call (415) 877-9400</span>
+      </a>
+
+      <nav class="ix" aria-label="Primary">
+        <ul class="ix__list">
+
+          <li class="ix__item">
+            <a class="ix__link" data-idx="01" href="auto-accident.html" aria-current="page">Injured in a Crash</a>
+            <button class="ix__caret" type="button" aria-expanded="false" aria-controls="sheet-crash" aria-label="Open the Injured in a Crash contents">
+              <svg class="ico" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </button>
+          </li>
+
+          <li class="ix__item">
+            <a class="ix__link" data-idx="02" href="cost.html">What It Costs</a>
+            <button class="ix__caret" type="button" aria-expanded="false" aria-controls="sheet-cost" aria-label="Open the What It Costs contents">
+              <svg class="ico" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </button>
+          </li>
+
+          <li class="ix__item">
+            <a class="ix__link" data-idx="03" href="consultation.html">Book a Visit</a>
+          </li>
+
+          <li class="ix__item">
+            <a class="ix__link" data-idx="04" href="conditions.html">Conditions We Treat</a>
+            <button class="ix__caret" type="button" aria-expanded="false" aria-controls="sheet-conditions" aria-label="Open the Conditions We Treat contents">
+              <svg class="ico" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </button>
+          </li>
+
+          <li class="ix__item">
+            <a class="ix__link" data-idx="05" href="testimonials.html">Proof</a>
+          </li>
+
+          <li class="ix__item">
+            <a class="ix__link" data-idx="06" href="doctor.html">The Practice</a>
+            <button class="ix__caret" type="button" aria-expanded="false" aria-controls="sheet-practice" aria-label="Open the Practice contents">
+              <svg class="ico" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </button>
+          </li>
+
+          <li class="ix__item">
+            <a class="ix__link" data-idx="07" href="narrative-report.html">Your Medical Record</a>
+          </li>
+
+          <li class="ix__item">
+            <a class="ix__link" data-idx="08" href="for-attorneys.html">For Attorneys</a>
+          </li>
+
+        </ul>
+      </nav>
+
+      <div class="ch__cta">
+        <a class="btn btn-primary" href="consultation.html">
+          Request a consultation
+          <svg class="arrow" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M4 12h15M13 6l6 6-6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </a>
+      </div>
+    </div>
+  </div>
+
+  
+  <div class="mega" id="sheet-crash" hidden>
+    <div class="container container--wide mega__inner">
+      <div class="mega__head">
+        <p class="mono-label">Section 01</p>
+        <p class="mega__title">Injured in a Crash</p>
+        <p class="mega__note">The triage sequence, in the order it usually happens.</p>
+      </div>
+      <div class="mega__toc">
+        <a class="mega__row" href="auto-accident.html"><span class="mega__n">01</span><span class="mega__l">Auto accident injury care</span><span class="mega__lead"></span><svg class="arrow" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M4 12h15M13 6l6 6-6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+        <a class="mega__row" href="after-a-crash.html"><span class="mega__n">02</span><span class="mega__l">What to do after a crash</span><span class="mega__lead"></span><svg class="arrow" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M4 12h15M13 6l6 6-6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+        <a class="mega__row" href="first-visit.html"><span class="mega__n">03</span><span class="mega__l">Your first visit</span><span class="mega__lead"></span><svg class="arrow" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M4 12h15M13 6l6 6-6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+        <a class="mega__row" href="faq.html"><span class="mega__n">04</span><span class="mega__l">Questions, answered</span><span class="mega__lead"></span><svg class="arrow" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M4 12h15M13 6l6 6-6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+        <a class="mega__row" href="work-injuries.html"><span class="mega__n">05</span><span class="mega__l">Work injuries</span><span class="mega__lead"></span><svg class="arrow" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M4 12h15M13 6l6 6-6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+      </div>
+    </div>
+  </div>
+
+  <div class="mega" id="sheet-cost" hidden>
+    <div class="container container--wide mega__inner">
+      <div class="mega__head">
+        <p class="mono-label">Section 02</p>
+        <p class="mega__title">What It Costs</p>
+        <p class="mega__note">How a lien works, and what is put in writing before an examination begins.</p>
+      </div>
+      <div class="mega__toc">
+        <a class="mega__row" href="cost.html"><span class="mega__n">01</span><span class="mega__l">What care costs</span><span class="mega__lead"></span><svg class="arrow" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M4 12h15M13 6l6 6-6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+        <a class="mega__row" href="cost-uninsured-driver.html"><span class="mega__n">02</span><span class="mega__l">If the other driver is uninsured</span><span class="mega__lead"></span><svg class="arrow" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M4 12h15M13 6l6 6-6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+        <a class="mega__row" href="good-faith-estimate.html"><span class="mega__n">03</span><span class="mega__l">Good Faith Estimate</span><span class="mega__lead"></span><svg class="arrow" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M4 12h15M13 6l6 6-6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+      </div>
+    </div>
+  </div>
+
+  <div class="mega" id="sheet-conditions" hidden>
+    <div class="container container--wide mega__inner">
+      <div class="mega__head">
+        <p class="mono-label">Section 04</p>
+        <p class="mega__title">Conditions We Treat</p>
+        <p class="mega__note">Nine entries. Each one is a page of its own, indexed here the way a contents page indexes a chapter.</p>
+      </div>
+      <div class="mega__toc">
+        <a class="mega__row" href="whiplash.html"><span class="mega__n">01</span><span class="mega__l">Whiplash</span><span class="mega__lead"></span><svg class="arrow" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M4 12h15M13 6l6 6-6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+        <a class="mega__row" href="low-back-pain.html"><span class="mega__n">02</span><span class="mega__l">Low back pain</span><span class="mega__lead"></span><svg class="arrow" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M4 12h15M13 6l6 6-6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+        <a class="mega__row" href="upper-back-neck-pain.html"><span class="mega__n">03</span><span class="mega__l">Upper back and neck pain</span><span class="mega__lead"></span><svg class="arrow" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M4 12h15M13 6l6 6-6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+        <a class="mega__row" href="shoulder-pain.html"><span class="mega__n">04</span><span class="mega__l">Shoulder pain</span><span class="mega__lead"></span><svg class="arrow" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M4 12h15M13 6l6 6-6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+        <a class="mega__row" href="headache-migraine.html"><span class="mega__n">05</span><span class="mega__l">Headaches and migraines</span><span class="mega__lead"></span><svg class="arrow" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M4 12h15M13 6l6 6-6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+        <a class="mega__row" href="pinched-nerve.html"><span class="mega__n">06</span><span class="mega__l">Pinched nerve</span><span class="mega__lead"></span><svg class="arrow" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M4 12h15M13 6l6 6-6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+        <a class="mega__row" href="slipped-disc.html"><span class="mega__n">07</span><span class="mega__l">Slipped disc</span><span class="mega__lead"></span><svg class="arrow" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M4 12h15M13 6l6 6-6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+        <a class="mega__row" href="sciatica.html"><span class="mega__n">08</span><span class="mega__l">Sciatica</span><span class="mega__lead"></span><svg class="arrow" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M4 12h15M13 6l6 6-6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+        <a class="mega__row" href="conditions.html"><span class="mega__n">ALL</span><span class="mega__l">All conditions</span><span class="mega__lead"></span><svg class="arrow" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M4 12h15M13 6l6 6-6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+      </div>
+    </div>
+  </div>
+
+  <div class="mega" id="sheet-practice" hidden>
+    <div class="container container--wide mega__inner">
+      <div class="mega__head">
+        <p class="mono-label">Section 06</p>
+        <p class="mega__title">The Practice</p>
+        <p class="mega__note">Who examines you, where the office is, and what the written record is for.</p>
+      </div>
+      <div class="mega__toc">
+        <a class="mega__row" href="doctor.html"><span class="mega__n">01</span><span class="mega__l">Your chiropractor</span><span class="mega__lead"></span><svg class="arrow" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M4 12h15M13 6l6 6-6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+        <a class="mega__row" href="pain-relief-clinic-of-marin.html"><span class="mega__n">02</span><span class="mega__l">Pain Relief Clinic of Marin</span><span class="mega__lead"></span><svg class="arrow" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M4 12h15M13 6l6 6-6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+        <a class="mega__row" href="testimonials.html"><span class="mega__n">03</span><span class="mega__l">Patient reviews</span><span class="mega__lead"></span><svg class="arrow" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M4 12h15M13 6l6 6-6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+        <a class="mega__row" href="chiropractic.html"><span class="mega__n">04</span><span class="mega__l">How chiropractic care works</span><span class="mega__lead"></span><svg class="arrow" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M4 12h15M13 6l6 6-6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+        <a class="mega__row" href="narrative-report.html"><span class="mega__n">05</span><span class="mega__l">Narrative reports</span><span class="mega__lead"></span><svg class="arrow" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M4 12h15M13 6l6 6-6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+        <a class="mega__row" href="for-attorneys.html"><span class="mega__n">06</span><span class="mega__l">For attorneys</span><span class="mega__lead"></span><svg class="arrow" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M4 12h15M13 6l6 6-6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+      </div>
+    </div>
+  </div>
+</header>
+
+<div class="drawer-scrim" id="scrim" data-open="false"></div>
+
+<div class="drawer" id="drawer" data-open="false" aria-label="Site index">
+  <div class="drawer__head">
+    <p class="mono-label">Contents</p>
+    <button class="drawer__close" id="drawer-close" type="button" aria-label="Close the site index">
+      <svg viewBox="0 0 24 24" fill="none" aria-hidden="true" width="20" height="20"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+    </button>
+  </div>
+
+  <nav class="drawer__nav" aria-label="Primary, mobile">
+    <ul>
+      <li class="d-item" data-open="false">
+        <button class="d-trigger" data-idx="01" type="button" aria-expanded="false">
+          <span class="d-label">Injured in a Crash</span>
+          <svg class="d-mark" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+        <div class="d-sub">
+          <div class="d-sub__inner">
+            <ul class="d-sub__list">
+              <li><a class="d-sub__link" href="auto-accident.html"><span class="d-sub__n">01</span>Auto accident injury care</a></li>
+              <li><a class="d-sub__link" href="after-a-crash.html"><span class="d-sub__n">02</span>What to do after a crash</a></li>
+              <li><a class="d-sub__link" href="first-visit.html"><span class="d-sub__n">03</span>Your first visit</a></li>
+              <li><a class="d-sub__link" href="faq.html"><span class="d-sub__n">04</span>Questions, answered</a></li>
+              <li><a class="d-sub__link" href="work-injuries.html"><span class="d-sub__n">05</span>Work injuries</a></li>
+            </ul>
+          </div>
+        </div>
+      </li>
+
+      <li class="d-item" data-open="false">
+        <button class="d-trigger" data-idx="02" type="button" aria-expanded="false">
+          <span class="d-label">What It Costs</span>
+          <svg class="d-mark" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+        <div class="d-sub">
+          <div class="d-sub__inner">
+            <ul class="d-sub__list">
+              <li><a class="d-sub__link" href="cost.html"><span class="d-sub__n">01</span>What care costs</a></li>
+              <li><a class="d-sub__link" href="cost-uninsured-driver.html"><span class="d-sub__n">02</span>If the other driver is uninsured</a></li>
+              <li><a class="d-sub__link" href="good-faith-estimate.html"><span class="d-sub__n">03</span>Good Faith Estimate</a></li>
+            </ul>
+          </div>
+        </div>
+      </li>
+
+      <li class="d-item">
+        <a class="d-link" data-idx="03" href="consultation.html">
+          <span class="d-label">Book a Visit</span>
+          <svg class="d-mark" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M4 12h15M13 6l6 6-6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </a>
+      </li>
+
+      <li class="d-item" data-open="false">
+        <button class="d-trigger" data-idx="04" type="button" aria-expanded="false">
+          <span class="d-label">Conditions We Treat</span>
+          <svg class="d-mark" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+        <div class="d-sub">
+          <div class="d-sub__inner">
+            <ul class="d-sub__list">
+              <li><a class="d-sub__link" href="whiplash.html"><span class="d-sub__n">01</span>Whiplash</a></li>
+              <li><a class="d-sub__link" href="low-back-pain.html"><span class="d-sub__n">02</span>Low back pain</a></li>
+              <li><a class="d-sub__link" href="upper-back-neck-pain.html"><span class="d-sub__n">03</span>Upper back and neck pain</a></li>
+              <li><a class="d-sub__link" href="shoulder-pain.html"><span class="d-sub__n">04</span>Shoulder pain</a></li>
+              <li><a class="d-sub__link" href="headache-migraine.html"><span class="d-sub__n">05</span>Headaches and migraines</a></li>
+              <li><a class="d-sub__link" href="pinched-nerve.html"><span class="d-sub__n">06</span>Pinched nerve</a></li>
+              <li><a class="d-sub__link" href="slipped-disc.html"><span class="d-sub__n">07</span>Slipped disc</a></li>
+              <li><a class="d-sub__link" href="sciatica.html"><span class="d-sub__n">08</span>Sciatica</a></li>
+              <li><a class="d-sub__link" href="conditions.html"><span class="d-sub__n">ALL</span>All conditions</a></li>
+            </ul>
+          </div>
+        </div>
+      </li>
+
+      <li class="d-item">
+        <a class="d-link" data-idx="05" href="testimonials.html">
+          <span class="d-label">Proof</span>
+          <svg class="d-mark" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M4 12h15M13 6l6 6-6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </a>
+      </li>
+
+      <li class="d-item" data-open="false">
+        <button class="d-trigger" data-idx="06" type="button" aria-expanded="false">
+          <span class="d-label">The Practice</span>
+          <svg class="d-mark" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+        <div class="d-sub">
+          <div class="d-sub__inner">
+            <ul class="d-sub__list">
+              <li><a class="d-sub__link" href="doctor.html"><span class="d-sub__n">01</span>Your chiropractor</a></li>
+              <li><a class="d-sub__link" href="pain-relief-clinic-of-marin.html"><span class="d-sub__n">02</span>Pain Relief Clinic of Marin</a></li>
+              <li><a class="d-sub__link" href="testimonials.html"><span class="d-sub__n">03</span>Patient reviews</a></li>
+              <li><a class="d-sub__link" href="chiropractic.html"><span class="d-sub__n">04</span>How chiropractic care works</a></li>
+              <li><a class="d-sub__link" href="narrative-report.html"><span class="d-sub__n">05</span>Narrative reports</a></li>
+              <li><a class="d-sub__link" href="for-attorneys.html"><span class="d-sub__n">06</span>For attorneys</a></li>
+            </ul>
+          </div>
+        </div>
+      </li>
+
+      <li class="d-item">
+        <a class="d-link" data-idx="07" href="narrative-report.html">
+          <span class="d-label">Your Medical Record</span>
+          <svg class="d-mark" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M4 12h15M13 6l6 6-6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </a>
+      </li>
+
+      <li class="d-item">
+        <a class="d-link" data-idx="08" href="for-attorneys.html">
+          <span class="d-label">For Attorneys</span>
+          <svg class="d-mark" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M4 12h15M13 6l6 6-6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </a>
+      </li>
+    </ul>
+  </nav>
+
+  <div class="drawer__foot">
+    <a class="btn btn-quiet btn--phone btn--block" href="tel:+14158779400">Call (415) 877-9400</a>
+    <p>55 Mitchell Blvd, Ste 10, San Rafael, CA 94903</p>
+  </div>
+</div>
+
+<main id="main">
+
+  
+  <section class="section section--deep surface-dark hero">
+    <span class="scrim"></span>
+    <div class="container">
+      <h1 class="h-hero">Hit by a car in San Rafael?</h1>
+      <p class="lead">Care on a lien. You are billed nothing while your case is open, and we are paid from the settlement.</p>
+      <div class="cta-row">
+        <a class="btn btn-primary" href="consultation.html">
+          Request a consultation
+          <svg class="arrow" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M4 12h15M13 6l6 6-6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </a>
+        <a class="btn btn-ghost" href="cost.html">See how liens work</a>
+      </div>
+      <div class="plane">
+        <svg class="ico" viewBox="0 0 24 24" fill="none" aria-hidden="true"><rect x="3" y="5" width="18" height="16" rx="2" stroke="currentColor" stroke-width="2"/><path d="M3 10h18M8 3v4M16 3v4" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+        <p>New auto-accident patients are seen the same day.</p>
+      </div>
+    </div>
+    <svg class="seam" viewBox="0 0 1200 54" preserveAspectRatio="none" aria-hidden="true">
+      <path class="seam-back" d="M0 16 C 300 54 900 54 1200 12 L1200 54 L0 54 Z"/>
+      <path class="seam-front" d="M0 24 C 320 56 880 56 1200 20 L1200 54 L0 54 Z"/>
+    </svg>
+  </section>
+
+  
+  <section class="section section--paper">
+    <div class="container">
+      <p class="eyebrow">The chrome, on paper</p>
+      <h2 class="h-band">A frame that reads like a file.</h2>
+      <p class="lead">The header states the facts of the record and then stops: who this is, where the office is, and the one number that reaches it. Everything else is an index. The accent is spent once, as a rule of light on the seam, and the type does the rest of the work.</p>
+      <p class="seam-rule">Seam 02, numbered hairline</p>
+      <div class="grid grid--2">
+        <div class="flow">
+          <h3 class="h-card">Why restraint is the character</h3>
+          <p class="lead">This practice writes the narrative report a claim depends on, and it puts the estimate in writing before an examination begins. A frame that shouts would contradict the product. A frame that indexes, numbers and rules its own contents agrees with it.</p>
+          <a class="btn-link" href="narrative-report.html">Read what the record contains
+            <svg class="arrow" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M4 12h15M13 6l6 6-6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </a>
+        </div>
+        <div class="doc-plate">
+          <span class="doc-plate__rule doc-plate__rule--head"></span>
+          <span class="doc-plate__rule"></span>
+          <span class="doc-plate__rule doc-plate__rule--short"></span>
+          <span class="doc-plate__rule"></span>
+          <span class="doc-plate__rule doc-plate__rule--stub"></span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  
+  <section class="section section--sunken pv">
+    <div class="container">
+      <p class="eyebrow">Preview scaffolding, not chrome</p>
+      <h2 class="h-band">Drive the states.</h2>
+      <p class="lead pv__note">These three controls act on the REAL chrome above rather than on a picture of it, so what you judge is the shipping element in each state. None of this band ships.</p>
+      <div class="pv__row">
+        <button class="chip" id="pv-scroll" type="button" aria-pressed="false">Toggle the scrolled state</button>
+        <button class="chip" id="pv-mega" type="button" aria-pressed="false">Open the Conditions contents</button>
+        <button class="chip" id="pv-drawer" type="button">Open the drawer at 390px</button>
+      </div>
+      <div class="pv__frame">
+        <p>At rest the header is opaque paper: the identity row on top with the phone at its left and the one booking CTA at its right, the index row beneath, and a single hairline between them carrying the only segment of accent in the whole frame. Scrolled, the identity row drops to running-head size, the frame loses its air, the index row pins with nothing removed from it, and the bar becomes a glass plane. That is 164px down to 127px, measured. At 1279px and below the index row moves into the drawer, the hamburger appears, and the booking CTA becomes the full-width second row, so the pinned action survives every width.</p>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<section class="section section--tight section--sunken precta">
+  <div class="container">
+    <div class="cta-band">
+      <div class="cta-band__body">
+        <p class="eyebrow">Next</p>
+        <h2 class="h-band">Start the record.</h2>
+        <p>An examination, an estimate in writing, and a file that follows the claim.</p>
+      </div>
+      <div class="cta-row">
+        <a class="btn btn-primary" href="consultation.html">
+          Request a consultation
+          <svg class="arrow" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M4 12h15M13 6l6 6-6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </a>
+        <a class="btn btn-quiet btn--phone" href="tel:+14158779400">Call (415) 877-9400</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer class="mast">
+  <div class="container container--wide">
+
+    <div class="mast__head">
+      <p class="mono-label">Colophon</p>
+      <p class="mast__name">San Rafael Auto Accident Injury<span>Chiropractic Center</span></p>
+      <p class="mast__credit">Auto accident and personal injury chiropractic care at 55 Mitchell Blvd, Ste 10, San Rafael. A satellite office of Pain Relief Clinic of Marin.</p>
+    </div>
+
+    <nav class="mast__cols" aria-label="Footer">
+      <div>
+        <p class="mast__ct">Injured in a Crash</p>
+        <ul class="mast__list">
+          <li><a class="mast__link" href="auto-accident.html">Auto accident injury care</a></li>
+          <li><a class="mast__link" href="after-a-crash.html">What to do after a crash</a></li>
+          <li><a class="mast__link" href="first-visit.html">Your first visit</a></li>
+          <li><a class="mast__link" href="faq.html">Questions, answered</a></li>
+          <li><a class="mast__link" href="work-injuries.html">Work injuries</a></li>
+        </ul>
+      </div>
+
+      <div>
+        <p class="mast__ct">What It Costs</p>
+        <ul class="mast__list">
+          <li><a class="mast__link" href="cost.html">What care costs</a></li>
+          <li><a class="mast__link" href="cost-uninsured-driver.html">If the other driver is uninsured</a></li>
+          <li><a class="mast__link" href="good-faith-estimate.html">Good Faith Estimate</a></li>
+        </ul>
+      </div>
+
+      <div>
+        <p class="mast__ct">Conditions We Treat</p>
+        <ul class="mast__list">
+          <li><a class="mast__link" href="conditions.html">All conditions</a></li>
+          <li><a class="mast__link" href="whiplash.html">Whiplash</a></li>
+          <li><a class="mast__link" href="low-back-pain.html">Low back pain</a></li>
+          <li><a class="mast__link" href="upper-back-neck-pain.html">Upper back and neck pain</a></li>
+          <li><a class="mast__link" href="shoulder-pain.html">Shoulder pain</a></li>
+          <li><a class="mast__link" href="headache-migraine.html">Headaches and migraines</a></li>
+          <li><a class="mast__link" href="pinched-nerve.html">Pinched nerve</a></li>
+          <li><a class="mast__link" href="slipped-disc.html">Slipped disc</a></li>
+          <li><a class="mast__link" href="sciatica.html">Sciatica</a></li>
+        </ul>
+      </div>
+
+      <div>
+        <p class="mast__ct">The Practice</p>
+        <ul class="mast__list">
+          <li><a class="mast__link" href="doctor.html">Your chiropractor</a></li>
+          <li><a class="mast__link" href="pain-relief-clinic-of-marin.html">Pain Relief Clinic of Marin</a></li>
+          <li><a class="mast__link" href="testimonials.html">Patient reviews</a></li>
+          <li><a class="mast__link" href="chiropractic.html">How chiropractic care works</a></li>
+          <li><a class="mast__link" href="narrative-report.html">Narrative reports</a></li>
+          <li><a class="mast__link" href="for-attorneys.html">For attorneys</a></li>
+        </ul>
+      </div>
+
+      <div>
+        <p class="mast__ct">Visit Us</p>
+        <ul class="mast__list">
+          <li><a class="mast__link" href="contact.html">Contact and hours</a></li>
+          <li><a class="mast__link" href="consultation.html">Request a consultation</a></li>
+          <li><a class="mast__link" href="forms.html">Patient forms</a></li>
+          <li><a class="mast__link" href="accessibility.html">Accessibility</a></li>
+          <li><a class="mast__link" href="privacy.html">Privacy policy</a></li>
+        </ul>
+      </div>
+
+      <div>
+        <p class="mast__ct">Contact</p>
+        <ul class="mast__list">
+          <li><a class="mast__fact mast__fact--phone" href="tel:+14158779400">(415) 877-9400</a></li>
+          <li><address class="mast__fact">55 Mitchell Blvd, Ste 10, San Rafael, CA 94903</address></li>
+          <li><span class="mast__fact">Mon closed · Tue-Fri 9am-6pm · Sat closed</span></li>
+        </ul>
+      </div>
+    </nav>
+
+    <div class="mast__legal">
+      <p>Copyright 2026 San Rafael Auto Accident Injury Chiropractic Center. Chiropractic care is not a substitute for emergency treatment after a crash.</p>
+      <a class="mast__top" href="#top">
+        Back to top
+        <svg class="arrow" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M4 12h15M13 6l6 6-6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </a>
+    </div>
+  </div>
+</footer>
+
+<script>
+
+(function () {
+  var ch = document.getElementById('ch');
+  var deskQuery = window.matchMedia('(min-width:1280px)');
+
+  
+  var ticking = false;
+  function readScroll() {
+    ch.setAttribute('data-scrolled', (window.pageYOffset || document.documentElement.scrollTop) > 20 ? 'true' : 'false');
+    ticking = false;
+  }
+  window.addEventListener('scroll', function () {
+    if (!ticking) { ticking = true; window.requestAnimationFrame(readScroll); }
+  }, { passive: true });
+  readScroll();
+
+  
+  var carets = Array.prototype.slice.call(document.querySelectorAll('.ix__caret'));
+  function panelOf(btn) { return document.getElementById(btn.getAttribute('aria-controls')); }
+  function closeSheets(keep) {
+    carets.forEach(function (c) {
+      var p = panelOf(c);
+      if (p && p !== keep) { p.hidden = true; c.setAttribute('aria-expanded', 'false'); }
+    });
+  }
+  function openSheet(c) {
+    var p = panelOf(c);
+    if (!p) return;
+    closeSheets(p);
+    p.hidden = false;
+    c.setAttribute('aria-expanded', 'true');
+  }
+  carets.forEach(function (c) {
+    c.addEventListener('click', function (e) {
+      e.preventDefault();
+      var p = panelOf(c);
+      if (!p) return;
+      if (p.hidden) { openSheet(c); } else { closeSheets(null); }
+    });
+    var item = c.parentNode;
+    item.addEventListener('mouseenter', function () { if (deskQuery.matches) openSheet(c); });
+    item.addEventListener('mouseleave', function () { if (deskQuery.matches) closeSheets(null); });
+  });
+  document.addEventListener('click', function (e) {
+    var inHeader = e.target && e.target.closest && e.target.closest('.ch');
+    if (!inHeader) closeSheets(null);
+  });
+
+  
+  var drawer = document.getElementById('drawer');
+  var scrim = document.getElementById('scrim');
+  var burger = document.getElementById('burger');
+  var closer = document.getElementById('drawer-close');
+  function openDrawer() {
+    drawer.setAttribute('data-open', 'true');
+    scrim.setAttribute('data-open', 'true');
+    burger.setAttribute('aria-expanded', 'true');
+    document.documentElement.style.overflow = 'hidden';
+    closer.focus();
+  }
+  function closeDrawer() {
+    drawer.setAttribute('data-open', 'false');
+    scrim.setAttribute('data-open', 'false');
+    burger.setAttribute('aria-expanded', 'false');
+    document.documentElement.style.overflow = '';
+  }
+  burger.addEventListener('click', openDrawer);
+  closer.addEventListener('click', function () { closeDrawer(); burger.focus(); });
+  scrim.addEventListener('click', closeDrawer);
+  document.addEventListener('keydown', function (e) {
+    if (e.key === 'Escape' || e.key === 'Esc') { closeSheets(null); closeDrawer(); }
+  });
+
+  
+  var triggers = Array.prototype.slice.call(document.querySelectorAll('.d-trigger'));
+  triggers.forEach(function (t) {
+    t.addEventListener('click', function () {
+      var item = t.parentNode;
+      var wasOpen = item.getAttribute('data-open') === 'true';
+      triggers.forEach(function (other) {
+        other.parentNode.setAttribute('data-open', 'false');
+        other.setAttribute('aria-expanded', 'false');
+      });
+      if (!wasOpen) {
+        item.setAttribute('data-open', 'true');
+        t.setAttribute('aria-expanded', 'true');
+      }
+    });
+  });
+
+  
+  var pvScroll = document.getElementById('pv-scroll');
+  var pvMega = document.getElementById('pv-mega');
+  var pvDrawer = document.getElementById('pv-drawer');
+  pvScroll.addEventListener('click', function () {
+    var next = ch.getAttribute('data-scrolled') !== 'true';
+    ch.setAttribute('data-scrolled', next ? 'true' : 'false');
+    pvScroll.setAttribute('aria-pressed', next ? 'true' : 'false');
+  });
+  pvMega.addEventListener('click', function () {
+    var c = document.querySelector('.ix__caret[aria-controls="sheet-conditions"]');
+    var p = document.getElementById('sheet-conditions');
+    if (!c || !p) return;
+    window.scrollTo(0, 0);
+    if (p.hidden) { openSheet(c); pvMega.setAttribute('aria-pressed', 'true'); }
+    else { closeSheets(null); pvMega.setAttribute('aria-pressed', 'false'); }
+  });
+  pvDrawer.addEventListener('click', openDrawer);
+})();
+</script>
+
+</body>
+</html>

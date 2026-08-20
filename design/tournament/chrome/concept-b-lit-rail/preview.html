@@ -1,0 +1,809 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>CHROME concept B: The Lit Rail</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,300;8..60,400;8..60,600;8..60,700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../../../san-rafael-auto-accident-injury-tokens.css">
+<link rel="stylesheet" href="../../../san-rafael-auto-accident-injury-structural.css">
+
+<style>
+
+.surface-dark{color:var(--ds-ink)}
+
+.rail-scope{
+  position:sticky;
+  top:0;
+  z-index:var(--ds-z-drawer);
+  container-type:inline-size;
+  container-name:rail;
+}
+.rail-scope[data-view="mobile"]{max-width:390px;margin-left:auto;margin-right:auto}
+
+.rail{
+  --rail-pad:18px;
+  padding-top:var(--rail-pad);
+  padding-bottom:var(--rail-pad);
+  border-top:0;
+  border-bottom:1px solid transparent;
+  box-shadow:none;
+  transition:padding-top var(--ds-dur) var(--ds-ease),
+             padding-bottom var(--ds-dur) var(--ds-ease),
+             border-color var(--ds-dur) var(--ds-ease),
+             box-shadow var(--ds-dur) var(--ds-ease);
+}
+.rail.is-scrolled{
+  --rail-pad:9px;
+  border-bottom-color:var(--ds-line);
+  box-shadow:var(--ds-shadow-lift);
+}
+
+main > .section--deep:first-child{border-top:0}
+
+.section--deep:has(> .seam){border-bottom:0}
+
+.rail.is-scrolled .rail__sub{max-height:0;opacity:0}
+
+.rail.is-scrolled .scrim{opacity:var(--ds-opacity-veil)}
+
+.rail__inner{
+  display:grid;
+  align-items:center;
+  column-gap:14px;
+  grid-template-columns:1fr auto;
+  grid-template-areas:
+    "brand toggle"
+    "sheet sheet"
+    "book  book"
+    "call  call";
+}
+
+.rail__brand{
+  grid-area:brand;
+  display:flex;
+  align-items:center;
+  gap:12px;
+  min-height:var(--ds-tap);
+  color:var(--ds-ink);
+  text-decoration:none;
+}
+.rail__mark{
+  display:block;
+  flex:none;
+  width:4px;
+  height:30px;
+  border-radius:var(--ds-r-pill);
+  background-color:var(--ds-brand-accent);
+  box-shadow:0 0 0 1px var(--ds-brand-accent);
+  box-shadow:0 0 18px color-mix(in srgb,var(--ds-brand-accent) 55%,transparent);
+  transition:height var(--ds-dur) var(--ds-ease);
+}
+.rail.is-scrolled .rail__mark{height:22px}
+.rail__word{
+  display:block;
+  font-family:var(--ds-font-display);
+  font-weight:600;
+  font-size:1.2rem;
+  line-height:1.04;
+  letter-spacing:var(--ds-track-display);
+}
+.rail__sub{
+  display:block;
+  overflow:hidden;
+  max-height:2em;
+  font-family:var(--ds-font-mono);
+  font-size:calc(var(--ds-step-fine) * 0.78);
+  letter-spacing:var(--ds-track-eyebrow);
+  text-transform:uppercase;
+  color:var(--ds-ink-soft);
+  transition:max-height var(--ds-dur) var(--ds-ease),opacity var(--ds-dur) var(--ds-ease);
+}
+
+.rail__toggle{
+  grid-area:toggle;
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  gap:10px;
+  min-height:var(--ds-tap);
+  padding:0 16px;
+  border-radius:var(--ds-r-control);
+  border:1px solid var(--ds-ink-faint);
+  background-color:transparent;
+  color:var(--ds-ink);
+  font-family:var(--ds-font-body);
+  font-weight:600;
+  font-size:var(--ds-step-fine);
+  letter-spacing:var(--ds-track-eyebrow);
+  text-transform:uppercase;
+  cursor:pointer;
+  transition:border-color var(--ds-dur-fast) var(--ds-ease),
+             color var(--ds-dur-fast) var(--ds-ease),
+             box-shadow var(--ds-dur-fast) var(--ds-ease);
+}
+.rail__toggle:hover{border-color:var(--ds-brand-accent)}
+.rail__toggle[aria-expanded="true"]{
+  border-color:var(--ds-brand-accent);
+  box-shadow:var(--ds-shadow);
+  box-shadow:0 0 22px color-mix(in srgb,var(--ds-brand-accent) 40%,transparent);
+}
+.rail__burger{position:relative;display:block;flex:none;width:18px;height:12px}
+.rail__burger i{
+  position:absolute;
+  left:0;
+  right:0;
+  height:2px;
+  border-radius:var(--ds-r-pill);
+  background-color:currentColor;
+  transition:transform var(--ds-dur) var(--ds-ease-out),opacity var(--ds-dur) var(--ds-ease-out);
+}
+.rail__burger i:nth-child(1){top:0}
+.rail__burger i:nth-child(2){top:5px}
+.rail__burger i:nth-child(3){top:10px}
+.rail__toggle[aria-expanded="true"] .rail__burger i:nth-child(1){transform:translateY(5px) rotate(45deg)}
+.rail__toggle[aria-expanded="true"] .rail__burger i:nth-child(2){opacity:0}
+.rail__toggle[aria-expanded="true"] .rail__burger i:nth-child(3){transform:translateY(-5px) rotate(-45deg)}
+
+.rail__slot{display:none;align-items:center}
+.rail__slot--book{grid-area:book;margin-top:14px;padding-top:14px;border-top:1px solid var(--ds-line)}
+.rail__slot--call{grid-area:call;margin-top:8px}
+.rail[data-open="true"] .rail__slot{display:flex}
+.rail__slot .btn{width:100%;justify-content:center}
+.rail .btn{padding:0 18px;font-size:var(--ds-step-fine)}
+
+.rail__sheet{
+  grid-area:sheet;
+  display:none;
+  width:100%;
+  margin-top:14px;
+}
+.rail[data-open="true"] .rail__sheet{
+  display:block;
+  animation:rail-in var(--ds-dur) var(--ds-ease-out) both;
+}
+@keyframes rail-in{
+  from{opacity:0;transform:translateY(-8px)}
+  to{opacity:1;transform:translateY(0)}
+}
+.rail__plate{padding:clamp(1.2rem,3.4vw,2rem) clamp(1.1rem,3vw,2rem)}
+.rail__kicker{
+  margin:0 0 var(--ds-space-gap);
+  font-family:var(--ds-font-display);
+  font-size:var(--ds-step-h3);
+  line-height:1.25;
+  letter-spacing:var(--ds-track-display);
+  color:var(--ds-ink);
+  max-width:34ch;
+}
+.rail__nav{display:grid;gap:var(--ds-space-gap)}
+.rail__group{
+  margin:0 0 var(--ds-space-tight);
+  padding-bottom:var(--ds-space-tight);
+  border-bottom:1px solid var(--ds-line);
+  font-family:var(--ds-font-mono);
+  font-size:var(--ds-step-fine);
+  letter-spacing:var(--ds-track-eyebrow);
+  text-transform:uppercase;
+  color:var(--ds-ink-faint);
+}
+.rail__list{display:grid}
+.rail__item{position:relative;padding:6px 0 10px;border-bottom:1px solid var(--ds-line)}
+.rail__item:last-child{border-bottom:0}
+
+.rail__item::before{
+  content:"";
+  position:absolute;
+  inset:-2px -14px;
+  z-index:var(--ds-z-base);
+  pointer-events:none;
+  border-radius:var(--ds-r-control);
+  opacity:0;
+  background-image:radial-gradient(120% 170% at 0% 50%,var(--ds-brand-accent) 0%,transparent 62%);
+  transition:opacity var(--ds-dur) var(--ds-ease);
+}
+.rail__item:hover::before,.rail__item:focus-within::before{opacity:var(--ds-opacity-faint)}
+.rail__link{
+  position:relative;
+  z-index:var(--ds-z-raised);
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:14px;
+  min-height:var(--ds-tap);
+  font-family:var(--ds-font-display);
+  font-weight:600;
+  font-size:var(--ds-step-h3);
+  line-height:1.2;
+  letter-spacing:var(--ds-track-display);
+  color:var(--ds-ink);
+  text-decoration:none;
+  transition:color var(--ds-dur-fast) var(--ds-ease);
+}
+
+.rail__link::after{content:"";position:absolute;inset:-6px -14px -34px}
+.rail__link .arrow{color:var(--ds-brand-accent);opacity:0;transform:translateX(-4px)}
+.rail__item:hover .rail__link .arrow,.rail__item:focus-within .rail__link .arrow{opacity:1;transform:translateX(0)}
+.rail__note{
+  position:relative;
+  z-index:var(--ds-z-raised);
+  display:block;
+  color:var(--ds-ink-soft);
+  font-size:var(--ds-step-fine);
+  line-height:1.5;
+  max-width:40ch;
+}
+.rail__fine{
+  margin:var(--ds-space-gap) 0 0;
+  padding-top:var(--ds-space-gap);
+  border-top:1px solid var(--ds-line);
+  color:var(--ds-ink-faint);
+  font-size:var(--ds-step-fine);
+}
+
+.rail__sheet{
+  overflow-x:hidden;
+  overflow-y:auto;
+  max-height:calc(100vh - 250px);
+  max-height:calc(100dvh - 250px);
+}
+
+@container rail (min-width:768px){
+  .rail{overflow:visible}
+  .rail__inner{
+    column-gap:14px;
+    grid-template-columns:auto 1fr auto auto auto;
+    grid-template-areas:"brand . call book toggle";
+  }
+  .rail__slot{display:flex;margin-top:0;padding-top:0;border-top:0}
+  .rail__slot .btn{width:auto}
+  
+  .rail__sheet{
+    position:absolute;
+    left:0;
+    right:0;
+    top:100%;
+    margin-top:0;
+    max-height:none;
+    overflow:hidden;
+    border-top:0;
+    border-radius:0 0 var(--ds-r-surface) var(--ds-r-surface);
+  }
+  .rail__plate{
+    width:100%;
+    max-width:1140px;
+    margin-left:auto;
+    margin-right:auto;
+    padding:clamp(1.6rem,3vw,2.4rem) 24px clamp(1.6rem,3vw,2.4rem);
+  }
+  .rail__nav{grid-template-columns:repeat(2,minmax(0,1fr));gap:var(--ds-space-gap) 40px}
+}
+
+@container rail (min-width:768px) and (max-width:1023.98px){
+  .rail__sub{display:none}
+  .rail__slot--call .btn{padding:0 14px}
+}
+@container rail (min-width:1024px){
+  .rail__inner{column-gap:20px}
+  .rail__plate{padding-left:24px;padding-right:24px}
+  .rail__nav{gap:var(--ds-space-gap) 56px}
+}
+
+.rail-veil{
+  position:fixed;
+  inset:0;
+  z-index:var(--ds-z-overlay);
+  background-color:var(--ds-surface-deep);
+  opacity:0;
+  visibility:hidden;
+  transition:opacity var(--ds-dur) var(--ds-ease),visibility var(--ds-dur) var(--ds-ease);
+}
+.rail-veil[data-open="true"]{opacity:var(--ds-opacity-scrim);visibility:visible}
+
+.precta{position:relative}
+.precta .cta-band__body p{margin-top:var(--ds-space-tight)}
+
+.sfoot{position:relative}
+.sfoot__row{padding-top:var(--ds-space-gap);padding-bottom:var(--ds-space-gap)}
+.sfoot__row--top{
+  display:flex;
+  flex-wrap:wrap;
+  align-items:center;
+  justify-content:space-between;
+  gap:var(--ds-space-gap);
+  padding-top:calc(var(--ds-space-band) * 0.62);
+}
+.sfoot__ident{display:flex;align-items:center;gap:12px;color:var(--ds-ink);text-decoration:none}
+.sfoot__line{color:var(--ds-ink-soft);font-size:var(--ds-step-fine);max-width:46ch}
+.sfoot__top{
+  display:inline-flex;
+  align-items:center;
+  gap:8px;
+  min-height:var(--ds-tap);
+  padding:0 16px;
+  border:1px solid var(--ds-ink-faint);
+  border-radius:var(--ds-r-pill);
+  color:var(--ds-ink);
+  font-size:var(--ds-step-fine);
+  font-weight:600;
+  text-decoration:none;
+  transition:border-color var(--ds-dur-fast) var(--ds-ease),color var(--ds-dur-fast) var(--ds-ease);
+}
+.sfoot__top:hover{border-color:var(--ds-brand-accent)}
+.sfoot__top .arrow{transform:rotate(-90deg)}
+.sfoot__row--nav{
+  display:grid;
+  gap:var(--ds-space-gap) 32px;
+  grid-template-columns:1fr;
+  border-top:1px solid var(--ds-line);
+  padding-top:calc(var(--ds-space-gap) * 1.4);
+}
+.fcol{border-bottom:1px solid var(--ds-line)}
+.fcol__head{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:12px;
+  min-height:var(--ds-tap);
+  list-style:none;
+  cursor:pointer;
+  font-family:var(--ds-font-body);
+  font-size:var(--ds-step-fine);
+  font-weight:600;
+  letter-spacing:var(--ds-track-eyebrow);
+  text-transform:uppercase;
+  color:var(--ds-ink);
+}
+.fcol__head::-webkit-details-marker{display:none}
+.fcol__mark{position:relative;flex:none;width:16px;height:16px}
+.fcol__mark::before,.fcol__mark::after{
+  content:"";
+  position:absolute;
+  left:50%;
+  top:50%;
+  background-color:var(--ds-brand-accent);
+}
+.fcol__mark::before{width:14px;height:2px;margin:-1px 0 0 -7px}
+.fcol__mark::after{width:2px;height:14px;margin:-7px 0 0 -1px;transition:transform var(--ds-dur) var(--ds-ease-out)}
+.fcol[open] .fcol__mark::after{transform:scaleY(0)}
+.fcol__list{display:grid;padding-bottom:var(--ds-space-gap)}
+.fcol__list a{
+  display:inline-flex;
+  align-items:center;
+  min-height:40px;
+  color:var(--ds-ink-soft);
+  font-size:var(--ds-step-fine);
+  text-decoration:none;
+  transition:color var(--ds-dur-fast) var(--ds-ease);
+}
+.fcol__list a:hover{color:var(--ds-ink);text-decoration:underline;text-underline-offset:4px}
+.fcol__fact{
+  display:block;
+  padding:6px 0;
+  color:var(--ds-ink-soft);
+  font-size:var(--ds-step-fine);
+  line-height:1.5;
+  max-width:30ch;
+}
+.sfoot__row--legal{
+  display:flex;
+  flex-wrap:wrap;
+  align-items:center;
+  justify-content:space-between;
+  gap:var(--ds-space-tight) var(--ds-space-gap);
+  border-top:1px solid var(--ds-line);
+  padding-bottom:calc(var(--ds-space-band) * 0.5);
+  color:var(--ds-ink-faint);
+  font-size:var(--ds-step-fine);
+}
+.sfoot__legal-links{display:flex;flex-wrap:wrap;gap:var(--ds-space-gap)}
+.sfoot__legal-links a{color:var(--ds-ink-faint);text-decoration:none}
+.sfoot__legal-links a:hover{color:var(--ds-ink);text-decoration:underline;text-underline-offset:4px}
+@media (min-width:768px){
+  .sfoot__row--nav{grid-template-columns:repeat(3,minmax(0,1fr))}
+  .fcol{border-bottom:0}
+  .fcol__mark{display:none}
+  .fcol__head{cursor:default;min-height:0;margin-bottom:var(--ds-space-tight)}
+}
+@media (min-width:1024px){
+  .sfoot__row--nav{grid-template-columns:repeat(6,minmax(0,1fr))}
+}
+
+.deck{background-color:var(--ds-surface-sunken);border-bottom:1px solid var(--ds-line)}
+.deck__inner{padding-top:20px;padding-bottom:20px}
+.deck__title{
+  margin:0 0 var(--ds-space-tight);
+  font-family:var(--ds-font-mono);
+  font-size:var(--ds-step-fine);
+  letter-spacing:var(--ds-track-eyebrow);
+  text-transform:uppercase;
+  color:var(--ds-ink-faint);
+}
+.deck__row{display:flex;flex-wrap:wrap;gap:var(--ds-space-tight)}
+.deck__btn{
+  display:inline-flex;
+  align-items:center;
+  min-height:var(--ds-tap);
+  padding:0 16px;
+  border:1px solid var(--ds-ink-faint);
+  border-radius:var(--ds-r-pill);
+  background-color:var(--ds-surface-2);
+  color:var(--ds-ink);
+  font-size:var(--ds-step-fine);
+  font-weight:600;
+  cursor:pointer;
+}
+.deck__btn:hover{border-color:var(--ds-brand-primary-deep);color:var(--ds-brand-primary-deep)}
+.deck__btn[aria-pressed="true"]{background-color:var(--ds-brand-primary-deep);border-color:var(--ds-brand-primary-deep);color:var(--ds-brand-on-primary)}
+.deck__note{margin:var(--ds-space-tight) 0 0;color:var(--ds-ink-soft);font-size:var(--ds-step-fine);max-width:78ch}
+
+@media (prefers-reduced-motion:reduce){
+  .rail[data-open="true"] .rail__sheet{animation:none}
+  .rail__link .arrow{transition:none}
+}
+</style>
+</head>
+<body>
+<span id="top"></span>
+<a class="skip-link" href="#main">Skip to content</a>
+
+<div class="deck">
+  <div class="container deck__inner">
+    <p class="deck__title">Chrome states, for review</p>
+    <div class="deck__row">
+      <button class="deck__btn" type="button" data-act="panel" aria-pressed="false">Open the lit panel</button>
+      <button class="deck__btn" type="button" data-act="scrolled" aria-pressed="false">Hold the scrolled bar</button>
+      <button class="deck__btn" type="button" data-act="mobile" aria-pressed="false">Clamp the rail to 390px</button>
+    </div>
+    <p class="deck__note">Three controls, three states. The bar also shrinks on real scroll. "Clamp the rail to 390px" narrows the rail's own container, which is what the panel's layout listens to, so the phone presentation of the SAME element appears at any window size. There is no second copy of the markup anywhere in this file.</p>
+  </div>
+</div>
+
+<div class="rail-scope" id="rail-scope">
+  <header class="rail section--deep surface-dark" id="rail" data-open="false">
+    <span class="scrim"></span>
+    <div class="container rail__inner">
+
+      <a class="rail__brand" href="index.html">
+        <span class="rail__mark" aria-hidden="true"></span>
+        <span class="rail__wordmark">
+          <span class="rail__word">San Rafael</span>
+          <span class="rail__sub">Auto Accident Injury</span>
+        </span>
+      </a>
+
+      <div class="rail__slot rail__slot--call">
+        <a class="btn btn-ghost btn--phone" href="tel:+14158779400">
+          <svg class="ico" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M6 3h3l2 5-2 1a12 12 0 006 6l1-2 5 2v3a2 2 0 01-2 2A16 16 0 014 6a2 2 0 012-3z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></svg>
+          Call (415) 877-9400
+        </a>
+      </div>
+
+      <div class="rail__slot rail__slot--book">
+        <a class="btn btn-primary" href="consultation.html">
+          Request a consultation
+          <svg class="arrow" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M4 12h15M13 6l6 6-6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </a>
+      </div>
+
+      <button class="rail__toggle" type="button" id="rail-toggle" aria-expanded="false" aria-controls="rail-drawer">
+        <span class="rail__burger" aria-hidden="true"><i></i><i></i><i></i></span>
+        <span class="rail__toggle-label">Menu</span>
+      </button>
+
+      
+      
+      <div class="rail__sheet deep" id="rail-drawer" aria-hidden="true">
+        <div class="rail__plate">
+          <span class="rule-lit"></span>
+          <p class="rail__kicker">Everywhere this site goes, in the order a crash makes you need it.</p>
+
+          <nav class="rail__nav" aria-label="Primary">
+            <div class="rail__set">
+              <p class="rail__group">If you were just hit</p>
+              <ul class="rail__list">
+                <li class="rail__item">
+                  <a class="rail__link" href="auto-accident.html">Injured in a Crash
+                    <svg class="arrow" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M4 12h15M13 6l6 6-6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                  </a>
+                  <span class="rail__note">Care after a collision, and what to do in the first days.</span>
+                </li>
+                <li class="rail__item">
+                  <a class="rail__link" href="cost.html">What It Costs
+                    <svg class="arrow" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M4 12h15M13 6l6 6-6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                  </a>
+                  <span class="rail__note">How a lien works, who signs it, and what happens to the bill.</span>
+                </li>
+                <li class="rail__item">
+                  <a class="rail__link" href="consultation.html">Book a Visit
+                    <svg class="arrow" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M4 12h15M13 6l6 6-6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                  </a>
+                  <span class="rail__note">Request a consultation, and what to bring with you.</span>
+                </li>
+                <li class="rail__item">
+                  <a class="rail__link" href="conditions.html">Conditions We Treat
+                    <svg class="arrow" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M4 12h15M13 6l6 6-6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                  </a>
+                  <span class="rail__note">Whiplash, back, neck, shoulder, nerve and disc injuries.</span>
+                </li>
+              </ul>
+            </div>
+            <div class="rail__set">
+              <p class="rail__group">Before you decide</p>
+              <ul class="rail__list">
+                <li class="rail__item">
+                  <a class="rail__link" href="testimonials.html">Proof
+                    <svg class="arrow" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M4 12h15M13 6l6 6-6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                  </a>
+                  <span class="rail__note">What patients have written, quoted and attributed.</span>
+                </li>
+                <li class="rail__item">
+                  <a class="rail__link" href="doctor.html">The Practice
+                    <svg class="arrow" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M4 12h15M13 6l6 6-6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                  </a>
+                  <span class="rail__note">Who treats you, and the parent clinic behind this office.</span>
+                </li>
+                <li class="rail__item">
+                  <a class="rail__link" href="narrative-report.html">Your Medical Record
+                    <svg class="arrow" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M4 12h15M13 6l6 6-6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                  </a>
+                  <span class="rail__note">The narrative report your claim is eventually read from.</span>
+                </li>
+                <li class="rail__item">
+                  <a class="rail__link" href="for-attorneys.html">For Attorneys
+                    <svg class="arrow" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M4 12h15M13 6l6 6-6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                  </a>
+                  <span class="rail__note">Records, timelines, and what this office sends your firm.</span>
+                </li>
+              </ul>
+            </div>
+          </nav>
+
+          <p class="rail__fine">55 Mitchell Blvd, Ste 10, San Rafael</p>
+        </div>
+      </div>
+
+    </div>
+  </header>
+</div>
+<div class="rail-veil" id="rail-veil" data-open="false" hidden></div>
+
+<main id="main">
+
+  <section class="section section--deep surface-dark hero">
+    <span class="scrim"></span>
+    <div class="container rise">
+      <span class="rule-lit"></span>
+      <h1 class="h-hero">Hit by a car in San Rafael?</h1>
+      <p class="lead">Care on a lien. You are billed nothing while your case is open, and we are paid from the settlement.</p>
+      <div class="cta-row">
+        <a class="btn btn-primary" href="consultation.html">
+          Request a consultation
+          <svg class="arrow" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M4 12h15M13 6l6 6-6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </a>
+        <a class="btn btn-quiet" href="cost.html">See how liens work</a>
+      </div>
+      <div class="plane">
+        <svg class="ico" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M6 3h9l4 4v14H6z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/><path d="M9 12h7M9 16h5" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+        <p>A first visit is an examination and a written estimate, before any care begins.</p>
+      </div>
+    </div>
+    <svg class="seam" viewBox="0 0 1200 54" preserveAspectRatio="none" aria-hidden="true">
+      <path class="seam-back" d="M0 16 C 300 54 900 54 1200 12 L1200 54 L0 54 Z"/>
+      <path class="seam-front" d="M0 24 C 320 56 880 56 1200 20 L1200 54 L0 54 Z"/>
+    </svg>
+  </section>
+
+  <section class="section section--paper">
+    <div class="container rise">
+      <p class="eyebrow">The frame against the other ground</p>
+      <h2 class="h-band">The rail is the material, not a lid on it.</h2>
+      <p class="lead">This band exists so the chrome can be judged against paper as well as against the dark plane. Scroll it: the rail keeps its own light, gains a hairline and an elevation step at the moment it starts to float over live copy, and gives up the second line of the lockup to buy the height back.</p>
+      <div class="tile-grid">
+        <a class="tile" href="cost.html">See how liens work
+          <svg class="arrow" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M4 12h15M13 6l6 6-6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </a>
+        <a class="tile" href="cost-uninsured-driver.html">Check your coverage
+          <svg class="arrow" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M4 12h15M13 6l6 6-6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </a>
+        <a class="tile" href="good-faith-estimate.html">Get your estimate in writing
+          <svg class="arrow" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M4 12h15M13 6l6 6-6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </a>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<section class="precta section section--deep surface-dark">
+  <span class="scrim"></span>
+  <div class="container cta-band">
+    <div class="cta-band__body">
+      <span class="rule-lit"></span>
+      <h2 class="h-band">Start with a consultation.</h2>
+      <p>Bring the police report if you have one. We examine you, explain what we find, and put the estimate in writing before care begins.</p>
+    </div>
+    <div class="cta-row">
+      <a class="btn btn-primary" href="consultation.html">
+        Request a consultation
+        <svg class="arrow" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M4 12h15M13 6l6 6-6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </a>
+      <a class="btn btn-ghost btn--phone" href="tel:+14158779400">
+        <svg class="ico" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M6 3h3l2 5-2 1a12 12 0 006 6l1-2 5 2v3a2 2 0 01-2 2A16 16 0 014 6a2 2 0 012-3z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></svg>
+        Call (415) 877-9400
+      </a>
+    </div>
+  </div>
+</section>
+
+<footer class="sfoot section--deep surface-dark" id="site-footer">
+  <span class="scrim"></span>
+
+  <div class="container sfoot__row sfoot__row--top">
+    <a class="sfoot__ident" href="index.html">
+      <span class="rail__mark" aria-hidden="true"></span>
+      <span class="rail__wordmark">
+        <span class="rail__word">San Rafael</span>
+        <span class="rail__sub">Auto Accident Injury</span>
+      </span>
+    </a>
+    <p class="sfoot__line">A chiropractic office for people hurt in collisions, and a satellite of Pain Relief Clinic of Marin.</p>
+    <a class="sfoot__top" href="#top">
+      Back to top
+      <svg class="arrow" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M4 12h15M13 6l6 6-6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </a>
+  </div>
+
+  <div class="container sfoot__row sfoot__row--nav">
+    <details class="fcol" open>
+      <summary class="fcol__head">Injured in a Crash<span class="fcol__mark" aria-hidden="true"></span></summary>
+      <ul class="fcol__list">
+        <li><a href="auto-accident.html">Auto accident injury care</a></li>
+        <li><a href="after-a-crash.html">What to do after a crash</a></li>
+        <li><a href="first-visit.html">Your first visit</a></li>
+        <li><a href="faq.html">Questions, answered</a></li>
+        <li><a href="work-injuries.html">Work injuries</a></li>
+      </ul>
+    </details>
+
+    <details class="fcol" open>
+      <summary class="fcol__head">What It Costs<span class="fcol__mark" aria-hidden="true"></span></summary>
+      <ul class="fcol__list">
+        <li><a href="cost.html">What care costs</a></li>
+        <li><a href="cost-uninsured-driver.html">If the other driver is uninsured</a></li>
+        <li><a href="good-faith-estimate.html">Good Faith Estimate</a></li>
+      </ul>
+    </details>
+
+    <details class="fcol" open>
+      <summary class="fcol__head">Conditions We Treat<span class="fcol__mark" aria-hidden="true"></span></summary>
+      <ul class="fcol__list">
+        <li><a href="conditions.html">All conditions</a></li>
+        <li><a href="whiplash.html">Whiplash</a></li>
+        <li><a href="low-back-pain.html">Low back pain</a></li>
+        <li><a href="upper-back-neck-pain.html">Upper back and neck pain</a></li>
+        <li><a href="shoulder-pain.html">Shoulder pain</a></li>
+        <li><a href="headache-migraine.html">Headaches and migraines</a></li>
+        <li><a href="pinched-nerve.html">Pinched nerve</a></li>
+        <li><a href="slipped-disc.html">Slipped disc</a></li>
+        <li><a href="sciatica.html">Sciatica</a></li>
+      </ul>
+    </details>
+
+    <details class="fcol" open>
+      <summary class="fcol__head">The Practice<span class="fcol__mark" aria-hidden="true"></span></summary>
+      <ul class="fcol__list">
+        <li><a href="doctor.html">Your chiropractor</a></li>
+        <li><a href="pain-relief-clinic-of-marin.html">Pain Relief Clinic of Marin</a></li>
+        <li><a href="testimonials.html">Patient reviews</a></li>
+        <li><a href="chiropractic.html">How chiropractic care works</a></li>
+        <li><a href="narrative-report.html">Narrative reports</a></li>
+        <li><a href="for-attorneys.html">For attorneys</a></li>
+      </ul>
+    </details>
+
+    <details class="fcol" open>
+      <summary class="fcol__head">Visit Us<span class="fcol__mark" aria-hidden="true"></span></summary>
+      <ul class="fcol__list">
+        <li><a href="contact.html">Contact and hours</a></li>
+        <li><a href="consultation.html">Request a consultation</a></li>
+        <li><a href="forms.html">Patient forms</a></li>
+        <li><a href="accessibility.html">Accessibility</a></li>
+        <li><a href="privacy.html">Privacy policy</a></li>
+      </ul>
+    </details>
+
+    <details class="fcol" open>
+      <summary class="fcol__head">Contact<span class="fcol__mark" aria-hidden="true"></span></summary>
+      <ul class="fcol__list">
+        <li><a href="tel:+14158779400">(415) 877-9400</a></li>
+        <li><span class="fcol__fact">55 Mitchell Blvd, Ste 10, San Rafael, CA 94903</span></li>
+        <li><span class="fcol__fact">Mon closed · Tue-Fri 9am-6pm · Sat closed</span></li>
+      </ul>
+    </details>
+  </div>
+
+  <div class="container sfoot__row sfoot__row--legal">
+    <p>&copy; 2026 San Rafael Auto Accident Injury Chiropractic Center. Care is provided on a lien.</p>
+    <p class="sfoot__legal-links">
+      <a href="accessibility.html">Accessibility</a>
+      <a href="privacy.html">Privacy policy</a>
+    </p>
+  </div>
+</footer>
+
+<script>
+
+(function () {
+  'use strict';
+
+  var rail = document.getElementById('rail');
+  var scope = document.getElementById('rail-scope');
+  var toggle = document.getElementById('rail-toggle');
+  var sheet = document.getElementById('rail-drawer');
+  var veil = document.getElementById('rail-veil');
+
+  function setPanel(open) {
+    rail.setAttribute('data-open', open ? 'true' : 'false');
+    toggle.setAttribute('aria-expanded', open ? 'true' : 'false');
+    sheet.setAttribute('aria-hidden', open ? 'false' : 'true');
+    veil.setAttribute('data-open', open ? 'true' : 'false');
+    if (open) { veil.removeAttribute('hidden'); } else { veil.setAttribute('hidden', ''); }
+    var deckBtn = document.querySelector('.deck__btn[data-act="panel"]');
+    if (deckBtn) { deckBtn.setAttribute('aria-pressed', open ? 'true' : 'false'); }
+  }
+
+  toggle.addEventListener('click', function () {
+    setPanel(rail.getAttribute('data-open') !== 'true');
+  });
+  veil.addEventListener('click', function () { setPanel(false); toggle.focus(); });
+  document.addEventListener('keydown', function (e) {
+    if (e.key === 'Escape' && rail.getAttribute('data-open') === 'true') { setPanel(false); toggle.focus(); }
+  });
+
+  
+  var held = false;
+  function onScroll() {
+    if (held) { return; }
+    if (window.scrollY > 24) { rail.classList.add('is-scrolled'); }
+    else { rail.classList.remove('is-scrolled'); }
+  }
+  window.addEventListener('scroll', onScroll, { passive: true });
+  onScroll();
+
+  
+  var narrow = window.matchMedia('(max-width: 767px)');
+  var cols = Array.prototype.slice.call(document.querySelectorAll('.fcol'));
+  function syncCols() {
+    if (!narrow.matches) { cols.forEach(function (c) { c.open = true; }); }
+    else {
+      cols.forEach(function (c, i) { c.open = (i === 0); });
+    }
+  }
+  cols.forEach(function (col) {
+    col.addEventListener('toggle', function () {
+      if (!narrow.matches) { if (!col.open) { col.open = true; } return; }
+      if (!col.open) { return; }
+      cols.forEach(function (other) { if (other !== col) { other.open = false; } });
+    });
+  });
+  if (narrow.addEventListener) { narrow.addEventListener('change', syncCols); }
+  syncCols();
+
+  
+  document.querySelectorAll('.deck__btn').forEach(function (btn) {
+    btn.addEventListener('click', function () {
+      var act = btn.getAttribute('data-act');
+      var on = btn.getAttribute('aria-pressed') !== 'true';
+      if (act === 'panel') { setPanel(on); return; }
+      btn.setAttribute('aria-pressed', on ? 'true' : 'false');
+      if (act === 'scrolled') { held = on; rail.classList.toggle('is-scrolled', on); if (!on) { onScroll(); } }
+      if (act === 'mobile') { scope.setAttribute('data-view', on ? 'mobile' : 'wide'); }
+    });
+  });
+}());
+</script>
+</body>
+</html>
