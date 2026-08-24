@@ -1,0 +1,15 @@
+# REVIEW PREVIEW - CRAWLING DISALLOWED, DELIBERATELY.
+#
+# This build is published to a shared review host so the owner can look at it. It carries the
+# practice's real name, phone number and street address. If a search engine indexed it here, those
+# pages would compete with the practice's own site under somebody else's domain, and a patient could
+# reach a review copy believing it was the practice. That is a worse outcome than any indexing gain,
+# so the whole preview is closed to crawlers.
+#
+# THIS FILE IS PREVIEW POSTURE AND MUST BE REPLACED BEFORE A PRODUCTION LAUNCH.
+# Shipping this Disallow to the live domain would de-index the real site.
+#
+# No Sitemap: line is advertised here on purpose: sitemap.xml lists preview URLs, and pointing
+# crawlers at a listing of pages this same file forbids them to fetch is a contradiction.
+User-agent: *
+Disallow: /

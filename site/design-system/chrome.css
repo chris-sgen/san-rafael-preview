@@ -1,0 +1,574 @@
+/* ============================================================================
+   SAN RAFAEL AUTO ACCIDENT INJURY - CHROME SHEET (the P9 / stage-2 CHROME lock)
+   EXTRACTED VERBATIM from the owner-picked CHROME tournament winner, concept B
+   "The Lit Rail" (_design/_tournament/chrome/concept-b-lit-rail/preview.html).
+   This is an EXTRACTION, not a redesign: every rule below is the winner's rule,
+   in the winner's order, so the cascade computes exactly what the owner saw.
+
+   WHAT WAS LEFT BEHIND (reviewer scaffolding, never part of the chrome):
+     .deck / .deck__inner / .deck__title / .deck__row / .deck__btn / .deck__note
+       - the "CHROME STATES, FOR REVIEW" control strip and its three buttons.
+     .rail-scope[data-view="mobile"] - the CSS half of the third review button
+       ("Clamp the rail to 390px"). It is only reachable from that button, which
+       does not ship, so it can never fire in the shipped chrome. The container
+       ARCHITECTURE it exercised (container-type:inline-size on .rail-scope) is
+       kept, because a real 390px viewport narrows the container on its own.
+   Nothing else was removed and nothing was re-authored.
+
+   ONE ADDITION, forced by a gate rather than by taste, and stated rather than
+   hidden: the keyboard focus ring is RESTATED below. See its own comment.
+
+   WHERE THIS SITS IN THE CASCADE: tokens.css -> chrome.css -> structural.css
+   (build.mjs's designCssLinks() emits them in that order). This sheet therefore
+   states only what the locked structural sheet deliberately does NOT ship: the
+   rail, the lit panel, the veil, the closing band and the footer geometry.
+   Every layout class the structural sheet already owns (.container, .section,
+   .section--deep, .deep, .scrim, .seam, .rule-lit, .plane, .btn, .btn-primary,
+   .btn-ghost, .btn--phone, .cta-band, .cta-row, .arrow, .ico, .h-band,
+   .skip-link, .sr-only) is REUSED, never restated here.
+
+   TOKEN PURITY. Zero brand hex literals. No raw colour function of any kind: no
+   hex, no rgb, no rgba, no hsl, no hand-written alpha channel. Every colour
+   resolves through var(--ds-*); every translucent value is a color-mix() with a
+   plain-token fallback DECLARED FIRST, the same construction the structural
+   sheet uses. Every icon is drawn with stroke="currentColor" in the markup, so
+   it inherits the ink of the surface it sits on. ASCII only.
+   ============================================================================ */
+
+/* --- ONE CORRECTION TO THE INHERITED CASCADE, found by RENDERING ---------
+   The structural sheet sets body{color:var(--ds-ink)} in LIGHT scope, and
+   .surface-dark only redeclares CUSTOM PROPERTIES. So a classed element
+   inside a dark band is fine (it names its own colour token), but anything
+   that INHERITS colour - an unclassed run of text, and every icon drawn with
+   stroke="currentColor" - inherits the LIGHT ink and renders dark-on-dark.
+   The hero's .plane icon was invisible in the first render of this file for
+   exactly that reason; no text gate could have seen it, because the defect
+   only exists in computed style. One declaration fixes the whole class of
+   bug, and it belongs to the chrome stage rather than to the locked sheets. */
+.surface-dark{color:var(--ds-ink)}
+
+/* --- THE KEYBOARD FOCUS RING, RESTATED (not redesigned) ------------------
+   THE ONLY DECLARATION IN THIS SHEET THAT IS NOT IN THE WINNING PREVIEW, and
+   it is here because G-FOCUS (verify-focus-states) blocks a chrome sheet that
+   ships no global role-based :focus-visible ring of its own. The preview did
+   not need one: it inherited the locked ring from the structural sheet.
+   NOTHING ABOUT THE RING CHANGES. These are the structural sheet's own three
+   declarations, byte for byte - the C7 DEVIATION-3 ring, drawn as an OUTLINE
+   in --ds-brand-primary-deep (5.53 light / 5.52 dark), never a box-shadow.
+   The ONLY difference is the SELECTOR SHAPE: structural writes it as
+   :where(a,button,summary,input,select,textarea):focus-visible, and a :where()
+   selector is invisible to the gate's role check (the token before
+   :focus-visible is a bracket, not a role). Naming the same six roles
+   explicitly raises specificity from (0,1,0) to (0,1,1) - and NOTHING in the
+   locked foundation sits in that gap: the only other focus rules are
+   .skip-link:focus and .field:focus-visible, both (0,2,0), so both still win.
+   Same roles, same values, same paint. This is a restatement, not a change. */
+a:focus-visible,
+button:focus-visible,
+summary:focus-visible,
+input:focus-visible,
+select:focus-visible,
+textarea:focus-visible{
+  outline:3px solid var(--ds-brand-primary-deep);
+  outline-offset:2px;
+  border-radius:var(--ds-r-control);
+}
+
+/* --- THE RAIL SCOPE ------------------------------------------------------
+   Why a wrapper exists at all. The lit panel and the mobile drawer are ONE
+   component in this concept (see the two pick blocks on it), so its layout
+   must switch on the RAIL's own width rather than on a media query that only
+   the viewport can satisfy. The DEFAULT rules below are the NARROW ones, so a
+   browser that ignores container queries degrades to a stacked bar that
+   cannot overflow, rather than to a four-column bar that would.
+   The scope carries the sticky, not the rail, because the rail is also the
+   container and a container query can style a container's descendants but
+   never the container itself. */
+.rail-scope{
+  position:sticky;
+  top:0;
+  z-index:var(--ds-z-drawer);
+  container-type:inline-size;
+  container-name:rail;
+}
+
+/* --- THE RAIL: the same material as the hero beneath it ------------------
+   .section--deep supplies the three token-built layers and the inset top
+   highlight; everything below only re-times them for a bar. At rest the
+   bottom border is transparent so the rail and a dark hero read as one
+   plane. composition-medical-health section 1: sticky, shrink on scroll. */
+.rail{
+  --rail-pad:18px;
+  padding-top:var(--rail-pad);
+  padding-bottom:var(--rail-pad);
+  border-top:0;
+  border-bottom:1px solid transparent;
+  box-shadow:none;
+  transition:padding-top var(--ds-dur) var(--ds-ease),
+             padding-bottom var(--ds-dur) var(--ds-ease),
+             border-color var(--ds-dur) var(--ds-ease),
+             box-shadow var(--ds-dur) var(--ds-ease);
+}
+.rail.is-scrolled{
+  --rail-pad:9px;
+  border-bottom-color:var(--ds-line);
+  box-shadow:var(--ds-shadow-lift);
+}
+/* the OTHER half of the continuity contract, and the reason it is a CHROME
+   rule rather than a page one: when the first band under the rail is also the
+   dark material, that band gives up its own top hairline, so the two planes
+   meet with nothing between them and the frame reads as part of the page. A
+   page that opens on paper keeps every hairline it has. Found by rendering:
+   the locked .section--deep carries a 1px top border, which drew a visible
+   line straight across the join. */
+main > .section--deep:first-child{border-top:0}
+/* and the same argument at the other edge: a band that ends in the locked
+   .seam curve has already drawn its own edge, so its 1px bottom hairline is
+   a SECOND edge and rendered as a dark line straight under the curve. Also
+   caught by rendering, not by parsing. If :has() is unsupported the rule is
+   simply dropped and the hairline returns, which is the safe direction. */
+.section--deep:has(> .seam){border-bottom:0}
+/* the shrink is REAL: the second line of the lockup collapses to zero height,
+   so the bar loses about 18px of type as well as 18px of air. */
+.rail.is-scrolled .rail__sub{max-height:0;opacity:0}
+/* scrolled over live copy, the scrim steps up from the vignette opacity to
+   the veil opacity, which is what keeps the wordmark off a bright bloom. */
+.rail.is-scrolled .scrim{opacity:var(--ds-opacity-veil)}
+
+.rail__inner{
+  display:grid;
+  align-items:center;
+  column-gap:14px;
+  grid-template-columns:1fr auto;
+  grid-template-areas:
+    "brand toggle"
+    "sheet sheet"
+    "book  book"
+    "call  call";
+}
+
+/* --- the lockup. There is no vector logo, only a raster, so nothing is
+   traced. The mark is a DRAWN lit rule in the practice's own accent, which
+   is the same move the feel specimen locked, and the name is set in the
+   locked display face. Nothing here pretends to be a logo file. */
+.rail__brand{
+  grid-area:brand;
+  display:flex;
+  align-items:center;
+  gap:12px;
+  min-height:var(--ds-tap);
+  color:var(--ds-ink);
+  text-decoration:none;
+}
+.rail__mark{
+  display:block;
+  flex:none;
+  width:4px;
+  height:30px;
+  border-radius:var(--ds-r-pill);
+  background-color:var(--ds-brand-accent);
+  box-shadow:0 0 0 1px var(--ds-brand-accent);
+  box-shadow:0 0 18px color-mix(in srgb,var(--ds-brand-accent) 55%,transparent);
+  transition:height var(--ds-dur) var(--ds-ease);
+}
+.rail.is-scrolled .rail__mark{height:22px}
+.rail__word{
+  display:block;
+  font-family:var(--ds-font-display);
+  font-weight:600;
+  font-size:1.2rem;
+  line-height:1.04;
+  letter-spacing:var(--ds-track-display);
+}
+.rail__sub{
+  display:block;
+  overflow:hidden;
+  max-height:2em;
+  font-family:var(--ds-font-mono);
+  font-size:calc(var(--ds-step-fine) * 0.78);
+  letter-spacing:var(--ds-track-eyebrow);
+  text-transform:uppercase;
+  color:var(--ds-ink-soft);
+  transition:max-height var(--ds-dur) var(--ds-ease),opacity var(--ds-dur) var(--ds-ease);
+}
+
+/* --- the persistent menu control. It is LABELLED, not a bare glyph: this
+   reader was just hit by a car and a three-line icon is a puzzle. */
+.rail__toggle{
+  grid-area:toggle;
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  gap:10px;
+  min-height:var(--ds-tap);
+  padding:0 16px;
+  border-radius:var(--ds-r-control);
+  border:1px solid var(--ds-ink-faint);
+  background-color:transparent;
+  color:var(--ds-ink);
+  font-family:var(--ds-font-body);
+  font-weight:600;
+  font-size:var(--ds-step-fine);
+  letter-spacing:var(--ds-track-eyebrow);
+  text-transform:uppercase;
+  cursor:pointer;
+  transition:border-color var(--ds-dur-fast) var(--ds-ease),
+             color var(--ds-dur-fast) var(--ds-ease),
+             box-shadow var(--ds-dur-fast) var(--ds-ease);
+}
+.rail__toggle:hover{border-color:var(--ds-brand-accent)}
+.rail__toggle[aria-expanded="true"]{
+  border-color:var(--ds-brand-accent);
+  box-shadow:var(--ds-shadow);
+  box-shadow:0 0 22px color-mix(in srgb,var(--ds-brand-accent) 40%,transparent);
+}
+.rail__burger{position:relative;display:block;flex:none;width:18px;height:12px}
+.rail__burger i{
+  position:absolute;
+  left:0;
+  right:0;
+  height:2px;
+  border-radius:var(--ds-r-pill);
+  background-color:currentColor;
+  transition:transform var(--ds-dur) var(--ds-ease-out),opacity var(--ds-dur) var(--ds-ease-out);
+}
+.rail__burger i:nth-child(1){top:0}
+.rail__burger i:nth-child(2){top:5px}
+.rail__burger i:nth-child(3){top:10px}
+.rail__toggle[aria-expanded="true"] .rail__burger i:nth-child(1){transform:translateY(5px) rotate(45deg)}
+.rail__toggle[aria-expanded="true"] .rail__burger i:nth-child(2){opacity:0}
+.rail__toggle[aria-expanded="true"] .rail__burger i:nth-child(3){transform:translateY(-5px) rotate(-45deg)}
+
+/* --- the two action slots. ONE instance of each control exists in the whole
+   header. They are GRID ITEMS, so the same node sits in the bar at desktop
+   and at the foot of the open sheet on a phone: no duplicate CTA, no
+   duplicate phone number, and therefore no way for the two copies to drift.
+   Exactly ONE primary CTA exists in this header at every width. */
+.rail__slot{display:none;align-items:center}
+.rail__slot--book{grid-area:book;margin-top:14px;padding-top:14px;border-top:1px solid var(--ds-line)}
+.rail__slot--call{grid-area:call;margin-top:8px}
+.rail[data-open="true"] .rail__slot{display:flex}
+.rail__slot .btn{width:100%;justify-content:center}
+.rail .btn{padding:0 18px;font-size:var(--ds-step-fine)}
+
+/* --- THE LIT PANEL. .deep is the locked contained plane, so the panel is
+   made of the identical three layers as the rail and the hero: this is the
+   concept's signature move, a plane of the same material that LIGHTS UP
+   under the bar rather than a white sheet dropped over it. */
+.rail__sheet{
+  grid-area:sheet;
+  display:none;
+  width:100%;
+  margin-top:14px;
+}
+.rail[data-open="true"] .rail__sheet{
+  display:block;
+  animation:rail-in var(--ds-dur) var(--ds-ease-out) both;
+}
+@keyframes rail-in{
+  from{opacity:0;transform:translateY(-8px)}
+  to{opacity:1;transform:translateY(0)}
+}
+.rail__plate{padding:clamp(1.2rem,3.4vw,2rem) clamp(1.1rem,3vw,2rem)}
+.rail__kicker{
+  margin:0 0 var(--ds-space-gap);
+  font-family:var(--ds-font-display);
+  font-size:var(--ds-step-h3);
+  line-height:1.25;
+  letter-spacing:var(--ds-track-display);
+  color:var(--ds-ink);
+  max-width:34ch;
+}
+.rail__nav{display:grid;gap:var(--ds-space-gap)}
+.rail__group{
+  margin:0 0 var(--ds-space-tight);
+  padding-bottom:var(--ds-space-tight);
+  border-bottom:1px solid var(--ds-line);
+  font-family:var(--ds-font-mono);
+  font-size:var(--ds-step-fine);
+  letter-spacing:var(--ds-track-eyebrow);
+  text-transform:uppercase;
+  color:var(--ds-ink-faint);
+}
+/* GROUPING WRAPPERS, made explicit 2026-08-20. These three carried NO rule - not here and not in the
+   winning concept, which is where the gap originated; the lock extracted it faithfully. They are not a
+   rendering defect: .rail__word and .rail__sub are both display:block so the wordmark stacks on its
+   own, and .rail__nav is a grid whose gap already separates the sets. But verify-no-orphan-classes
+   exits 2 on a class defined in no linked sheet - correctly, since it cannot know a wrapper is inert -
+   and that would have refused EVERY page write at bulk, for all 12 T-FEATURE pages and every other
+   type carrying this chrome. Declaring the layout job each one actually does costs nothing and states
+   the intent, rather than leaving three dead names in the shipped markup.
+   .rail__wordmark must stay a single flex ITEM inside .rail__brand: deleting it would let the two
+   spans become separate flex children and break the lockup. */
+.rail__wordmark{display:block;min-width:0}
+.rail__toggle-label{display:inline-block}
+.rail__set{display:block}
+.rail__list{display:grid}
+.rail__item{position:relative;padding:6px 0 10px;border-bottom:1px solid var(--ds-line)}
+.rail__item:last-child{border-bottom:0}
+/* the accent as LIGHT: a bloom washes in from the left edge of the row. It is
+   held at the faint opacity token, so the reversed type on top of it stays
+   far above the AA floor (white measures better than 14:1 over it). */
+.rail__item::before{
+  content:"";
+  position:absolute;
+  inset:-2px -14px;
+  z-index:var(--ds-z-base);
+  pointer-events:none;
+  border-radius:var(--ds-r-control);
+  opacity:0;
+  background-image:radial-gradient(120% 170% at 0% 50%,var(--ds-brand-accent) 0%,transparent 62%);
+  transition:opacity var(--ds-dur) var(--ds-ease);
+}
+.rail__item:hover::before,.rail__item:focus-within::before{opacity:var(--ds-opacity-faint)}
+.rail__link{
+  position:relative;
+  z-index:var(--ds-z-raised);
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:14px;
+  min-height:var(--ds-tap);
+  font-family:var(--ds-font-display);
+  font-weight:600;
+  font-size:var(--ds-step-h3);
+  line-height:1.2;
+  letter-spacing:var(--ds-track-display);
+  color:var(--ds-ink);
+  text-decoration:none;
+  transition:color var(--ds-dur-fast) var(--ds-ease);
+}
+/* the whole row is the target, not just the words. The overlay sits UNDER the
+   note text so the note stays selectable. */
+.rail__link::after{content:"";position:absolute;inset:-6px -14px -34px}
+.rail__link .arrow{color:var(--ds-brand-accent);opacity:0;transform:translateX(-4px)}
+.rail__item:hover .rail__link .arrow,.rail__item:focus-within .rail__link .arrow{opacity:1;transform:translateX(0)}
+.rail__note{
+  position:relative;
+  z-index:var(--ds-z-raised);
+  display:block;
+  color:var(--ds-ink-soft);
+  font-size:var(--ds-step-fine);
+  line-height:1.5;
+  max-width:40ch;
+}
+.rail__fine{
+  margin:var(--ds-space-gap) 0 0;
+  padding-top:var(--ds-space-gap);
+  border-top:1px solid var(--ds-line);
+  color:var(--ds-ink-faint);
+  font-size:var(--ds-step-fine);
+}
+
+/* --- NARROW (the default, and the phone presentation) --------------------
+   The sheet stays IN FLOW inside the sticky rail and scrolls inside itself,
+   so nothing is position:fixed and nothing can be trapped off-screen. The two
+   action slots appear BELOW the destinations, which is where a thumb is.
+   The reserve in the calc below is the bar plus BOTH action slots plus their
+   rule: measured, not guessed, after a first render left the phone control
+   under the fold on a 375x780 screen. This is the same defect class the
+   brief names, one open accordion taller than the viewport hiding the row
+   beneath it, so the sheet is capped rather than allowed to grow. */
+.rail__sheet{
+  overflow-x:hidden;
+  overflow-y:auto;
+  max-height:calc(100vh - 250px);
+  max-height:calc(100dvh - 250px);
+}
+
+/* --- MID: the bar earns its booking CTA back ---------------------------- */
+@container rail (min-width:768px){
+  .rail{overflow:visible}
+  .rail__inner{
+    column-gap:14px;
+    grid-template-columns:auto 1fr auto auto auto;
+    grid-template-areas:"brand . call book toggle";
+  }
+  .rail__slot{display:flex;margin-top:0;padding-top:0;border-top:0}
+  .rail__slot .btn{width:auto}
+  /* the panel hangs OFF the rail instead of pushing the page down. It is the
+     width of the page MEASURE, not the viewport, so its content edge lines up
+     with the wordmark above it and with every band below it; its top corners
+     are square so it reads as the rail extending, not as a card dropped on
+     the page, and only the bottom two are rounded. */
+  .rail__sheet{
+    position:absolute;
+    left:0;
+    right:0;
+    top:100%;
+    margin-top:0;
+    max-height:none;
+    overflow:hidden;
+    border-top:0;
+    border-radius:0 0 var(--ds-r-surface) var(--ds-r-surface);
+  }
+  /* The position:absolute above LOSES, and this panel is the whole navigation.
+     The element is class="rail__sheet deep", and the structural sheet declares
+     `.deep,.section--deep{position:relative}` at the SAME specificity (0,1,0)
+     from a file linked AFTER this one, so the later declaration wins. A container
+     query contributes no specificity of its own, which is why this failed so
+     quietly: the query DID match and every other declaration in the block above
+     applied, leaving only `position` overridden. Left in flow, the sheet is a grid
+     item asking for `grid-area:sheet`, and the >=768 template has no such area, so
+     it lands in an implicit track far down the document. Measured by driving the
+     real MENU control: 57x1283 at (687,1350) at 768, and 292x871 at (974,938) at
+     1440, both entirely outside the viewport. It looked correct on a phone, where
+     the sheet is an ordinary stacked grid item and `relative` costs nothing, which
+     is the one width the panel was hand verified at. Re-stated at (0,2,0) so it
+     wins on merit rather than on the order two sheets happen to be linked in. */
+  .rail__sheet.deep{position:absolute}
+  .rail__plate{
+    width:100%;
+    max-width:1140px;
+    margin-left:auto;
+    margin-right:auto;
+    padding:clamp(1.6rem,3vw,2.4rem) 24px clamp(1.6rem,3vw,2.4rem);
+  }
+  .rail__nav{grid-template-columns:repeat(2,minmax(0,1fr));gap:var(--ds-space-gap) 40px}
+}
+/* 768 to 1023 is the tightest bar in the system: five items in one row on a
+   720px canvas. The second line of the lockup is the one thing that can go
+   without losing meaning, so it goes, and returns at 1024. */
+@container rail (min-width:768px) and (max-width:1023.98px){
+  .rail__sub{display:none}
+  .rail__slot--call .btn{padding:0 14px}
+}
+@container rail (min-width:1024px){
+  .rail__inner{column-gap:20px}
+  .rail__plate{padding-left:24px;padding-right:24px}
+  .rail__nav{gap:var(--ds-space-gap) 56px}
+}
+
+/* --- the veil. It lives OUTSIDE the rail so it can cover the viewport
+   without being clipped by the rail's own containment, and it sits one
+   canonical z-step BELOW the rail (overlay under drawer). Clicking it
+   closes the panel, which is the behaviour a drawer has to have. */
+.rail-veil{
+  position:fixed;
+  inset:0;
+  z-index:var(--ds-z-overlay);
+  background-color:var(--ds-surface-deep);
+  opacity:0;
+  visibility:hidden;
+  transition:opacity var(--ds-dur) var(--ds-ease),visibility var(--ds-dur) var(--ds-ease);
+}
+.rail-veil[data-open="true"]{opacity:var(--ds-opacity-scrim);visibility:visible}
+
+/* --- THE CLOSING BAND ---------------------------------------------------- */
+.precta{position:relative}
+.precta .cta-band__body p{margin-top:var(--ds-space-tight)}
+
+/* --- THE FOOTER: three rows, three jobs ---------------------------------- */
+.sfoot{position:relative}
+.sfoot__row{padding-top:var(--ds-space-gap);padding-bottom:var(--ds-space-gap)}
+.sfoot__row--top{
+  display:flex;
+  flex-wrap:wrap;
+  align-items:center;
+  justify-content:space-between;
+  gap:var(--ds-space-gap);
+  padding-top:calc(var(--ds-space-band) * 0.62);
+}
+.sfoot__ident{display:flex;align-items:center;gap:12px;color:var(--ds-ink);text-decoration:none}
+.sfoot__line{color:var(--ds-ink-soft);font-size:var(--ds-step-fine);max-width:46ch}
+.sfoot__top{
+  display:inline-flex;
+  align-items:center;
+  gap:8px;
+  min-height:var(--ds-tap);
+  padding:0 16px;
+  border:1px solid var(--ds-ink-faint);
+  border-radius:var(--ds-r-pill);
+  color:var(--ds-ink);
+  font-size:var(--ds-step-fine);
+  font-weight:600;
+  text-decoration:none;
+  transition:border-color var(--ds-dur-fast) var(--ds-ease),color var(--ds-dur-fast) var(--ds-ease);
+}
+.sfoot__top:hover{border-color:var(--ds-brand-accent)}
+.sfoot__top .arrow{transform:rotate(-90deg)}
+.sfoot__row--nav{
+  display:grid;
+  gap:var(--ds-space-gap) 32px;
+  grid-template-columns:1fr;
+  border-top:1px solid var(--ds-line);
+  padding-top:calc(var(--ds-space-gap) * 1.4);
+}
+.fcol{border-bottom:1px solid var(--ds-line)}
+.fcol__head{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:12px;
+  min-height:var(--ds-tap);
+  list-style:none;
+  cursor:pointer;
+  font-family:var(--ds-font-body);
+  font-size:var(--ds-step-fine);
+  font-weight:600;
+  letter-spacing:var(--ds-track-eyebrow);
+  text-transform:uppercase;
+  color:var(--ds-ink);
+}
+.fcol__head::-webkit-details-marker{display:none}
+.fcol__mark{position:relative;flex:none;width:16px;height:16px}
+.fcol__mark::before,.fcol__mark::after{
+  content:"";
+  position:absolute;
+  left:50%;
+  top:50%;
+  background-color:var(--ds-brand-accent);
+}
+.fcol__mark::before{width:14px;height:2px;margin:-1px 0 0 -7px}
+.fcol__mark::after{width:2px;height:14px;margin:-7px 0 0 -1px;transition:transform var(--ds-dur) var(--ds-ease-out)}
+.fcol[open] .fcol__mark::after{transform:scaleY(0)}
+.fcol__list{display:grid;padding-bottom:var(--ds-space-gap)}
+.fcol__list a{
+  display:inline-flex;
+  align-items:center;
+  min-height:40px;
+  color:var(--ds-ink-soft);
+  font-size:var(--ds-step-fine);
+  text-decoration:none;
+  transition:color var(--ds-dur-fast) var(--ds-ease);
+}
+.fcol__list a:hover{color:var(--ds-ink);text-decoration:underline;text-underline-offset:4px}
+.fcol__fact{
+  display:block;
+  padding:6px 0;
+  color:var(--ds-ink-soft);
+  font-size:var(--ds-step-fine);
+  line-height:1.5;
+  max-width:30ch;
+}
+.sfoot__row--legal{
+  display:flex;
+  flex-wrap:wrap;
+  align-items:center;
+  justify-content:space-between;
+  gap:var(--ds-space-tight) var(--ds-space-gap);
+  border-top:1px solid var(--ds-line);
+  padding-bottom:calc(var(--ds-space-band) * 0.5);
+  color:var(--ds-ink-faint);
+  font-size:var(--ds-step-fine);
+}
+.sfoot__legal-links{display:flex;flex-wrap:wrap;gap:var(--ds-space-gap)}
+.sfoot__legal-links a{color:var(--ds-ink-faint);text-decoration:none}
+.sfoot__legal-links a:hover{color:var(--ds-ink);text-decoration:underline;text-underline-offset:4px}
+@media (min-width:768px){
+  .sfoot__row--nav{grid-template-columns:repeat(3,minmax(0,1fr))}
+  .fcol{border-bottom:0}
+  .fcol__mark{display:none}
+  .fcol__head{cursor:default;min-height:0;margin-bottom:var(--ds-space-tight)}
+}
+@media (min-width:1024px){
+  .sfoot__row--nav{grid-template-columns:repeat(6,minmax(0,1fr))}
+}
+
+/* reduced motion is already zeroed globally by the structural sheet; these
+   two are the only NEW animations this file introduces, so they are named
+   here as well rather than relying on the wildcard alone. */
+@media (prefers-reduced-motion:reduce){
+  .rail[data-open="true"] .rail__sheet{animation:none}
+  .rail__link .arrow{transition:none}
+}

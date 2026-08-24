@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  REVIEW PREVIEW SITEMAP - NOT A PRODUCTION ARTIFACT.
+  These URLs point at the review host (https://chris-sgen.github.io/san-rafael-preview/site/), which is where this build is
+  published for the owner to look at. They are NOT the practice's canonical URLs: no canonical
+  domain has been confirmed by the owner. The only occurrence of a domain anywhere in the handoff
+  is inside an email address the briefs themselves mark "SAMPLE-SWAPPABLE placeholder ... NOT a
+  confirmed mailbox", which is not a basis for asserting a canonical host.
+  REGENERATE THIS FILE against the real domain before any production launch.
+  Paired with a robots.txt that disallows crawling, so this listing is a machine-readable index of
+  where the preview pages are, not an invitation to index them.
+-->
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <url>
+    <loc>https://chris-sgen.github.io/san-rafael-preview/site/accessibility.html</loc>
+    <lastmod>2026-08-24</lastmod>
+  </url>
+  <url>
+    <loc>https://chris-sgen.github.io/san-rafael-preview/site/after-a-crash.html</loc>
+    <lastmod>2026-08-24</lastmod>
+  </url>
+  <url>
+    <loc>https://chris-sgen.github.io/san-rafael-preview/site/auto-accident.html</loc>
+    <lastmod>2026-08-24</lastmod>
+  </url>
+  <url>
+    <loc>https://chris-sgen.github.io/san-rafael-preview/site/chiropractic.html</loc>
+    <lastmod>2026-08-24</lastmod>
+  </url>
+  <url>
+    <loc>https://chris-sgen.github.io/san-rafael-preview/site/conditions.html</loc>
+    <lastmod>2026-08-24</lastmod>
+  </url>
+  <url>
+    <loc>https://chris-sgen.github.io/san-rafael-preview/site/consultation.html</loc>
+    <lastmod>2026-08-24</lastmod>
+  </url>
+  <url>
+    <loc>https://chris-sgen.github.io/san-rafael-preview/site/contact.html</loc>
+    <lastmod>2026-08-24</lastmod>
+  </url>
+  <url>
+    <loc>https://chris-sgen.github.io/san-rafael-preview/site/cost-uninsured-driver.html</loc>
+    <lastmod>2026-08-24</lastmod>
+  </url>
+  <url>
+    <loc>https://chris-sgen.github.io/san-rafael-preview/site/cost.html</loc>
+    <lastmod>2026-08-24</lastmod>
+  </url>
+  <url>
+    <loc>https://chris-sgen.github.io/san-rafael-preview/site/doctor.html</loc>
+    <lastmod>2026-08-24</lastmod>
+  </url>
+  <url>
+    <loc>https://chris-sgen.github.io/san-rafael-preview/site/faq.html</loc>
+    <lastmod>2026-08-24</lastmod>
+  </url>
+  <url>
+    <loc>https://chris-sgen.github.io/san-rafael-preview/site/first-visit.html</loc>
+    <lastmod>2026-08-24</lastmod>
+  </url>
+  <url>
+    <loc>https://chris-sgen.github.io/san-rafael-preview/site/for-attorneys.html</loc>
+    <lastmod>2026-08-24</lastmod>
+  </url>
+  <url>
+    <loc>https://chris-sgen.github.io/san-rafael-preview/site/forms.html</loc>
+    <lastmod>2026-08-24</lastmod>
+  </url>
+  <url>
+    <loc>https://chris-sgen.github.io/san-rafael-preview/site/good-faith-estimate.html</loc>
+    <lastmod>2026-08-24</lastmod>
+  </url>
+  <url>
+    <loc>https://chris-sgen.github.io/san-rafael-preview/site/headache-migraine.html</loc>
+    <lastmod>2026-08-24</lastmod>
+  </url>
+  <url>
+    <loc>https://chris-sgen.github.io/san-rafael-preview/site/</loc>
+    <lastmod>2026-08-24</lastmod>
+  </url>
+  <url>
+    <loc>https://chris-sgen.github.io/san-rafael-preview/site/low-back-pain.html</loc>
+    <lastmod>2026-08-24</lastmod>
+  </url>
+  <url>
+    <loc>https://chris-sgen.github.io/san-rafael-preview/site/narrative-report.html</loc>
+    <lastmod>2026-08-24</lastmod>
+  </url>
+  <url>
+    <loc>https://chris-sgen.github.io/san-rafael-preview/site/pain-relief-clinic-of-marin.html</loc>
+    <lastmod>2026-08-24</lastmod>
+  </url>
+  <url>
+    <loc>https://chris-sgen.github.io/san-rafael-preview/site/pinched-nerve.html</loc>
+    <lastmod>2026-08-24</lastmod>
+  </url>
+  <url>
+    <loc>https://chris-sgen.github.io/san-rafael-preview/site/privacy.html</loc>
+    <lastmod>2026-08-24</lastmod>
+  </url>
+  <url>
+    <loc>https://chris-sgen.github.io/san-rafael-preview/site/sciatica.html</loc>
+    <lastmod>2026-08-24</lastmod>
+  </url>
+  <url>
+    <loc>https://chris-sgen.github.io/san-rafael-preview/site/shoulder-pain.html</loc>
+    <lastmod>2026-08-24</lastmod>
+  </url>
+  <url>
+    <loc>https://chris-sgen.github.io/san-rafael-preview/site/slipped-disc.html</loc>
+    <lastmod>2026-08-24</lastmod>
+  </url>
+  <url>
+    <loc>https://chris-sgen.github.io/san-rafael-preview/site/testimonials.html</loc>
+    <lastmod>2026-08-24</lastmod>
+  </url>
+  <url>
+    <loc>https://chris-sgen.github.io/san-rafael-preview/site/upper-back-neck-pain.html</loc>
+    <lastmod>2026-08-24</lastmod>
+  </url>
+  <url>
+    <loc>https://chris-sgen.github.io/san-rafael-preview/site/whiplash.html</loc>
+    <lastmod>2026-08-24</lastmod>
+  </url>
+  <url>
+    <loc>https://chris-sgen.github.io/san-rafael-preview/site/work-injuries.html</loc>
+    <lastmod>2026-08-24</lastmod>
+  </url>
+</urlset>
