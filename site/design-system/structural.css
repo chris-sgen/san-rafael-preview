@@ -290,7 +290,14 @@ button{font:inherit;color:inherit}
 }
 .section--deep{
   border-top:1px solid var(--ds-line);
-  border-bottom:1px solid var(--ds-line);
+  /* border-bottom REMOVED on owner instruction 2026-08-25. It was dead weight by then: every
+     .section--deep in this build also carries .section--seamed, so the doubled-class rule further
+     down was already zeroing it on all 65 of them. Deleting the declaration is better than
+     out-specifying it — the band's bottom edge is the carved curve, and a straight hairline drawn
+     at the section's rectangular bottom contradicts it.
+     NOTE the seamed override still earns its place: .section--sunken sets its OWN border-bottom
+     (see .section--sunken above), and `conditions` ships a sunken seamed band, so removing deep's
+     border does not cover that case. */
   box-shadow:inset 0 1px 0 var(--ds-line);
   box-shadow:inset 0 1px 0 color-mix(in srgb,var(--ds-ink) 16%,transparent);
 }
@@ -1500,7 +1507,7 @@ button{font:inherit;color:inherit}
    gets the curve AND a hard rule a few pixels below it. Measured on the shipped page: every
    `.section--seamed` computed `border-bottom: 1px solid rgb(43,50,56)` sitting exactly at the seam's
    own bottom. Dropped here at (0,2,0) so it beats `.section--deep` regardless of source order. The
-   TOP border is left alone: that one separates this band from the one above and is doing real work. */
+   TOP border is left alone: that one separates this band from the one above and is doing real work.
    Written as a doubled class rather than `.section--deep.section--seamed`, because the deep ground
    is not the only one that carries a seam: `conditions` ships a `.section--sunken.section--seamed`,
    whose 1px bottom border is currently INVISIBLE only because `.section--sunken` has no
