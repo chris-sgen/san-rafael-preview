@@ -141,7 +141,11 @@ main > .section--deep:first-child{border-top:0}
    a SECOND edge and rendered as a dark line straight under the curve. Also
    caught by rendering, not by parsing. If :has() is unsupported the rule is
    simply dropped and the hairline returns, which is the safe direction. */
-.section--deep:has(> .seam){border-bottom:0}
+/* REMOVED 2026-08-25: `.section--deep:has(> .seam){border-bottom:0}` sat here and never once
+   matched. `.seam` is never a DIRECT child of the section — the real DOM is
+   section > .container--full > .row > .col > svg.seam — so the rule was inert while reading as
+   though the seam's double bottom edge was already handled. The live fix is class-based and lives
+   in the structural sheet beside the other seam rules: `.section--seamed.section--seamed`. */
 /* the shrink is REAL: the second line of the lockup collapses to zero height,
    so the bar loses about 18px of type as well as 18px of air. */
 .rail.is-scrolled .rail__sub{max-height:0;opacity:0}

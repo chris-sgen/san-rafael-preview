@@ -31,8 +31,9 @@
      elevation   4 declared steps, unchanged: paper at rest, the lifted panel or
                  card (.plate / .card), the dark plane (.deep), the glass plane
                  floating on the dark plane (.plane)
-     seams       .seam (curve) and .seam-rule (numbered hairline). TWO seam kinds,
-                 never three, exactly as the specimen locked it
+     seams       .seam (the layered curve). ONE seam kind. The specimen locked TWO,
+                 the numbered hairline being the second; it was REMOVED on owner
+                 instruction 2026-08-25 and every element with it went too
      rhythm      one --ds-space-band of air between bands; three grounds walked in
                  order: lit dark material, calm paper, sunken
      type        four applied steps: .h-hero, .h-band, .h-card, reading (.lead / p)
@@ -89,7 +90,7 @@
      _MODERN-DESIGN-PATTERN-LIBRARY D1 (ink-tinted shadows, inherited from tokens)
      SURFACE-PATTERNS.md #10 soft-shadow-lift        -> .card / .plate chrome
      SURFACE-PATTERNS.md #13 glass-translucent       -> .plane
-     SURFACE-PATTERNS.md #28 hairline-with-eyebrow-label (numbered) -> .seam-rule
+     SURFACE-PATTERNS.md #28 hairline-with-eyebrow-label (numbered) -> RETIRED 2026-08-25
      SURFACE-PATTERNS.md #38 film-grain-overlay      -> the grain veil, no asset
      DIVIDER-PATTERNS.md #2 wave smooth (single curve) -> .seam
      CARD-VARIATIONS.md #4 circle-icon service card with arrow link -> .card
@@ -116,7 +117,8 @@
        measured signature move (signature_moves: dark-hero, big-stat-bands)
      FAQ-ACCORDION.md #1 "Classic expand-rows with + indicator" -> .faq. Picked
        over the card variants because the reading canvas is deliberately calm and
-       the hairline row is the same architectural family as .seam-rule
+       the hairline row was the same architectural family as the numbered seam
+       that has since been retired
      FORM-LAYOUTS.md #1 "Single-column stacked inquiry form" -> .form default
      FORM-LAYOUTS.md #3 "2-up field rows (denser desktop layout)" -> .form__row--2up
      SURFACE-PATTERNS.md #39 Boxed-default -> .field (padding + hairline + small
@@ -370,12 +372,14 @@ button{font:inherit;color:inherit}
 
 
 /* ==========================================================================
-   4. SEAMS - two kinds, never three
+   4. SEAMS - one kind (the second was retired 2026-08-25)
    Seam one is the layered curve (organic, this vertical's own arc idiom):
    DIVIDER-PATTERNS.md #2 built as the _MODERN-WOW-SPEC section A "Opacity"
    variant, two paths of one shape with the back one held down at the texture
    opacity, so the seam reads as depth rather than as a graphic.
-   Seam two is the numbered hairline (architectural, quiet): SURFACE-PATTERNS #28.
+   Seam two WAS the numbered hairline (SURFACE-PATTERNS #28). Removed on owner
+   instruction 2026-08-25 along with all 110 of its elements; the curve is now the
+   only seam device this sheet ships.
    ========================================================================== */
 .seam{
   position:absolute;
@@ -395,24 +399,15 @@ button{font:inherit;color:inherit}
 .seam-into-sunken{--seam-fill:var(--ds-surface-sunken);--seam-fill-back:var(--ds-line)}
 .seam-into-paper{--seam-fill:var(--ds-surface);--seam-fill-back:var(--ds-surface-sunken)}
 
-.seam-rule{
-  display:flex;
-  align-items:center;
-  gap:20px;
-  margin:var(--ds-space-band) 0 var(--ds-space-gap);
-  font-family:var(--ds-font-mono);
-  font-size:var(--ds-step-fine);
-  letter-spacing:var(--ds-track-eyebrow);
-  text-transform:uppercase;
-  color:var(--ds-ink-faint);
-}
-.seam-rule::after{
-  content:"";
-  flex:1 1 auto;
-  height:1px;
-  background-color:var(--ds-line);
-  background-image:linear-gradient(90deg,var(--ds-line-strong) 0%,var(--ds-line) 60%,transparent 100%);
-}
+/* The seam-rule device (a numbered hairline) was REMOVED on owner instruction, 2026-08-25, along with all 110
+   of its elements across 28 pages. Recording what it was so the removal is legible rather than a gap:
+   a flex row whose ::after drew a fading hairline, opening a light band the way the carved curve
+   closes a lit one. Two notes for anyone reconsidering it. Its `margin: var(--ds-space-band) 0
+   var(--ds-space-gap)` meant it was carrying real band rhythm, not just a mark, so removing it
+   shortens every section that used one. And the `<span class="seam-rule" data-num="NN">` variant
+   never rendered its number at all: no rule anywhere resolved `attr(data-num)`, so those 30-odd spans
+   drew a bare line while the markup implied a numeral. The `<p class="seam-rule">NN</p>` variant did
+   show its number, so the page carried two devices that looked different and were named the same. */
 /* the plain divider, for inside a block rather than between bands */
 .hairline{height:1px;border:0;margin:var(--ds-space-gap) 0;background-color:var(--ds-line)}
 
@@ -1498,9 +1493,25 @@ button{font:inherit;color:inherit}
 }
 .hero.section--seamed{padding-bottom:calc(var(--ds-space-band) * 1.15 + 34px)}
 
+/* ON A SEAMED BAND THE CURVE *IS* THE BOTTOM EDGE, so the straight hairline underneath it is a
+   second, contradictory edge. `.deep,.section--deep` sets `border-bottom:1px solid var(--ds-line)`,
+   which is right for a band that ends on a straight line and wrong the moment the band ends on a
+   carved curve: the border still draws the full width at the section's rectangular bottom, so the eye
+   gets the curve AND a hard rule a few pixels below it. Measured on the shipped page: every
+   `.section--seamed` computed `border-bottom: 1px solid rgb(43,50,56)` sitting exactly at the seam's
+   own bottom. Dropped here at (0,2,0) so it beats `.section--deep` regardless of source order. The
+   TOP border is left alone: that one separates this band from the one above and is doing real work. */
+   Written as a doubled class rather than `.section--deep.section--seamed`, because the deep ground
+   is not the only one that carries a seam: `conditions` ships a `.section--sunken.section--seamed`,
+   whose 1px bottom border is currently INVISIBLE only because `.section--sunken` has no
+   `overflow:hidden`, so the seam SVG paints over it. That is luck, not design, and it would come
+   back the day anyone gives that class a clip. Repeating the selector is the standard way to buy
+   specificity without naming a ground this rule does not care about: any seamed band, any ground. */
+.section--seamed.section--seamed{border-bottom:0}
+
 /* The numbered hairline OPENS a band, so its own band-sized top margin would
    double the section's padding. Zeroed only where it is the first thing in a col. */
-.col > .seam-rule:first-child{margin-top:0}
+/* (the first-child margin reset that corrected this device went with it) */
 
 /* .card__disc paints a brand gradient that INVERTS with the surface (deep blue on
    paper, pale blue on the material) while the icon inside inherits the band's ink.
