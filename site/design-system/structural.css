@@ -207,6 +207,33 @@ h1,h2,h3,h4,h5,h6,p,figure,blockquote,dl,dd,pre{margin:0}
 ul,ol{margin:0;padding:0;list-style:none}
 img,svg,video{max-width:100%}
 img{height:auto;display:block}
+/* A CAPPED IMAGE CENTRES IN ITS COLUMN.
+   Several images carry an inline `max-width` (30rem to 34rem) so a photograph never runs the full
+   measure. That cap is a deliberate SIZE decision. Being pinned to the column's left edge is not —
+   it is just what a block element does when it is narrower than its parent, and it reads as an
+   unfinished row rather than a composed one. Measured across the build at 1200px: 16 capped images,
+   ALL 16 flush left, with 228px to 612px of empty column beside them.
+   Only bites when the image is narrower than its column: a full-width image has no free space to
+   distribute, so `auto` resolves to zero and nothing moves.
+   Keyed to the CAP rather than to a wrapper. Chasing wrappers failed twice: `.col > img` reached 7
+   of the 16, adding `.flow > img` reached 15, and the last one turned out to sit inside a `.deep`
+   plate — a fourth wrapper would have appeared eventually. The cap is what the affected images
+   actually have in common: exactly 16 carry an inline max-width, exactly the 16 that were pinned
+   left, and no card, tile or grid image carries one, so this cannot reach an image a component is
+   sizing on purpose. An uncapped image fills its column and `auto` resolves to zero regardless. */
+img[style*="max-width"]{margin-inline:auto}
+/* ...with ONE exception, measured. Every one of the 16 images this rule centres shares its column
+   with blocks that stay on the left rail: `h2.h-band` at 361px, `p.lead` at 665, `p.measure` at 708,
+   all at x=54. So the column grammar is not "images hug left" — it is that EVERYTHING in a text
+   column hangs off the left rail at whatever width it happens to be, and centring the image moves
+   the one element that is not text. In 15 of the 16 the rail-mates are visibly different widths, so
+   a centred image still reads as a deliberate figure. In the 16th it does not: on
+   upper-back-neck-pain a `div.plane` sits directly above the image at 544px against the image's own
+   544px — the author gave the two the SAME cap so they would stack as a pair — and centring moved
+   the image 274px out from under it (154px at 900px wide). Two identically-wide blocks 40px apart
+   and offset read as a mistake, not a composition. Where a plane shares the column, the image keeps
+   the rail. */
+.flow:has(> .plane) > img[style*="max-width"]{margin-inline:0}
 a{color:var(--ds-brand-primary-deep)}
 button{font:inherit;color:inherit}
 :where(a,button,summary,input,select,textarea):focus-visible{
@@ -1467,28 +1494,54 @@ button{font:inherit;color:inherit}
      aspect ratio and the rest of the column is dead space: measured across this build at 1200px, 26
      media+prose splits had the media column stopping short of the prose, most of them by half —
      583px of text beside 259px of picture, and the gap below it empty.
-     Fixed by letting a media-only column stretch and its image fill the height it is given, cropping
-     through object-fit rather than letter-boxing.
+     Fixed by letting a media-only column stretch and its image grow into the height it is given.
+     Correcting my own earlier count here: the figure was 28 short media columns, not 26, and 6 still
+     stand short after this rule, not 4 — and three of those 6 hold exactly one child
+     (`figure.figure-drawn`), so they are not the multi-element cases I claimed they were.
 
-     TWO deliberate bounds:
+     ONE deliberate bound at this level:
      - `:only-child` — a column holding TWO stacked frames (headache-migraine) is composed, not
        short, and stretching both would double it. Only a lone image is treated as under-filled.
-     - `max-height:34rem` — the imagery spec's rule 5 is that an image never becomes the page, and the
-       tallest prose column here is 1170px. Filling to the sibling without a ceiling would hand a
-       photograph the whole fold. 34rem fills the common 430-750px cases completely and caps the rest.
 
-     `!important` is needed because the cap it overrides is an INLINE style on each <img>; inline
-     beats any selector. Nine other declarations in this sheet already use it. */
-  /* Centred, not top-aligned: where the prose runs past the 34rem ceiling the image cannot fill the
-     column, and the leftover reads as a short column if it all sits underneath. Split above and
-     below, the same picture reads as deliberately set against the text. */
+     The height CEILING is not set here — see the rule below. It is each image's own authored
+     `max-height`, deliberately NOT overridden. */
+  /* Centred, not top-aligned: an image that cannot fill the column leaves a remainder, and all of it
+     sitting underneath reads as a short column. Split above and below, the same picture reads as
+     deliberately set against the text. This half of the pair crops nothing — it only decides where
+     the leftover space goes. */
   .row--split > .col:has(> img:only-child){align-self:stretch;display:flex;align-items:center}
-  .row--split > .col > img:only-child{
-    flex:1 1 auto;
+  /* Grow only to the cap THIS image was authored with. An earlier version of this rule forced
+     `max-height:34rem !important`, which did not enforce the cap discipline — it RAISED it. Measured:
+     15 of 18 affected images landed on exactly 544px, so four authored values (20/22/24/26rem)
+     collapsed into one and the per-image sizing they encoded was gone; the smallest cap was
+     overridden by +70%. imagery-system.md rule 5 is "capped media height ... an image never becomes
+     the page", and at a 900px-wide viewport 544px is roughly 78% of the fold.
+     Worse, the crop that bought: `record-documentation` fell to 47.6% of frame and the pen its alt
+     text names on five pages was outside the surviving window, and `road-marin-corridor` — a WIDE
+     corridor whose alt names hills on both sides — rendered as a 0.85:1 portrait strip with both
+     sides cut. On a build whose whole discipline is that a picture never says more than the copy can,
+     five pictures were saying LESS than their own alt text.
+     So: no max-height override. Each image fills its column up to the ceiling its author gave it.
+     Scoped to images that DECLARE a cap, because an image with no cap also declared no object-fit,
+     and cropping one that was deliberately left uncropped is not this rule's business. */
+  .row--split > .col > img[style*="max-height"]:only-child{
+    flex:0 1 auto;
     height:100% !important;
-    max-height:34rem !important;
     object-fit:cover;
   }
+  /* ONE asset is exempt, on the honesty rule rather than on taste. `record-documentation.jpg` is
+     1024x576 and the pen its alt text names sits at roughly 81-97% of the frame WIDTH. Filling the
+     column height crops it to a 1.20 box, which keeps only the centre 67.4% of the width, i.e. cuts
+     at 84% - through the pen, leaving about a sixth of it and removing the barrel, clip and tip. All
+     NINE places this asset is used say "beside a capped pen" or "beside a pen", so the crop would
+     leave nine alt texts describing something no longer in the picture. imagery-system.md line 111:
+     "A missing picture is not a defect; a dishonest picture is."
+     Checked the same way and NOT exempt: `road-marin-corridor` (hills run to x=430 and x=560, the
+     eucalyptus sits at x=150, all inside the 73.6% window, so "on either side" still holds),
+     `record-writing-desk` (pen central at 430-620, cup 590-900, both inside 80.9%),
+     `collision-damage-detail` (its own alt says "close crop ... filling the frame"), and
+     `record-radiograph` (its claim is vertical, "skull to pelvis", and cover trims the horizontal). */
+  .row--split > .col > img[src*="record-documentation"]:only-child{height:auto !important}
 }
 
 /* A full-bleed container. Named in the DOM-grammar law itself ("allow
