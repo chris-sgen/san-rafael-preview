@@ -109,6 +109,20 @@ textarea:focus-visible{
              border-color var(--ds-dur) var(--ds-ease),
              box-shadow var(--ds-dur) var(--ds-ease);
 }
+/* THE RAIL MUST NOT CLIP ITS OWN PANEL.
+   The rail is <header class="rail section--deep surface-dark">, and `.deep,.section--deep` carries
+   `overflow:hidden` (structural.css) so a band's three material layers stay inside the band's
+   geometry. Correct for a BAND. Wrong for a header whose entire navigation drops BELOW itself: at
+   >=768 the sheet is absolutely positioned at top:100%, i.e. it begins exactly where the rail's clip
+   ends. Measured on the shipped page at 1200: rail bottom 86, sheet 67 -> 751, so 19px of a 684px
+   panel survived and the veil covered the rest. Hit-testing every destination at its own centre
+   returned 0 of 8 clickable. It looked correct on a phone only because the sheet is in normal flow
+   there, so the rail grows to contain it, which is why a 390-wide check passed it.
+   Lifted only while the panel is OPEN, so the closed rail keeps the containment the material was
+   designed with. Specificity (0,2,0) beats `.section--deep` (0,1,0), so this does not depend on the
+   order the two sheets happen to be linked in. */
+.rail[data-open="true"]{overflow:visible}
+
 .rail.is-scrolled{
   --rail-pad:9px;
   border-bottom-color:var(--ds-line);
@@ -375,6 +389,15 @@ main > .section--deep:first-child{border-top:0}
   max-height:calc(100vh - 250px);
   max-height:calc(100dvh - 250px);
 }
+/* ...and that `overflow-y:auto` LOSES, which silently costs a phone user half the navigation.
+   The sheet element is class="rail__sheet deep", and `.deep,.section--deep{overflow:hidden}`
+   (structural.css) matches it at the same specificity from a sheet linked AFTER this one, so the
+   computed value is `hidden`. The cap above is doing its job — measured at 375: 1144px of content in
+   a 560px box — but with overflow hidden the panel cannot be scrolled by touch, so the last four
+   destinations are simply unreachable. Programmatic scrollTop still moves, which is exactly why this
+   survives a scripted check and fails a thumb. Re-stated at (0,2,0) so the cap and the scroll ship
+   together. */
+.rail__sheet.deep{overflow-y:auto}
 
 /* --- MID: the bar earns its booking CTA back ---------------------------- */
 @container rail (min-width:768px){
@@ -417,6 +440,11 @@ main > .section--deep:first-child{border-top:0}
      is the one width the panel was hand verified at. Re-stated at (0,2,0) so it
      wins on merit rather than on the order two sheets happen to be linked in. */
   .rail__sheet.deep{position:absolute}
+  /* At this width the sheet is a dropdown with `max-height:none`, so it is exactly as tall as its
+     content and has nothing to scroll. Restore the intended clip at the same (0,2,0) the base rule
+     now uses, or the scroll-fix above would leak an unnecessary scroll container onto the desktop
+     panel. */
+  .rail__sheet.deep{overflow:hidden}
   .rail__plate{
     width:100%;
     max-width:1140px;
