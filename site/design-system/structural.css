@@ -1460,6 +1460,35 @@ button{font:inherit;color:inherit}
 .row--split{gap:calc(var(--ds-space-gap) * 1.9);align-items:start}
 @media (min-width:900px){
   .row--split{grid-template-columns:minmax(0,1.12fr) minmax(0,0.88fr)}
+
+  /* BALANCE THE MEDIA COLUMN AGAINST THE PROSE BESIDE IT.
+     `align-items:start` above makes every column only as tall as its own content. For a prose column
+     that is right. For a column holding one photograph it means the picture sits at its natural
+     aspect ratio and the rest of the column is dead space: measured across this build at 1200px, 26
+     media+prose splits had the media column stopping short of the prose, most of them by half —
+     583px of text beside 259px of picture, and the gap below it empty.
+     Fixed by letting a media-only column stretch and its image fill the height it is given, cropping
+     through object-fit rather than letter-boxing.
+
+     TWO deliberate bounds:
+     - `:only-child` — a column holding TWO stacked frames (headache-migraine) is composed, not
+       short, and stretching both would double it. Only a lone image is treated as under-filled.
+     - `max-height:34rem` — the imagery spec's rule 5 is that an image never becomes the page, and the
+       tallest prose column here is 1170px. Filling to the sibling without a ceiling would hand a
+       photograph the whole fold. 34rem fills the common 430-750px cases completely and caps the rest.
+
+     `!important` is needed because the cap it overrides is an INLINE style on each <img>; inline
+     beats any selector. Nine other declarations in this sheet already use it. */
+  /* Centred, not top-aligned: where the prose runs past the 34rem ceiling the image cannot fill the
+     column, and the leftover reads as a short column if it all sits underneath. Split above and
+     below, the same picture reads as deliberately set against the text. */
+  .row--split > .col:has(> img:only-child){align-self:stretch;display:flex;align-items:center}
+  .row--split > .col > img:only-child{
+    flex:1 1 auto;
+    height:100% !important;
+    max-height:34rem !important;
+    object-fit:cover;
+  }
 }
 
 /* A full-bleed container. Named in the DOM-grammar law itself ("allow
