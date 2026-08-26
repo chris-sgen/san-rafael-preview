@@ -406,6 +406,11 @@ button{font:inherit;color:inherit}
   box-shadow:var(--ds-shadow),inset 0 1px 0 color-mix(in srgb,var(--ds-ink) 22%,transparent);
   max-width:36rem;
 }
+/* A plane carrying a DEFINITION LIST is a different object from a plane carrying one line of prose.
+   36rem suits the callouts - eleven of the twelve planes on this site - but it left the billing
+   block at 576px inside a 1092px column, so half the band was empty beside a four-row table. Scoped
+   by content rather than by page: exactly one plane holds a <dl>. */
+.plane:has(> dl){max-width:52rem}
 /* the reading measure sits on the element that OWNS the body font, never on a
    wrapper: a ch on a wrapper resolves against the wrong face and computes wide. */
 .plane p{margin:0;color:var(--ds-ink-soft);font-size:var(--ds-step-fine);max-width:52ch}
@@ -474,7 +479,12 @@ button{font:inherit;color:inherit}
   line-height:var(--ds-leading-tight);
   letter-spacing:var(--ds-track-display);
   color:var(--ds-ink);
-  max-width:16ch;
+  /* 32ch, not 16. At 16 the band headings broke into three and four lines against a column many times
+     wider than the text, so a two-clause heading read as a stack. Measured every requested heading at
+     16/26/30/34/36/38/42ch: 30 and 34 both land ALL SEVEN on the line counts asked for, and 36 is
+     already too wide - "What is billed, and what is not, in one block" collapses to one line there.
+     32 is the middle of the working window. The <=480px override stays at 22ch. */
+  max-width:32ch;
   font-variant-numeric:tabular-nums;
 }
 .h-sheet{
