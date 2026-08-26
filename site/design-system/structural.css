@@ -222,6 +222,13 @@ img{height:auto;display:block}
    actually have in common: exactly 16 carry an inline max-width, exactly the 16 that were pinned
    left, and no card, tile or grid image carries one, so this cannot reach an image a component is
    sizing on purpose. An uncapped image fills its column and `auto` resolves to zero regardless. */
+/* ONE corner treatment on every image, stated once. Measured 2026-08-26: 13 of the 68 images in
+   <main> rendered visually SQUARE while the other 55 rendered at --ds-r-surface, because the
+   radius was being carried inline per-image and 13 placements never received it - four of them
+   the condition cards on the homepage, which sat square-cornered inside a rounded card. An inline
+   border-radius still wins where one exists, and it carries the same token, so this changes only
+   the images that had none. */
+main img{border-radius:var(--ds-r-surface)}
 img[style*="max-width"]{margin-inline:auto}
 /* ...with ONE exception, measured. Every one of the 16 images this rule centres shares its column
    with blocks that stay on the left rail: `h2.h-band` at 361px, `p.lead` at 665, `p.measure` at 708,
