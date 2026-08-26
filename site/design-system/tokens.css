@@ -79,7 +79,7 @@
   --ds-font-display:"Source Serif 4",Georgia,"Times New Roman",serif;
   --ds-font-body:Inter,system-ui,-apple-system,sans-serif;
   --ds-font-mono:ui-monospace,"SFMono-Regular",Menlo,monospace;
-  --ds-step-hero:clamp(2.9rem,7.5vw,6rem);
+  --ds-step-hero:clamp(2.35rem,4.6vw,4rem);
   --ds-step-h2:clamp(1.9rem,3.6vw,3rem);
   --ds-step-h3:1.35rem;
   --ds-step-body:1.0625rem;
@@ -257,7 +257,7 @@
   --ds-font-display:"Source Serif 4",Georgia,"Times New Roman",serif;
   --ds-font-body:Inter,system-ui,-apple-system,sans-serif;
   --ds-font-mono:ui-monospace,"SFMono-Regular",Menlo,monospace;
-  --ds-step-hero:clamp(2.9rem,7.5vw,6rem);
+  --ds-step-hero:clamp(2.35rem,4.6vw,4rem);
   --ds-step-h2:clamp(1.9rem,3.6vw,3rem);
   --ds-step-h3:1.35rem;
   --ds-step-body:1.0625rem;

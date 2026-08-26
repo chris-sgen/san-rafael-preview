@@ -125,7 +125,8 @@
        radius + a focus ring; the ring colour is changed, see DEVIATION 3)
      SURFACE-PATTERNS.md #32 Numbered-step (process pages) -> .steps
      SURFACE-PATTERNS.md #17 Solid-square-precise -> .btn-primary shape
-     SURFACE-PATTERNS.md #19 Outline-ghost (secondary CTA) -> .btn-ghost
+     SURFACE-PATTERNS.md #19 Outline-ghost (secondary CTA) -> .btn-quiet (the single secondary;
+     the separate .btn-ghost rank was collapsed into it 2026-08-26 - see the note at .btn-quiet)
      SURFACE-PATTERNS.md #21 Icon-led-arrow -> .btn-link
      CTA-PATTERNS.md #7 "Multi-CTA cluster (primary + secondary horizontal)" -> .cta-row
      CTA-PATTERNS.md #4 "Phone-pill CTA (number as button)" -> .btn--phone (the NAP
@@ -239,7 +240,6 @@ button{font:inherit;color:inherit}
 :where(a,button,summary,input,select,textarea):focus-visible{
   outline:3px solid var(--ds-brand-primary-deep);
   outline-offset:2px;
-  border-radius:var(--ds-r-control);
 }
 .skip-link{
   position:absolute;
@@ -626,21 +626,29 @@ button{font:inherit;color:inherit}
 }
 .btn-quiet:hover{border-color:var(--ds-brand-primary-deep);color:var(--ds-brand-primary-deep);transform:translateY(-2px)}
 .btn-quiet:hover .arrow{transform:translateX(5px)}
-/* rank three: the ghost. It carries no fill at all, so it is the control that
-   can sit on the material, on paper, or on the sunken ground unchanged. */
-.btn-ghost{
-  background-color:transparent;
-  color:var(--ds-ink);
-  border-color:var(--ds-ink-faint);
-}
-.btn-ghost:hover{border-color:var(--ds-brand-primary-deep);color:var(--ds-brand-primary-deep)}
-.btn-ghost:hover .arrow{transform:translateX(5px)}
+/* THE SECONDARY IS .btn-quiet, AND THERE IS ONLY ONE. A third rank (.btn-ghost) used to sit here:
+   transparent, no fill, no shadow, otherwise identical to .btn-quiet. It was carrying 13 of the 45
+   secondary controls, 5 of them on dark bands and 8 on paper, and it never once appeared beside a
+   .btn-quiet in the same .cta-row - so the two were not a hierarchy a reader could perceive, they
+   were two names for the same rank. Collapsed into .btn-quiet. That is safe on BOTH grounds because
+   tokens.css:226 `.surface-dark{...}` redeclares the whole token set, so --ds-surface-2 resolves to
+   #ffffff on paper and #1c2126 on dark; the fill follows the band instead of fighting it. */
+/* .btn--phone is a MODIFIER, not a third style: it keeps the shared control radius so every button
+   on the site is the same shape. It previously overrode --ds-r-control (6px) with --ds-r-pill (999px),
+   which made the phone CTA the one differently-shaped button on the site. Tabular numerals stay -
+   that is legibility for a phone number, not decoration. */
 .btn--phone{
-  border-radius:var(--ds-r-pill);
   font-variant-numeric:tabular-nums;
   letter-spacing:0.01em;
 }
 .btn--block{display:flex;width:100%}
+/* PRESSED. The build shipped hover, focus-visible (globally, chrome.css:66) and disabled, but NO
+   :active on any button anywhere - so a tap on a touch device gave no confirmation at all. The
+   press undoes the hover lift rather than adding a new effect, which is what makes it read as
+   physical contact. */
+.btn-primary:active{transform:translateY(0);box-shadow:0 4px 12px color-mix(in srgb,var(--ds-brand-primary) 38%,transparent);background-color:var(--ds-brand-primary-ink);border-color:var(--ds-brand-primary-ink)}
+.btn-quiet:active{transform:translateY(0);box-shadow:none;border-color:var(--ds-brand-primary-deep);color:var(--ds-brand-primary-deep)}
+.btn-link:active{color:var(--ds-brand-primary-ink);text-decoration:none}
 .btn[disabled],.btn[aria-disabled="true"]{opacity:var(--ds-opacity-disabled);pointer-events:none}
 /* the inline text link with the moving arrow (the card and section "go") */
 .btn-link{
@@ -673,7 +681,20 @@ button{font:inherit;color:inherit}
 .hero .plane{max-width:34rem}
 /* the hero of an inner page: same left column, one step down in scale and air */
 .hero--inner{padding-top:calc(var(--ds-space-band) * 0.8);padding-bottom:calc(var(--ds-space-band) * 0.8)}
-.hero--inner .h-hero{font-size:var(--ds-step-h2);max-width:20ch}
+/* HIERARCHY REPAIR, measured 2026-08-26. Three levels of the outline were rendering as one size.
+   (1) .hero--inner put h1 on --ds-step-h2, so on the 5 pages that use it the page H1 computed
+       EXACTLY the size of its own 6-10 section headings at all four breakpoints - no visible top
+       of hierarchy at all. It now sits one step above h2 rather than on it.
+   (2) .h-band and .h-sheet both read --ds-step-h2, and 10 h3 elements across 7 pages carry one of
+       them, so those h3 rendered at the h2 size; on slipped-disc an h3 was byte-identical in every
+       computed property to the page H1 and sat 121px below an h2 it differed from only by weight.
+       The 179 h2 that carry these classes are untouched - the selector is h3-scoped.
+   (3) four h3.eyebrow on for-attorneys computed 13px, BELOW the 17px body step, so a heading
+       rendered smaller than the paragraph it introduces. p.eyebrow (3 uses) keeps the label size;
+       only the heading form is raised. */
+.hero--inner .h-hero{font-size:clamp(2.05rem,3.9vw,3.3rem);max-width:20ch}
+h3.h-band,h3.h-sheet{font-size:clamp(1.55rem,2.6vw,2.1rem)}
+h3.eyebrow{font-size:var(--ds-step-h3);letter-spacing:normal;text-transform:none}
 
 
 /* ==========================================================================
@@ -1429,9 +1450,25 @@ button{font:inherit;color:inherit}
    a laptop's. Nothing here restyles a component; it retunes the scale the
    components already read from.
    ========================================================================== */
+/* HERO SCALE, retuned 2026-08-26 on measurement rather than taste. --ds-step-hero topped out at
+   6rem/96px, and at 1440px that put 24 of the 29 pages' H1 at 96px: consultation ran EIGHT lines
+   at 64% of its own hero section, work-injuries eight at 61%, cost seven at 56%, the homepage six
+   at 54%, and the headline sat 5.6x the size of the lead paragraph beneath it. A headline that is
+   more than half its section is not a headline, it is the section. Ceiling now 4rem/64px, and the
+   phone ceiling 2.9rem -> 2.45rem because at 375px the homepage H1 was running NINE lines.
+   The five pages already at 48px are unaffected: they read from --ds-step-h2, not this token. */
 @media (max-width:480px){
-  :root{
-    --ds-step-hero:clamp(2.05rem,9vw,2.9rem);
+  /* `:root, .surface-dark` - BOTH, and that is the whole point. Measured 2026-08-26: this phone
+     retune was DEAD on every dark band since it was written. All four tokens it sets
+     (--ds-step-hero, --ds-step-h2, --ds-space-band, --ds-space-gap) are ALSO declared by
+     `.surface-dark{...}` in tokens.css:226, and a class beats :root, so inside any dark section
+     the desktop values kept winning at 375px. Every hero on this site is `.surface-dark`, so the
+     phone hero scale never once applied: the homepage H1 measured 46px at 375 when the override
+     said 2.9rem was its own ceiling, and after the ceiling was cut it measured 38px - the DESKTOP
+     clamp floor - rather than the phone clamp at all. Naming both scopes is what makes the
+     media query reach the bands it was written for. */
+  :root, .surface-dark{
+    --ds-step-hero:clamp(1.9rem,7.4vw,2.45rem);
     --ds-step-h2:clamp(1.55rem,6.5vw,1.9rem);
     --ds-space-band:2.75rem;
     --ds-space-gap:1.15rem;
@@ -1568,17 +1605,28 @@ button{font:inherit;color:inherit}
    it by making every seamed band's trailing space 34px deeper than its leading
    space, which reads as a page whose spacing wanders. Expressed as max() instead,
    the band keeps the page's own rhythm wherever that rhythm already clears the
-   curve (every width from ~768 up), and only takes the floor where it would not
-   (phone). Leading matches trailing at every width, and the curve never reaches
+   curve, and takes the floor where it would not. CORRECTED 2026-08-26 - this
+   previously claimed the rhythm wins "every width from ~768 up" and that the floor
+   applies only on "phone". Measured, the crossover is 915px, not 768: 7vw reaches
+   64px only at w>=914.3, so the floor is what actually ships across the whole
+   tablet tier and the bottom of the small-desktop tier. Leading matches trailing
+   at every width, and the curve never reaches
    the last line of copy. The hero keeps its own deeper close: it is the one band
    whose bottom edge is a deliberate pause rather than a join. */
 .section--seamed:not(.hero){
   padding-top:max(var(--ds-space-band),64px);
   padding-bottom:max(var(--ds-space-band),64px);
 }
+/* A seamed band carries a 34px carved edge (see .hero.section--seamed below, which adds exactly
+   that), so it cannot collapse to the tight scale no matter what modifier it carries. This read
+   max(calc(var(--ds-space-band) * 0.55), 64px), but --ds-space-band caps at 6rem, so the calc peaks
+   at 52.8px and could NEVER reach the 64px floor at any width - measured 64px at all 17 widths from
+   320px to 3840px. The calc half was unreachable dead code, and the modifier shipped MORE air than
+   no class at all (64px against a plain section's 44px at 375). Now a real constant, set to clear
+   the 34px carve with margin while actually being tighter than the 64px non-tight floor. */
 .section--tight.section--seamed:not(.hero){
-  padding-top:max(calc(var(--ds-space-band) * 0.55),64px);
-  padding-bottom:max(calc(var(--ds-space-band) * 0.55),64px);
+  padding-top:52px;
+  padding-bottom:52px;
 }
 .hero.section--seamed{padding-bottom:calc(var(--ds-space-band) * 1.15 + 34px)}
 

@@ -24,7 +24,7 @@
    rail, the lit panel, the veil, the closing band and the footer geometry.
    Every layout class the structural sheet already owns (.container, .section,
    .section--deep, .deep, .scrim, .seam, .rule-lit, .plane, .btn, .btn-primary,
-   .btn-ghost, .btn--phone, .cta-band, .cta-row, .arrow, .ico, .h-band,
+   .btn-quiet, .btn--phone, .cta-band, .cta-row, .arrow, .ico, .h-band,
    .skip-link, .sr-only) is REUSED, never restated here.
 
    TOKEN PURITY. Zero brand hex literals. No raw colour function of any kind: no
@@ -71,7 +71,6 @@ select:focus-visible,
 textarea:focus-visible{
   outline:3px solid var(--ds-brand-primary-deep);
   outline-offset:2px;
-  border-radius:var(--ds-r-control);
 }
 
 /* --- THE RAIL SCOPE ------------------------------------------------------
@@ -235,6 +234,9 @@ main > .section--deep:first-child{border-top:0}
              box-shadow var(--ds-dur-fast) var(--ds-ease);
 }
 .rail__toggle:hover{border-color:var(--ds-brand-accent)}
+/* the menu control is the only <button> in the carrier and it is the one a phone user presses
+   most; it shipped with :hover only, which a touch device never fires. */
+.rail__toggle:active{border-color:var(--ds-brand-accent);background-color:color-mix(in srgb,var(--ds-brand-accent) 16%,transparent)}
 .rail__toggle[aria-expanded="true"]{
   border-color:var(--ds-brand-accent);
   box-shadow:var(--ds-shadow);
