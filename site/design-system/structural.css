@@ -466,11 +466,11 @@ button{font:inherit;color:inherit}
 .h-hero{
   font-family:var(--ds-font-display);
   font-weight:600;
-  font-size:var(--ds-step-hero);
+  font-size:62px;
   line-height:var(--ds-leading-tight);
   letter-spacing:var(--ds-track-display);
   color:var(--ds-ink);
-  max-width:15ch;
+  max-width:100%;
 }
 .h-band{
   font-family:var(--ds-font-display);
@@ -1526,7 +1526,12 @@ h3.eyebrow{font-size:var(--ds-step-h3);letter-spacing:normal;text-transform:none
     --ds-space-band:2.75rem;
     --ds-space-gap:1.15rem;
   }
-  .h-hero{max-width:20ch}
+  /* The hero is 62px and max-width:100% everywhere above this breakpoint, as asked. Below it the
+     SIZE has to go back to the fluid step, and the measurement is why: a flat 62px runs the homepage
+     H1 to nine lines at 375px and twelve at 320, which pushed "Request a consultation" to y=928 on an
+     812px-tall viewport and y=1143 on a 568px one. The primary action was off-screen on a phone.
+     The 100% measure is kept here - it is the size, not the width, that had to bend. */
+  .h-hero{max-width:100%;font-size:var(--ds-step-hero)}
   .h-band,.h-sheet{max-width:22ch}
   .cta-row{gap:0.75rem;margin-top:calc(var(--ds-space-gap) * 1.2)}
   .table th,.table td,.table caption{padding:10px 10px}
