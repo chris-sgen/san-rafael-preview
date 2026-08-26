@@ -684,6 +684,19 @@ button{font:inherit;color:inherit}
    layout; it never contains an image slot.
    ========================================================================== */
 .hero{padding-top:calc(var(--ds-space-band) * 1.15);padding-bottom:calc(var(--ds-space-band) * 1.15)}
+/* THE HERO SPLIT. The model sits beside the copy rather than under it, but the copy column has a
+   hard floor the other splits do not: the two CTAs measure 602px side by side, and wrapping them
+   into a stack is a visible downgrade of the primary action. The generic .row--split ratio
+   (1.12/0.88) yields 586px of copy at 1440 - sixteen pixels short - so the hero takes a wider one.
+   And below 1024 no ratio works: at 900 the row has only 807px of content to divide, so buying the
+   copy its 602px would leave a 205px image. The hero therefore stays STACKED until 1024, which is
+   the first width where both fit (613px of copy against a 316px image). */
+@media (min-width:900px){
+  .hero .row--split{grid-template-columns:1fr}
+}
+@media (min-width:1024px){
+  .hero .row--split{grid-template-columns:minmax(0,1.32fr) minmax(0,0.68fr)}
+}
 .hero .lead{margin-top:var(--ds-space-gap)}
 .hero .plane{max-width:34rem}
 /* the hero of an inner page: same left column, one step down in scale and air */
