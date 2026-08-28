@@ -606,3 +606,68 @@ main > .section--deep:first-child{border-top:0}
   .rail[data-open="true"] .rail__sheet{animation:none}
   .rail__link .arrow{transition:none}
 }
+
+/* ==========================================================================
+   THE SECTION BAR
+   A horizontal row of the seven primary destinations, sitting under the identity
+   row. It is inside .rail-scope, which is the element carrying position:sticky, so
+   it travels with the rail; the rail itself is position:relative and the scope does
+   the sticking (see the note at .rail-scope).
+
+   It is NOT the reference's solid blue band. That band was one flat brand colour
+   across the full width, and this site's thesis is that the dark plane is a lit
+   material rather than a colour field - a bright bar under a near-black rail would
+   be the loudest thing on the page. The structure of the reference is kept: full
+   width, uppercase labels, hairline dividers between items. The brand blue arrives
+   where the reference implies it, on the item you are pointing at.
+   ========================================================================== */
+/* `.railnav surface-dark` in the markup, and this is why. The bar is a SIBLING of
+   <header class="rail ... surface-dark">, not a child of it, so it never entered the dark token
+   scope: the labels resolved --ds-ink-soft from the LIGHT scope and painted rgb(74,82,89) on a
+   rgb(20,23,26) ground - 2.26:1 against the 4.5:1 that 13px normal-weight text requires. The paint
+   -stack gate failed all 29 pages, 7 links x 3 widths, and it was right to. .surface-dark only
+   redeclares custom properties (see the note at its definition), so adding it re-points every token
+   this bar reads without changing a single rule below. */
+.railnav{
+  background-color:var(--ds-surface-deep);
+  border-top:1px solid color-mix(in srgb,var(--ds-line) 60%,transparent);
+  border-bottom:1px solid var(--ds-line);
+}
+.railnav__inner{
+  display:flex;
+  align-items:stretch;
+  flex-wrap:nowrap;
+}
+.railnav__link{
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  /* grow, so the row spans the bar. Content-sized, the seven labels came to 927px inside a 1140px
+     container and left 213px of dead bar on the right; the reference's items reach both edges.
+     `flex:1 1 auto` shares that surplus out rather than setting equal columns, so HOME stays the
+     narrow one and AFTER A CRASH stays the wide one - the proportions the words give them. */
+  flex:1 1 auto;
+  padding:0 clamp(10px,1.5vw,20px);
+  min-height:44px;
+  font-family:var(--ds-font-mono);
+  font-size:var(--ds-step-fine);
+  letter-spacing:var(--ds-track-eyebrow);
+  text-transform:uppercase;
+  text-decoration:none;
+  white-space:nowrap;
+  color:var(--ds-ink-soft);
+  border-right:1px solid color-mix(in srgb,var(--ds-line) 60%,transparent);
+  transition:background-color var(--ds-dur-fast) var(--ds-ease),
+             color var(--ds-dur-fast) var(--ds-ease);
+}
+.railnav__link:first-child{border-left:1px solid color-mix(in srgb,var(--ds-line) 60%,transparent)}
+.railnav__link:hover{background-color:var(--ds-brand-primary-deep);color:var(--ds-brand-on-primary)}
+.railnav__link:active{background-color:var(--ds-brand-primary-ink);color:var(--ds-brand-on-primary)}
+/* There is deliberately NO [aria-current] rule here. The chrome carrier is inlined byte-identical
+   into all 29 pages - that is what verify-chrome-parity enforces - so no page can mark its own link
+   as current without breaking parity, and the site ships no JavaScript to do it at runtime. A rule
+   for a state that can never occur is dead code, and this sheet has already been cleaned of one
+   comment that described a declaration it no longer had. */
+/* Seven uppercase labels cannot share a phone's width, and the drawer already carries
+   every one of them with a line of explanation each. Below 1024 the bar stands down. */
+@media (max-width:1023px){ .railnav{display:none} }
