@@ -159,9 +159,7 @@ main > .section--deep:first-child{border-top:0}
   grid-template-columns:1fr auto;
   grid-template-areas:
     "brand toggle"
-    "sheet sheet"
-    "book  book"
-    "call  call";
+    "sheet sheet";
 }
 
 /* --- the lockup. There is no vector logo, only a raster, so nothing is
@@ -211,6 +209,11 @@ main > .section--deep:first-child{border-top:0}
 
 /* --- the persistent menu control. It is LABELLED, not a bare glyph: this
    reader was just hit by a car and a three-line icon is a puzzle. */
+/* The rail carries the wordmark, the section nav and the drawer control - and nothing else. The
+   phone button and the booking button used to live here; the owner removed them from the nav so the
+   seven labels could have the row. Their rules went with them rather than sitting here unreferenced,
+   which is what git history is for. Both actions still appear in every hero, in the CTA band above
+   the footer, and in the footer itself, so nothing was lost from the site - only from this bar. */
 .rail__toggle{
   grid-area:toggle;
   display:inline-flex;
@@ -242,19 +245,20 @@ main > .section--deep:first-child{border-top:0}
   box-shadow:var(--ds-shadow);
   box-shadow:0 0 22px color-mix(in srgb,var(--ds-brand-accent) 40%,transparent);
 }
-.rail__burger{position:relative;display:block;flex:none;width:18px;height:12px}
+/* the three bars are laid out IN FLOW, not absolutely. A column flex box 12px tall holding
+   three 2px bars leaves 6px of free space, so space-between drops them at 0 / 5 / 10 - the exact
+   offsets the absolute version pinned by hand. The reason to prefer flow here is that an opaque,
+   absolutely-positioned child of a button reads to a paint-stack analyser as a BACKGROUND LAYER
+   painted behind the control, rather than as the icon it is: sampling the centre of this 52px
+   button lands on the middle bar and reports the icon as its own backdrop (white on white).
+   In flow the bars are static, so the control resolves against the rail it actually sits on. */
+.rail__burger{position:relative;display:flex;flex-direction:column;justify-content:space-between;flex:none;width:18px;height:12px}
 .rail__burger i{
-  position:absolute;
-  left:0;
-  right:0;
   height:2px;
   border-radius:var(--ds-r-pill);
   background-color:currentColor;
   transition:transform var(--ds-dur) var(--ds-ease-out),opacity var(--ds-dur) var(--ds-ease-out);
 }
-.rail__burger i:nth-child(1){top:0}
-.rail__burger i:nth-child(2){top:5px}
-.rail__burger i:nth-child(3){top:10px}
 .rail__toggle[aria-expanded="true"] .rail__burger i:nth-child(1){transform:translateY(5px) rotate(45deg)}
 .rail__toggle[aria-expanded="true"] .rail__burger i:nth-child(2){opacity:0}
 .rail__toggle[aria-expanded="true"] .rail__burger i:nth-child(3){transform:translateY(-5px) rotate(-45deg)}
@@ -264,11 +268,6 @@ main > .section--deep:first-child{border-top:0}
    and at the foot of the open sheet on a phone: no duplicate CTA, no
    duplicate phone number, and therefore no way for the two copies to drift.
    Exactly ONE primary CTA exists in this header at every width. */
-.rail__slot{display:none;align-items:center}
-.rail__slot--book{grid-area:book;margin-top:14px;padding-top:14px;border-top:1px solid var(--ds-line)}
-.rail__slot--call{grid-area:call;margin-top:8px}
-.rail[data-open="true"] .rail__slot{display:flex}
-.rail__slot .btn{width:100%;justify-content:center}
 .rail .btn{padding:0 18px;font-size:var(--ds-step-fine)}
 
 /* --- THE LIT PANEL. .deep is the locked contained plane, so the panel is
@@ -410,11 +409,9 @@ main > .section--deep:first-child{border-top:0}
   .rail{overflow:visible}
   .rail__inner{
     column-gap:14px;
-    grid-template-columns:auto 1fr auto auto auto;
-    grid-template-areas:"brand . call book toggle";
+    grid-template-columns:auto 1fr auto;
+    grid-template-areas:"brand nav toggle";
   }
-  .rail__slot{display:flex;margin-top:0;padding-top:0;border-top:0}
-  .rail__slot .btn{width:auto}
   /* the panel hangs OFF the rail instead of pushing the page down. It is the
      width of the page MEASURE, not the viewport, so its content edge lines up
      with the wordmark above it and with every band below it; its top corners
@@ -465,7 +462,6 @@ main > .section--deep:first-child{border-top:0}
    without losing meaning, so it goes, and returns at 1024. */
 @container rail (min-width:768px) and (max-width:1023.98px){
   .rail__sub{display:none}
-  .rail__slot--call .btn{padding:0 14px}
 }
 @container rail (min-width:1024px){
   .rail__inner{column-gap:20px}
@@ -629,7 +625,9 @@ main > .section--deep:first-child{border-top:0}
    redeclares custom properties (see the note at its definition), so adding it re-points every token
    this bar reads without changing a single rule below. */
 .railnav{
-  background-color:var(--ds-surface-deep);
+  grid-area:nav;
+  min-width:0;
+  background-color:transparent;
   border-top:1px solid color-mix(in srgb,var(--ds-line) 60%,transparent);
   border-bottom:1px solid var(--ds-line);
 }
@@ -647,7 +645,7 @@ main > .section--deep:first-child{border-top:0}
      `flex:1 1 auto` shares that surplus out rather than setting equal columns, so HOME stays the
      narrow one and AFTER A CRASH stays the wide one - the proportions the words give them. */
   flex:1 1 auto;
-  padding:0 clamp(10px,1.5vw,20px);
+  padding:0 clamp(6px,0.9vw,16px);
   min-height:44px;
   font-family:var(--ds-font-mono);
   font-size:var(--ds-step-fine);
@@ -670,4 +668,17 @@ main > .section--deep:first-child{border-top:0}
    comment that described a declaration it no longer had. */
 /* Seven uppercase labels cannot share a phone's width, and the drawer already carries
    every one of them with a line of explanation each. Below 1024 the bar stands down. */
-@media (max-width:1023px){ .railnav{display:none} }
+/* The gap between the wordmark and the CTA cluster is 332px at every width from 1280 up (the
+   container caps at 1140), 292px at 1100 and 216px at 1024. Measured against that cell: the seven
+   original labels need 723px, seven shortened need 480, five shortened need 339 and four need 291.
+   So five is the most the gap will hold, and only once the container has reached its cap - which is
+   why this hides below 1280 rather than 1024. Below it the drawer resumes sole duty, carrying all
+   eight destinations with a line of explanation each. */
+/* 1024, not 1280. The 1280 floor existed because the call and booking buttons were still taking
+   416px of the row and the nav's cell was 332px. With them out, the cell is the row minus the
+   wordmark (156px), the drawer control (~54) and two gaps (28). 1024 was tried and MEASURED as too
+   low: the seven labels have a min-content width of 777px, and at 1050 the cell is 754 and at 1024 it
+   is 728, so the row ran 3px and 25px INTO the drawer control. The floor is a cell of about 793px,
+   i.e. a viewport near 1079; 1100 clears it with 20px to spare. Below that the drawer resumes sole
+   duty, carrying all eight destinations with a line of explanation each. */
+@media (max-width:1099px){ .railnav{display:none} }

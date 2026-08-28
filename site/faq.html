@@ -10,7 +10,7 @@
 <link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
 
 <link rel="stylesheet" href="design-system/tokens.css?v=54325695">
-  <link rel="stylesheet" href="design-system/chrome.css?v=32a281ff">
+  <link rel="stylesheet" href="design-system/chrome.css?v=6d814ded">
   <link rel="stylesheet" href="design-system/structural.css?v=4e9eae44">
   <link rel="stylesheet" href="design-system/brand-card-standard.css?v=ec8c42eb">
 
@@ -33,23 +33,22 @@
         </span>
       </a>
 
-      <div class="rail__slot rail__slot--call">
-        <a class="btn btn-quiet btn--phone" href="tel:+14158779400">
-          <svg class="ico" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M6 3h3l2 5-2 1a12 12 0 006 6l1-2 5 2v3a2 2 0 01-2 2A16 16 0 014 6a2 2 0 012-3z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></svg>
-          Call (415) 877-9400
-        </a>
+      <nav class="railnav surface-dark" aria-label="Site sections">
+      <div class="railnav__inner">
+        <a class="railnav__link" href="index.html">Home</a>
+        <a class="railnav__link" href="auto-accident.html">After a Crash</a>
+        <a class="railnav__link" href="conditions.html">Conditions</a>
+        <a class="railnav__link" href="cost.html">What It Costs</a>
+        <a class="railnav__link" href="doctor.html">The Practice</a>
+        <a class="railnav__link" href="testimonials.html">Testimonials</a>
+        <a class="railnav__link" href="contact.html">Contact</a>
       </div>
+    </nav>
 
-      <div class="rail__slot rail__slot--book">
-        <a class="btn btn-primary" href="consultation.html">
-          Request a consultation
-          <svg class="arrow" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M4 12h15M13 6l6 6-6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-        </a>
-      </div>
 
-      <button class="rail__toggle" type="button" id="rail-toggle" aria-expanded="false" aria-controls="rail-drawer">
+
+      <button class="rail__toggle" type="button" id="rail-toggle" aria-expanded="false" aria-controls="rail-drawer" aria-label="Menu">
         <span class="rail__burger" aria-hidden="true"><i></i><i></i><i></i></span>
-        <span class="rail__toggle-label">Menu</span>
       </button>
 
       
@@ -127,18 +126,6 @@
     </div>
   </header>
 
-  
-  <nav class="railnav surface-dark" aria-label="Site sections">
-    <div class="container railnav__inner">
-      <a class="railnav__link" href="index.html">Home</a>
-      <a class="railnav__link" href="auto-accident.html">After a Crash</a>
-      <a class="railnav__link" href="conditions.html">Conditions</a>
-      <a class="railnav__link" href="cost.html">What It Costs</a>
-      <a class="railnav__link" href="doctor.html">The Practice</a>
-      <a class="railnav__link" href="testimonials.html">Testimonials</a>
-      <a class="railnav__link" href="contact.html">Contact</a>
-    </div>
-  </nav>
 </div>
 <div class="rail-veil" id="rail-veil" data-open="false" hidden></div>
 
