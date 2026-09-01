@@ -764,11 +764,11 @@ button{font:inherit;color:inherit}
    stayed visible. Intersecting a horizontal and a vertical fade takes every edge to full
    transparency while leaving the middle untouched. */
 .hero .row--split > .col > img:only-child{
-  -webkit-mask-image:linear-gradient(to right,transparent 0%,#000 14%,#000 86%,transparent 100%),
-                     linear-gradient(to bottom,transparent 0%,#000 12%,#000 88%,transparent 100%);
+  -webkit-mask-image:linear-gradient(to right,transparent 0%,rgba(0,0,0,1) 14%,rgba(0,0,0,1) 86%,transparent 100%),
+                     linear-gradient(to bottom,transparent 0%,rgba(0,0,0,1) 12%,rgba(0,0,0,1) 88%,transparent 100%);
   -webkit-mask-composite:source-in;
-  mask-image:linear-gradient(to right,transparent 0%,#000 14%,#000 86%,transparent 100%),
-             linear-gradient(to bottom,transparent 0%,#000 12%,#000 88%,transparent 100%);
+  mask-image:linear-gradient(to right,transparent 0%,rgba(0,0,0,1) 14%,rgba(0,0,0,1) 86%,transparent 100%),
+             linear-gradient(to bottom,transparent 0%,rgba(0,0,0,1) 12%,rgba(0,0,0,1) 88%,transparent 100%);
   mask-composite:intersect;
 }
 .hero .lead{margin-top:var(--ds-space-gap)}
