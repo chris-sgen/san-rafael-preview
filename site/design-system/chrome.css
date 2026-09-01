@@ -613,9 +613,12 @@ main > .section--deep:first-child{border-top:0}
    It is NOT the reference's solid blue band. That band was one flat brand colour
    across the full width, and this site's thesis is that the dark plane is a lit
    material rather than a colour field - a bright bar under a near-black rail would
-   be the loudest thing on the page. The structure of the reference is kept: full
-   width, uppercase labels, hairline dividers between items. The brand blue arrives
-   where the reference implies it, on the item you are pointing at.
+   be the loudest thing on the page. What is kept from the reference is the row
+   itself: full width, uppercase labels, one line. The dividers it also had were
+   tried and removed - see the note at .railnav - because seven ruled cells read as
+   a segmented control rather than a nav. The brand blue arrives where the reference
+   implies it, on the item you are pointing at, as an inset rounded shape rather
+   than a full-height rectangle butted against its neighbours.
    ========================================================================== */
 /* `.railnav surface-dark` in the markup, and this is why. The bar is a SIBLING of
    <header class="rail ... surface-dark">, not a child of it, so it never entered the dark token
@@ -624,17 +627,24 @@ main > .section--deep:first-child{border-top:0}
    -stack gate failed all 29 pages, 7 links x 3 widths, and it was right to. .surface-dark only
    redeclares custom properties (see the note at its definition), so adding it re-points every token
    this bar reads without changing a single rule below. */
+/* No rules of its own. The bar was drawn as a ruled strip - a hairline above, a hairline below and
+   a divider between every label - which read as a segmented control: seven boxed cells with each
+   word sitting a few pixels off a hard edge. With the dividers gone the two remaining hairlines
+   stopped describing a bar and became a stray underline floating beneath one region of the header,
+   so they went too. The row now sits IN the dark plane rather than in a box drawn on top of it. */
 .railnav{
   grid-area:nav;
   min-width:0;
   background-color:transparent;
-  border-top:1px solid color-mix(in srgb,var(--ds-line) 60%,transparent);
-  border-bottom:1px solid var(--ds-line);
 }
+/* centred rather than stretched, with the row height coming from this padding. That leaves the
+   links shorter than the bar, which is what lets the hover paint as an inset rounded shape instead
+   of a full-height rectangle butted against its neighbours. */
 .railnav__inner{
   display:flex;
-  align-items:stretch;
+  align-items:center;
   flex-wrap:nowrap;
+  padding-block:9px;
 }
 .railnav__link{
   display:flex;
@@ -645,20 +655,23 @@ main > .section--deep:first-child{border-top:0}
      `flex:1 1 auto` shares that surplus out rather than setting equal columns, so HOME stays the
      narrow one and AFTER A CRASH stays the wide one - the proportions the words give them. */
   flex:1 1 auto;
-  padding:0 clamp(6px,0.9vw,16px);
-  min-height:44px;
+  padding:0 clamp(10px,1vw,18px);
+  min-height:40px;
+  border-radius:var(--ds-r-control);
   font-family:var(--ds-font-mono);
   font-size:var(--ds-step-fine);
-  letter-spacing:var(--ds-track-eyebrow);
+  /* 0.10em, not the 0.14em eyebrow track. At eyebrow spacing the seven labels ran 637px of the
+     844px cell and the words themselves read loose while the space BETWEEN them read tight - the
+     exact inversion of what a nav wants. Pulling the track in holds each label together as one
+     word-group and hands the 37px it frees to the gaps, which go from 29.5px to 34.9px. */
+  letter-spacing:0.1em;
   text-transform:uppercase;
   text-decoration:none;
   white-space:nowrap;
   color:var(--ds-ink-soft);
-  border-right:1px solid color-mix(in srgb,var(--ds-line) 60%,transparent);
   transition:background-color var(--ds-dur-fast) var(--ds-ease),
              color var(--ds-dur-fast) var(--ds-ease);
 }
-.railnav__link:first-child{border-left:1px solid color-mix(in srgb,var(--ds-line) 60%,transparent)}
 .railnav__link:hover{background-color:var(--ds-brand-primary-deep);color:var(--ds-brand-on-primary)}
 .railnav__link:active{background-color:var(--ds-brand-primary-ink);color:var(--ds-brand-on-primary)}
 /* There is deliberately NO [aria-current] rule here. The chrome carrier is inlined byte-identical
