@@ -10,10 +10,11 @@
 <link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
 
 <link rel="stylesheet" href="design-system/tokens.css?v=54325695">
-  <link rel="stylesheet" href="design-system/chrome.css?v=573ec36a">
+  <link rel="stylesheet" href="design-system/chrome.css?v=04d74c37">
   <link rel="stylesheet" href="design-system/structural.css?v=8a8f3712">
   <link rel="stylesheet" href="design-system/brand-card-standard.css?v=ec8c42eb">
 
+<link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,300;8..60,400;8..60,600;8..60,700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 </head>
 <body>
 <span id="top"></span>
@@ -33,20 +34,21 @@
         </span>
       </a>
 
+      
       <nav class="railnav surface-dark" aria-label="Site sections">
-      <div class="railnav__inner">
-        <a class="railnav__link" href="index.html">Home</a>
-        <a class="railnav__link" href="auto-accident.html">After a Crash</a>
-        <a class="railnav__link" href="conditions.html">Conditions</a>
-        <a class="railnav__link" href="cost.html">What It Costs</a>
-        <a class="railnav__link" href="doctor.html">The Practice</a>
-        <a class="railnav__link" href="testimonials.html">Testimonials</a>
-        <a class="railnav__link" href="contact.html">Contact</a>
-      </div>
-    </nav>
+        <div class="railnav__inner">
+          <a class="railnav__link" href="auto-accident.html">After a Crash</a>
+          <a class="railnav__link" href="cost.html">What It Costs</a>
+          <a class="railnav__link" href="consultation.html">Book a Visit</a>
+          <a class="railnav__link" href="conditions.html">Conditions</a>
+          <a class="railnav__link" href="testimonials.html">Proof</a>
+          <a class="railnav__link" href="doctor.html">The Practice</a>
+          <a class="railnav__link" href="narrative-report.html">Your Record</a>
+          <a class="railnav__link" href="for-attorneys.html">For Attorneys</a>
+        </div>
+      </nav>
 
-
-
+      
       <button class="rail__toggle" type="button" id="rail-toggle" aria-expanded="false" aria-controls="rail-drawer" aria-label="Menu">
         <span class="rail__burger" aria-hidden="true"><i></i><i></i><i></i></span>
       </button>
@@ -63,7 +65,7 @@
               <p class="rail__group">If you were just hit</p>
               <ul class="rail__list">
                 <li class="rail__item">
-                  <a class="rail__link" href="auto-accident.html">Injured in a Crash
+                  <a class="rail__link" href="auto-accident.html">After a Crash
                     <svg class="arrow" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M4 12h15M13 6l6 6-6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
                   </a>
                   <span class="rail__note">Care after a collision, and what to do in the first days.</span>
@@ -81,7 +83,7 @@
                   <span class="rail__note">Request a consultation, and what to bring with you.</span>
                 </li>
                 <li class="rail__item">
-                  <a class="rail__link" href="conditions.html">Conditions We Treat
+                  <a class="rail__link" href="conditions.html">Conditions
                     <svg class="arrow" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M4 12h15M13 6l6 6-6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
                   </a>
                   <span class="rail__note">Whiplash, back, neck, shoulder, nerve and disc injuries.</span>
@@ -104,7 +106,7 @@
                   <span class="rail__note">Who treats you, and the parent clinic behind this office.</span>
                 </li>
                 <li class="rail__item">
-                  <a class="rail__link" href="narrative-report.html">Your Medical Record
+                  <a class="rail__link" href="narrative-report.html">Your Record
                     <svg class="arrow" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M4 12h15M13 6l6 6-6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
                   </a>
                   <span class="rail__note">The narrative report your claim is eventually read from.</span>
@@ -125,7 +127,6 @@
 
     </div>
   </header>
-
 </div>
 <div class="rail-veil" id="rail-veil" data-open="false" hidden></div>
 
@@ -480,6 +481,7 @@
         Request a consultation
         <svg class="arrow" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M4 12h15M13 6l6 6-6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
       </a>
+      
       <a class="btn btn-quiet btn--phone" href="tel:+14158779400">
         <svg class="ico" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M6 3h3l2 5-2 1a12 12 0 006 6l1-2 5 2v3a2 2 0 01-2 2A16 16 0 014 6a2 2 0 012-3z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></svg>
         Call (415) 877-9400
@@ -578,6 +580,8 @@
 
   <div class="container sfoot__row sfoot__row--legal">
     <p>&copy; 2026 San Rafael Auto Accident Injury Chiropractic Center. Care is provided on a lien.</p>
+    
+    <p class="sfoot__disclosure"><span>The photographs are generated illustrations of the subjects they name, not pictures of this practice, its staff or its patients.</span></p>
     <p class="sfoot__legal-links">
       <a href="accessibility.html">Accessibility</a>
       <a href="privacy.html">Privacy policy</a>

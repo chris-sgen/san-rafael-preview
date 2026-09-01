@@ -582,6 +582,17 @@ main > .section--deep:first-child{border-top:0}
   color:var(--ds-ink-faint);
   font-size:var(--ds-step-fine);
 }
+/* The imagery disclosure gets its OWN line, last. The legal row is a space-between flex, so a third
+   child would be wedged between the copyright and the links and read as a third column of
+   boilerplate; a full-basis item wraps instead and stays a sentence. It keeps the row's faint ink
+   and fine size deliberately - this is a disclosure, not a notice competing with the copy above it,
+   and it is capped at the measure so it does not run the full width of a 1440px footer. */
+/* The measure cap goes on the INNER span, not on this flex item. A flex item's hypothetical main
+   size is its basis CLAMPED BY max-width, so `flex-basis:100%` with `max-width:66ch` resolved to
+   541px and the item cheerfully sat on the same line as the copyright and the links - the wrap it
+   was supposed to force never happened. Basis stays unclamped here; the sentence is capped inside. */
+.sfoot__disclosure{flex:0 0 100%;order:1;margin-top:var(--ds-space-tight)}
+.sfoot__disclosure span{display:block;max-width:var(--ds-measure)}
 .sfoot__legal-links{display:flex;flex-wrap:wrap;gap:var(--ds-space-gap)}
 .sfoot__legal-links a{color:var(--ds-ink-faint);text-decoration:none}
 .sfoot__legal-links a:hover{color:var(--ds-ink);text-decoration:underline;text-underline-offset:4px}
@@ -681,17 +692,15 @@ main > .section--deep:first-child{border-top:0}
    comment that described a declaration it no longer had. */
 /* Seven uppercase labels cannot share a phone's width, and the drawer already carries
    every one of them with a line of explanation each. Below 1024 the bar stands down. */
-/* The gap between the wordmark and the CTA cluster is 332px at every width from 1280 up (the
-   container caps at 1140), 292px at 1100 and 216px at 1024. Measured against that cell: the seven
-   original labels need 723px, seven shortened need 480, five shortened need 339 and four need 291.
-   So five is the most the gap will hold, and only once the container has reached its cap - which is
-   why this hides below 1280 rather than 1024. Below it the drawer resumes sole duty, carrying all
-   eight destinations with a line of explanation each. */
-/* 1024, not 1280. The 1280 floor existed because the call and booking buttons were still taking
-   416px of the row and the nav's cell was 332px. With them out, the cell is the row minus the
-   wordmark (156px), the drawer control (~54) and two gaps (28). 1024 was tried and MEASURED as too
-   low: the seven labels have a min-content width of 777px, and at 1050 the cell is 754 and at 1024 it
-   is 728, so the row ran 3px and 25px INTO the drawer control. The floor is a cell of about 793px,
-   i.e. a viewport near 1079; 1100 clears it with 20px to spare. Below that the drawer resumes sole
-   duty, carrying all eight destinations with a line of explanation each. */
-@media (max-width:1099px){ .railnav{display:none} }
+/* 1280, and the number is set by the LABELS rather than chosen. The bar carries the same EIGHT
+   destinations as the drawer - one navigation, two presentations - so its floor is wherever those
+   eight labels stop fitting. Measured across widths at the bar's own type:
+     the approved labels          need 1168px  -> do not fit ANY width (cell is 1144 at its widest)
+     the shortened set that ships need  982px  -> fits from 1280 (cell 984), not at 1100 (cell 804)
+   Two earlier floors were wrong and are recorded so neither is retried. 1024 was tried while the bar
+   still carried seven invented labels and MEASURED too low - the row ran 25px into the drawer
+   control. 1100 then held for that seven-item set, but that set was the label DRIFT: seven items of
+   this bar's own invention beside the drawer's approved eight, two navigations on one site.
+   Below 1280 the drawer resumes sole duty and carries all eight with a line of explanation each,
+   which is the approved concept's own answer to eight items that will not fit a bar. */
+@media (max-width:1279px){ .railnav{display:none} }
