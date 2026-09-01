@@ -274,9 +274,16 @@ button{font:inherit;color:inherit}
    A dark band is written class="section section--deep surface-dark": the first
    class carries the geometry, the second the material, the third the token flip.
    ========================================================================== */
-.container{width:100%;max-width:1140px;margin-left:auto;margin-right:auto;padding-left:24px;padding-right:24px}
+/* 1440, up from 1140. On a 1900px screen the old cap left 380px of dead margin down each side and
+   the hero sat in the middle third of the display. The reading measure is NOT what widened - every
+   prose block keeps its own --ds-measure cap - what widened is the FRAME the structures sit in, so
+   the hero, the grids, the plates and the image use the width the display actually has.
+   --wide has to stay above the base or the modifier would make a container NARROWER than the
+   default it modifies; it moves 1320 -> 1600. --narrow is untouched at 820: it is a deliberate
+   reading column, and widening it would be widening exactly the thing that should not widen. */
+.container{width:100%;max-width:1440px;margin-left:auto;margin-right:auto;padding-left:24px;padding-right:24px}
 .container--narrow{max-width:820px}
-.container--wide{max-width:1320px}
+.container--wide{max-width:1600px}
 
 .section{position:relative;padding-top:var(--ds-space-band);padding-bottom:var(--ds-space-band)}
 .section--tight{padding-top:calc(var(--ds-space-band) * 0.55);padding-bottom:calc(var(--ds-space-band) * 0.55)}
@@ -528,7 +535,10 @@ button{font:inherit;color:inherit}
   margin-bottom:var(--ds-space-tight);
 }
 .lead{color:var(--ds-ink-soft);max-width:62ch}
-.fine{font-size:var(--ds-step-fine);color:var(--ds-ink-soft)}
+/* capped at the measure like every other prose class. Uncapped, .fine inherited the container, and
+   small print is the text that suffers most from a long line: measured at 110ch and 128ch on the
+   shipped 1140px page, and it would have reached 128ch+ once the container went to 1440. */
+.fine{font-size:var(--ds-step-fine);color:var(--ds-ink-soft);max-width:var(--ds-measure)}
 .mono-label{
   font-family:var(--ds-font-mono);
   font-size:var(--ds-step-fine);
@@ -730,6 +740,26 @@ button{font:inherit;color:inherit}
      tall crop stays a figure rather than becoming the page. */
   .hero .row--split > .col > img:only-child{max-width:20rem;margin-inline:auto}
 }
+/* THE HERO FIGURE FADES INTO THE PLANE INSTEAD OF SITTING ON IT IN A BOX.
+   The photograph is a light subject on a black field; the hero ground is a LIT dark plane, which is
+   a different black. Butted together they met as a hard-edged rectangle - the one shape in the hero
+   that announced itself as a pasted-in asset.
+   mix-blend-mode was tried FIRST and CANNOT work here, which is worth recording so it is not tried
+   again: .section--deep carries isolation:isolate and .container is a z-indexed stacking context, so
+   a blend on this image composites inside that context and can never reach the band background it
+   is supposed to blend with. Measured - lighten and screen both changed nothing on screen.
+   Two linear masks INTERSECTED, not one radial. A radial ellipse big enough to keep the subject
+   leaves the mid-edges around half opaque - measured, and that is precisely where the rectangle
+   stayed visible. Intersecting a horizontal and a vertical fade takes every edge to full
+   transparency while leaving the middle untouched. */
+.hero .row--split > .col > img:only-child{
+  -webkit-mask-image:linear-gradient(to right,transparent 0%,#000 14%,#000 86%,transparent 100%),
+                     linear-gradient(to bottom,transparent 0%,#000 12%,#000 88%,transparent 100%);
+  -webkit-mask-composite:source-in;
+  mask-image:linear-gradient(to right,transparent 0%,#000 14%,#000 86%,transparent 100%),
+             linear-gradient(to bottom,transparent 0%,#000 12%,#000 88%,transparent 100%);
+  mask-composite:intersect;
+}
 .hero .lead{margin-top:var(--ds-space-gap)}
 .hero .plane{max-width:34rem}
 /* the hero of an inner page: same left column, one step down in scale and air */
@@ -930,6 +960,11 @@ h3.eyebrow{font-size:var(--ds-step-h3);letter-spacing:normal;text-transform:none
 .notice--critical{border-left-color:var(--ds-critical)}
 .notice--positive{border-left-color:var(--ds-positive)}
 .notice--info{border-left-color:var(--ds-brand-primary-deep)}
+/* Same reason as .fine, and worse: a notice is a flex row, so its paragraph took the whole
+   container. Measured 119-123ch already at 1140 and 155-161ch at 1440 - the alert boxes were the
+   longest lines on the site. The cap goes on the paragraph, not the box, so the coloured rule and
+   the icon still span the full width of the notice. */
+.notice p{max-width:var(--ds-measure)}
 .notice strong{color:var(--ds-ink)}
 
 
@@ -1407,6 +1442,11 @@ h3.eyebrow{font-size:var(--ds-step-h3);letter-spacing:normal;text-transform:none
    Deliberately few. The rhythm is carried by .section, .flow and the two gap
    tokens, so a page never invents a spacing value.
    ========================================================================== */
+/* the last prose class that was inheriting the container. Three paragraphs sat directly in a
+   .flow with nothing narrower above them and ran 81ch, 88ch and 126ch. Every other prose class on
+   the site already caps at the measure; this makes .flow agree with them rather than being the one
+   place a line can run as wide as the frame. */
+.flow > p{max-width:var(--ds-measure)}
 .flow > * + *{margin-top:var(--ds-space-gap)}
 .flow--tight > * + *{margin-top:var(--ds-space-tight)}
 .flow--loose > * + *{margin-top:calc(var(--ds-space-gap) * 1.6)}
