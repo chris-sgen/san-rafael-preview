@@ -300,6 +300,42 @@ button{font:inherit;color:inherit}
 .section--tight{padding-top:calc(var(--ds-space-band) * 0.55);padding-bottom:calc(var(--ds-space-band) * 0.55)}
 .section--flush-top{padding-top:0}
 .section--flush-bottom{padding-bottom:0}
+/* A GREY WASH THAT FALLS AWAY DOWNWARD, with the page's own subject behind it.
+   Two layers, both on pseudo-elements so no wrapper is added to the markup:
+     ::before  the gradient - sunken grey at the top settling to the paper ground by 62%, which is
+               what gives the band a top edge without drawing a rule across the page.
+     ::after   the photograph, at 0.14 and masked by the SAME downward curve, so it is gone entirely
+               before the cards begin. It is texture, not a picture: the eye should read a surface,
+               not look at a subject.
+   Hex is deliberately absent - `#000` in a mask stop is what tripped the foundation gate's brand-hex
+   isolation on the hero mask earlier, and rgba() is the form that satisfies it. A mask reads alpha,
+   so the two are identical to render.
+   The image is the WRITTEN RECORD rather than a road or a collision. That is not an aesthetic
+   preference: this section's own provenance note rejected image-overlay tiles here because they
+   "would put a highway behind the words 'I was hurt in a crash'". Paperwork carries no such
+   implication, and it is what the two cards are actually about - findings written down, and what
+   they cost. */
+.section--wash{position:relative;isolation:isolate}
+.section--wash > *{position:relative}
+.section--wash::before{
+  content:"";
+  position:absolute;
+  inset:0;
+  z-index:-1;
+  background-image:linear-gradient(180deg,var(--ds-surface-sunken) 0%,var(--ds-surface) 62%,var(--ds-surface) 100%);
+}
+.section--wash::after{
+  content:"";
+  position:absolute;
+  inset:0;
+  z-index:-1;
+  opacity:0.14;
+  background-image:url(../assets/record-documentation.webp);
+  background-size:cover;
+  background-position:center 40%;
+  -webkit-mask-image:linear-gradient(180deg,rgba(0,0,0,1) 0%,rgba(0,0,0,0.35) 55%,rgba(0,0,0,0) 92%);
+  mask-image:linear-gradient(180deg,rgba(0,0,0,1) 0%,rgba(0,0,0,0.35) 55%,rgba(0,0,0,0) 92%);
+}
 /* ground 2, the calm reading canvas (the default body ground, stated for a band
    that follows a tinted one and has to step back to paper) */
 .section--paper{background-color:var(--ds-surface)}
@@ -863,6 +899,12 @@ h3.eyebrow{font-size:var(--ds-step-h3);letter-spacing:normal;text-transform:none
   flex-direction:column;
   align-items:flex-start;
   gap:var(--ds-space-tight);
+  /* The whole card is an <a>, and nothing here ever turned the anchor underline off, so the browser
+     drew one under the heading AND the description of every card on the site - the card read as a
+     wall of underlined text rather than as a surface you press. The affordance is the surface: the
+     border, the lift on hover and the arrow. Underlining the prose inside it as well says "link"
+     three times and makes the description look like eight separate links. */
+  text-decoration:none;
   padding:22px;
   border:1px solid var(--ds-line);
   border-radius:var(--ds-r-surface);
