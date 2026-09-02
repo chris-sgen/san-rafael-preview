@@ -535,9 +535,16 @@ button{font:inherit;color:inherit}
   color:var(--ds-ink);
   /* 32ch, not 16. At 16 the band headings broke into three and four lines against a column many times
      wider than the text, so a two-clause heading read as a stack. Measured every requested heading at
-     16/26/30/34/36/38/42ch: 30 and 34 both land ALL SEVEN on the line counts asked for, and 36 is
-     already too wide - "What is billed, and what is not, in one block" collapses to one line there.
-     32 is the middle of the working window. The <=480px override stays at 22ch. */
+     16/26/30/34/36/38/42ch: 30 and 34 both land ALL SEVEN on the line counts asked for, and 36 was
+     too wide AT THE TIME - the money heading, then worded "What is billed, and what is not, in one
+     block", collapsed to one line there. 32 is the middle of the working window. The <=480px
+     override stays at 22ch.
+     UPDATED 2026-09-02: that money heading has since been SHORTENED to "What is billed, and what is
+     not" at the owner's request and is now DELIBERATELY one line, so the specific case that argued
+     36 down to 32 no longer applies. The cap stays at 32ch regardless, because the other six were
+     measured against it and still hold the line counts asked for. If this is ever revisited,
+     re-measure all seven - do not move it on the strength of the one heading that prompted the
+     question, which is how the original 16ch setting produced four-line stacks. */
   max-width:32ch;
   font-variant-numeric:tabular-nums;
 }

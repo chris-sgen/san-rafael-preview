@@ -11,7 +11,7 @@
 
 <link rel="stylesheet" href="design-system/tokens.css?v=54325695">
   <link rel="stylesheet" href="design-system/chrome.css?v=04d74c37">
-  <link rel="stylesheet" href="design-system/structural.css?v=9b135af9">
+  <link rel="stylesheet" href="design-system/structural.css?v=4f6ed166">
   <link rel="stylesheet" href="design-system/brand-card-standard.css?v=ec8c42eb">
 
 <link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,300;8..60,400;8..60,600;8..60,700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -225,11 +225,11 @@
       <div class="col">
         <div class="flow rise wow-reveal">
           
-          <h2 class="h-band">The three things people worry about</h2>
+          <h2 class="h-band" id="wedge-title">The three things people worry about</h2>
         </div>
         <div class="table-wrap mt-gap rise wow-reveal">
-          <table class="table">
-            <caption>Stated in the words people use, answered in the words the practice uses.</caption>
+          
+          <table class="table" aria-labelledby="wedge-title">
             <thead>
               <tr><th scope="col">What people say</th><th scope="col">What happens here</th></tr>
             </thead>
@@ -272,7 +272,8 @@
       <div class="col">
         <div class="flow rise wow-reveal">
           <span class="rule-lit"></span>
-          <h2 class="h-band">What is billed, and what is not, in one block</h2>
+          
+          <h2 class="h-band">What is billed, and what is not</h2>
           <p class="lead">$0 out of pocket to start. The terms that qualify that sentence are printed with it here, because a promise of zero that sends you somewhere else for the conditions is the exact thing this site was rebuilt to stop doing.</p>
         </div>
         <div class="plane mt-gap rise wow-reveal">
