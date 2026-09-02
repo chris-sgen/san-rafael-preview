@@ -937,30 +937,35 @@ h3.eyebrow{font-size:var(--ds-step-h3);letter-spacing:normal;text-transform:none
    on the two-line one, 27px out of step across a pair sitting side by side. An auto top margin in a
    column flex box hands the leftover height to the gap ABOVE the arrow, so every arrow in a row lands
    on the same line whatever the headings above them do. */
-.card > .arrow{
-  margin-top:auto;
-  /* ...and it sits at the RIGHT END OF THE TEXT COLUMN. The paragraph stops at --card-measure, about
-     312px, while the card runs to 640px, so the half of the card to its right is empty: an arrow at
-     the card's edge would align with nothing, and at the left edge it read as a stray glyph under
-     the copy. Measured against the owner's mark on the render - the paragraph edge sat 55px away,
-     the card edge 271px - so the text column is the one being pointed at.
-     font-family and font-size are restated rather than inherited BECAUSE of the ch. This span
-     inherits 17px while the paragraph is 13px, and `ch` resolves against the element's own font, so
-     an inherited-font arrow would have taken a column a third wider than the one it is meant to
-     match. Reading --card-measure in the paragraph's own type is what makes the two edges identical.
-     The svg is sized for a related reason: this span used to be 18px wide and an unsized,
-     viewBox-only svg simply filled it. Widening the span to the text column would otherwise let that
-     svg scale with its container into a 312px arrow. */
-  align-self:flex-start;
-  width:100%;
-  max-width:var(--card-measure);
-  font-family:var(--ds-font-body);
-  font-size:var(--ds-step-fine);
-  display:flex;
-  justify-content:flex-end;
+/* THE ARROW SITS ON THE PARAGRAPH'S LAST LINE, not on a row of its own beneath it. It used to be a
+   sibling pinned to the card's foot, which left it stranded 38px below the copy on a one-line-heading
+   card - a glyph floating in dead space. Inside the paragraph and floated, it lands at the right end
+   of the final line, which is where a reader's eye already is when the sentence ends.
+   COLOUR IS RESTATED, and it is not decoration to do so: as a direct child of the card <a> the arrow
+   inherited the link colour rgb(29,111,155); moved inside the paragraph it would inherit the
+   paragraph's ink rgb(74,82,89) instead and quietly turn grey. The token is dual-surface, so naming
+   it keeps the correct flip on a dark ground rather than freezing one value.
+   The svg is sized explicitly because an unsized, viewBox-only svg takes its container's width. */
+.card p .arrow{
+  float:right;
+  width:18px;
   height:18px;
+  margin-left:0.6em;
+  margin-top:2px;
+  color:var(--ds-brand-primary-deep);
 }
-.card > .arrow svg{width:18px;height:18px;display:block}
+.card p .arrow svg{width:18px;height:18px;display:block}
+/* Both headings reserve two lines. Without this the one-line heading starts its paragraph 27px
+   higher, so the two paragraphs end 27px apart and - now that each arrow follows its own last line -
+   the arrows would sit at two different heights on a pair of cards side by side. Reserving the
+   second line costs a little air under the short heading and buys both cards a shared baseline. */
+.card .h-card{min-height:2.5em}
+/* REMOVED 2026-09-02: `.card > .arrow` and its svg rule sat here, pinning a sibling arrow to the
+   card's foot and right-aligning it to --card-measure. The arrow is no longer a sibling - it moved
+   INSIDE the paragraph so it can sit on the last line - so both rules matched nothing. A rule for a
+   structure the markup no longer has is the dead code this sheet has already been cleaned of twice;
+   the behaviour it described now lives at `.card p .arrow` above. --card-measure stays: `.card p`
+   still reads it, and it is the reason the paragraph and the float share one column. */
 .card:hover{transform:translateY(-4px);border-color:var(--ds-line-strong);box-shadow:var(--ds-shadow-lift)}
 .card:hover .arrow{transform:translateX(5px)}
 .card p{margin:0;color:var(--ds-ink-soft);font-size:var(--ds-step-fine);max-width:var(--card-measure)}
