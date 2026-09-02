@@ -601,6 +601,17 @@ button{font:inherit;color:inherit}
   font-size:var(--ds-step-fine);
 }
 .note p,p.note{max-width:62ch}
+/* A note that is meant to be read as ONE LINE. The 62ch cap above is the right default for a note -
+   it is the reason the other twenty-one on this site stay readable - so this is a modifier on the one
+   instance rather than a change to the rule. Be clear about the trade: the sentence is 133 characters
+   and needs 797px on one line, which is roughly 97ch, well past the measure the cap exists to hold.
+   It is a signpost read at a glance rather than a paragraph read word by word, which is what makes
+   that acceptable HERE and not in general. Below about 1024px the column is narrower than 797px and
+   it wraps again, as it must - this buys a single line on desktop, not everywhere.
+   Written as `p.note--line` and `.note.note--line`, NOT as a bare `.note--line`: the cap it has to
+   beat is `p.note`, which is (0,1,1), and a lone class is (0,1,0). The first attempt was the bare
+   class, it lost the cascade silently, and the note stayed at 508px on two lines. Measured. */
+p.note--line,.note.note--line{max-width:none}
 
 /* the long-form document body: legal pages, the FAQ answers, the article tiers.
    LEGAL-SECTIONS.md #1, a prose container at a single measure. Spacing is owned
@@ -913,6 +924,13 @@ h3.eyebrow{font-size:var(--ds-step-h3);letter-spacing:normal;text-transform:none
   box-shadow:var(--ds-shadow),inset 0 1px 0 var(--ds-surface-2);
   transition:transform var(--ds-dur) var(--ds-ease),box-shadow var(--ds-dur) var(--ds-ease),border-color var(--ds-dur) var(--ds-ease);
 }
+/* The arrow sits at the CARD'S FOOT, not wherever the copy happens to end. The grid already gives
+   sibling cards equal height, but the arrow was the last item in a flow, so a heading that wrapped to
+   two lines pushed its arrow down with it: measured 50px from the foot on the one-line card and 23px
+   on the two-line one, 27px out of step across a pair sitting side by side. An auto top margin in a
+   column flex box hands the leftover height to the gap ABOVE the arrow, so every arrow in a row lands
+   on the same line whatever the headings above them do. */
+.card > .arrow{margin-top:auto}
 .card:hover{transform:translateY(-4px);border-color:var(--ds-line-strong);box-shadow:var(--ds-shadow-lift)}
 .card:hover .arrow{transform:translateX(5px)}
 .card p{margin:0;color:var(--ds-ink-soft);font-size:var(--ds-step-fine);max-width:38ch}
