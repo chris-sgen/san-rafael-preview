@@ -916,6 +916,13 @@ h3.eyebrow{font-size:var(--ds-step-h3);letter-spacing:normal;text-transform:none
      border, the lift on hover and the arrow. Underlining the prose inside it as well says "link"
      three times and makes the description look like eight separate links. */
   text-decoration:none;
+  /* THE CARD'S TEXT COLUMN, declared once. The paragraph and the arrow both live in it, and until
+     now the width existed only inside `.card p`, so nothing else could line up with it. An
+     unregistered custom property is substituted as tokens and resolved where it is USED, so `38ch`
+     here computes against each user's own font - 13px on the paragraph and 13px on the arrow, the
+     same 311.6px column. Declared once and read twice, so the two agree by construction rather than
+     by a number copied into two places. */
+  --card-measure:38ch;
   padding:22px;
   border:1px solid var(--ds-line);
   border-radius:var(--ds-r-surface);
@@ -930,10 +937,33 @@ h3.eyebrow{font-size:var(--ds-step-h3);letter-spacing:normal;text-transform:none
    on the two-line one, 27px out of step across a pair sitting side by side. An auto top margin in a
    column flex box hands the leftover height to the gap ABOVE the arrow, so every arrow in a row lands
    on the same line whatever the headings above them do. */
-.card > .arrow{margin-top:auto}
+.card > .arrow{
+  margin-top:auto;
+  /* ...and it sits at the RIGHT END OF THE TEXT COLUMN. The paragraph stops at --card-measure, about
+     312px, while the card runs to 640px, so the half of the card to its right is empty: an arrow at
+     the card's edge would align with nothing, and at the left edge it read as a stray glyph under
+     the copy. Measured against the owner's mark on the render - the paragraph edge sat 55px away,
+     the card edge 271px - so the text column is the one being pointed at.
+     font-family and font-size are restated rather than inherited BECAUSE of the ch. This span
+     inherits 17px while the paragraph is 13px, and `ch` resolves against the element's own font, so
+     an inherited-font arrow would have taken a column a third wider than the one it is meant to
+     match. Reading --card-measure in the paragraph's own type is what makes the two edges identical.
+     The svg is sized for a related reason: this span used to be 18px wide and an unsized,
+     viewBox-only svg simply filled it. Widening the span to the text column would otherwise let that
+     svg scale with its container into a 312px arrow. */
+  align-self:flex-start;
+  width:100%;
+  max-width:var(--card-measure);
+  font-family:var(--ds-font-body);
+  font-size:var(--ds-step-fine);
+  display:flex;
+  justify-content:flex-end;
+  height:18px;
+}
+.card > .arrow svg{width:18px;height:18px;display:block}
 .card:hover{transform:translateY(-4px);border-color:var(--ds-line-strong);box-shadow:var(--ds-shadow-lift)}
 .card:hover .arrow{transform:translateX(5px)}
-.card p{margin:0;color:var(--ds-ink-soft);font-size:var(--ds-step-fine);max-width:38ch}
+.card p{margin:0;color:var(--ds-ink-soft);font-size:var(--ds-step-fine);max-width:var(--card-measure)}
 .card .btn-link{margin-top:auto}
 .card--flat{box-shadow:none;background-color:transparent}
 .card--flat:hover{transform:none;box-shadow:none}
