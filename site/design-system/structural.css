@@ -937,35 +937,30 @@ h3.eyebrow{font-size:var(--ds-step-h3);letter-spacing:normal;text-transform:none
    on the two-line one, 27px out of step across a pair sitting side by side. An auto top margin in a
    column flex box hands the leftover height to the gap ABOVE the arrow, so every arrow in a row lands
    on the same line whatever the headings above them do. */
-/* THE ARROW SITS ON THE PARAGRAPH'S LAST LINE, not on a row of its own beneath it. It used to be a
-   sibling pinned to the card's foot, which left it stranded 38px below the copy on a one-line-heading
-   card - a glyph floating in dead space. Inside the paragraph and floated, it lands at the right end
-   of the final line, which is where a reader's eye already is when the sentence ends.
-   COLOUR IS RESTATED, and it is not decoration to do so: as a direct child of the card <a> the arrow
-   inherited the link colour rgb(29,111,155); moved inside the paragraph it would inherit the
-   paragraph's ink rgb(74,82,89) instead and quietly turn grey. The token is dual-surface, so naming
-   it keeps the correct flip on a dark ground rather than freezing one value.
-   The svg is sized explicitly because an unsized, viewBox-only svg takes its container's width. */
-.card p .arrow{
-  float:right;
+/* THE ARROW SITS IN THE CARD'S BOTTOM-RIGHT CORNER. The card is a column flex box, so an auto top
+   margin drops the arrow to the foot and flex-end pushes it to the trailing edge - the corner, with
+   only the card's own padding beyond it. No absolute positioning: the arrow stays in flow, so it can
+   never overlap the copy when a paragraph runs long.
+   Because the cards in a row are equal height, corner-pinning aligns the two arrows for free -
+   whatever their headings and paragraphs do above them.
+   Colour is NOT restated here. As a direct child of the card <a> the arrow inherits the link colour
+   rgb(29,111,155) already; naming it again would be a declaration that changes nothing, which is the
+   sort of line this sheet has been cleaned of before. It was needed only while the arrow lived inside
+   the paragraph, where it would have inherited the paragraph's grey ink instead.
+   The svg is still sized explicitly: an unsized, viewBox-only svg takes its container's width. */
+.card > .arrow{
+  margin-top:auto;
+  align-self:flex-end;
   width:18px;
   height:18px;
-  margin-left:0.6em;
-  margin-top:2px;
-  color:var(--ds-brand-primary-deep);
 }
-.card p .arrow svg{width:18px;height:18px;display:block}
-/* Both headings reserve two lines. Without this the one-line heading starts its paragraph 27px
-   higher, so the two paragraphs end 27px apart and - now that each arrow follows its own last line -
-   the arrows would sit at two different heights on a pair of cards side by side. Reserving the
-   second line costs a little air under the short heading and buys both cards a shared baseline. */
-.card .h-card{min-height:2.5em}
-/* REMOVED 2026-09-02: `.card > .arrow` and its svg rule sat here, pinning a sibling arrow to the
-   card's foot and right-aligning it to --card-measure. The arrow is no longer a sibling - it moved
-   INSIDE the paragraph so it can sit on the last line - so both rules matched nothing. A rule for a
-   structure the markup no longer has is the dead code this sheet has already been cleaned of twice;
-   the behaviour it described now lives at `.card p .arrow` above. --card-measure stays: `.card p`
-   still reads it, and it is the reason the paragraph and the float share one column. */
+.card > .arrow svg{width:18px;height:18px;display:block}
+/* REMOVED 2026-09-02: `.card .h-card{min-height:2.5em}` reserved a second heading line here. It
+   existed for ONE reason - while each arrow followed its own paragraph's last line, two headings of
+   different height ended their paragraphs 27px apart and put the arrows on two different levels. The
+   arrow is corner-pinned now, so equal card heights align them on their own and the reservation buys
+   nothing; all it did was open a gap under the one-line heading. The requirement left with the
+   layout that needed it. */
 .card:hover{transform:translateY(-4px);border-color:var(--ds-line-strong);box-shadow:var(--ds-shadow-lift)}
 .card:hover .arrow{transform:translateX(5px)}
 .card p{margin:0;color:var(--ds-ink-soft);font-size:var(--ds-step-fine);max-width:var(--card-measure)}
