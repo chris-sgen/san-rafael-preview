@@ -1166,31 +1166,53 @@ h3.eyebrow{font-size:var(--ds-step-h3);letter-spacing:normal;text-transform:none
 
 
 /* ==========================================================================
-   12. TABLE SHELL
+   12. TABLE SHELL — RULED, NOT PANELLED
    For the comparison the briefs call "the five rails side by side, the matrix"
    and for the office-hours grid. It scrolls inside its own container rather than
-   forcing the page to scroll sideways, and the header row is the sunken ground
-   so the table reads as an object on the page, not as loose text.
+   forcing the page to scroll sideways.
+   CHANGED 2026-09-02: the wrapper was a card — 1px border, radius, a white
+   surface-2 fill and a shadow — and the header row was a sunken grey bar, so a
+   plain question-and-answer read as a widget dropped onto the band rather than
+   as part of the page. The panel is gone. What holds the table together now is
+   the RULING: one firm rule under the column labels, hairlines between rows,
+   which is how a table of record is set and how the rest of this system already
+   sets the FAQ (section 13 carries the same "no card chrome" note).
+   What did NOT change is the scroll behaviour — that is what stops a
+   four-column matrix forcing the whole page sideways on a phone, and it is
+   independent of whether the thing looks like a card.
    ========================================================================== */
 .table-wrap{
   overflow-x:auto;
   -webkit-overflow-scrolling:touch;
-  border:1px solid var(--ds-line);
-  border-radius:var(--ds-r-surface);
-  background-color:var(--ds-surface-2);
-  box-shadow:var(--ds-shadow);
 }
 .table{width:100%;border-collapse:collapse;font-size:var(--ds-step-fine);font-variant-numeric:tabular-nums}
 .table th,.table td{padding:14px 18px;text-align:left;vertical-align:top;border-bottom:1px solid var(--ds-line)}
+/* The table's text edges line up with the band heading above it — no left inset on the
+   first column, no right inset on the last. That 18px only ever existed to hold the text
+   off the card's border, and there is no border now; keeping it would leave the first
+   column hanging 18px to the right of every heading and paragraph in the same column.
+   The padding BETWEEN columns is untouched, because that is doing real work. */
+.table th:first-child,.table td:first-child{padding-left:0}
+.table th:last-child,.table td:last-child{padding-right:0}
 .table thead th{
-  background-color:var(--ds-surface-sunken);
   font-family:var(--ds-font-body);
   font-weight:600;
   letter-spacing:var(--ds-track-eyebrow);
   text-transform:uppercase;
   color:var(--ds-ink-soft);
   white-space:nowrap;
+  /* Separated by RULE, not by fill. The sunken grey bar was card interior — floated on
+     an open band it reads as a stray block. --ds-line-strong (#c9d1d8 light / #3d464e
+     dark, so it is dual-surface) is one clear step up from the row hairlines, which is
+     enough to make the labels read as a header without any fill at all. */
+  border-bottom:1px solid var(--ds-line-strong);
 }
+/* th AS WELL AS td. This named only `td`, so the last row's row-header kept its hairline
+   while the cells beside it did not - a rule that ran under column one and stopped dead
+   partway across (measured 445px of a 1392px table on index, 247px on cost, and the same
+   on contact and doctor). Inside the old card that stray line was masked by the panel's
+   own bottom border; taking the panel away exposed it on all four table pages at once. */
+.table tbody tr:last-child th,
 .table tbody tr:last-child td{border-bottom:0}
 .table td{color:var(--ds-ink-soft)}
 .table th[scope="row"]{color:var(--ds-ink);font-weight:600;white-space:normal}
@@ -1204,12 +1226,16 @@ h3.eyebrow{font-size:var(--ds-step-h3);letter-spacing:normal;text-transform:none
   text-transform:uppercase;
   color:var(--ds-ink-faint);
 }
+/* The caption is now a standfirst ABOVE an open table, not the first band inside a
+   panel: flush left with the heading, and with NO rule of its own. Its old border sat
+   one line above the header's rule, and with the panel gone those two hairlines stacked
+   into a double rule with the column labels trapped between them. Spacing separates it
+   instead. */
 .table caption{
-  padding:14px 18px;
+  padding:0 0 14px;
   text-align:left;
   font-size:var(--ds-step-fine);
   color:var(--ds-ink-faint);
-  border-bottom:1px solid var(--ds-line);
 }
 
 
@@ -1627,7 +1653,9 @@ h3.eyebrow{font-size:var(--ds-step-h3);letter-spacing:normal;text-transform:none
      a stack would destroy the one thing the row is for. */
   .table thead th{white-space:normal}
   .table th,.table td{padding:12px 12px}
-  .table caption{padding:12px 12px}
+  /* The first/last-child zeroing above is (0,2,1) and this is (0,1,1), so the outer
+     edges stay flush here too — only the BETWEEN-column padding tightens. */
+  .table caption{padding:0 0 12px}
   /* Releasing the header wrap is enough for a two-column table, which still reads
      across at 339px. A FOUR-column comparison matrix cannot be saved that way:
      four columns in a 339px container leaves about 85px each, under the legible
@@ -1655,7 +1683,7 @@ h3.eyebrow{font-size:var(--ds-step-h3);letter-spacing:normal;text-transform:none
      its full-width cell, and needs no hiding trick. */
   .table--stack thead{display:none}
   .table--stack .td-label{display:block}
-  .table--stack tr{padding:var(--ds-space-gap) 12px;border-bottom:1px solid var(--ds-line)}
+  .table--stack tr{padding:var(--ds-space-gap) 0;border-bottom:1px solid var(--ds-line)}
   .table--stack tr:last-child{border-bottom:0}
   .table--stack th[scope="row"]{padding:0 0 var(--ds-space-tight);border-bottom:0;font-size:var(--ds-step-body)}
   .table--stack td{padding:0 0 var(--ds-space-tight);border-bottom:0}
@@ -1707,7 +1735,14 @@ h3.eyebrow{font-size:var(--ds-step-h3);letter-spacing:normal;text-transform:none
   .h-hero{max-width:100%;font-size:var(--ds-step-hero)}
   .h-band,.h-sheet{max-width:22ch}
   .cta-row{gap:0.75rem;margin-top:calc(var(--ds-space-gap) * 1.2)}
-  .table th,.table td,.table caption{padding:10px 10px}
+  /* Cells keep the tighter phone padding; the first/last-child zeroing (section 12) is
+     (0,2,1) and outranks this, so the outer edges stay flush. The CAPTION has no such
+     override, so listing it here re-added a 10px left inset and left it sitting 10px
+     right of the column while every cell under it was flush - measured at 375px:
+     caption 28, first cell 18. It is broken out with the same flush padding it gets
+     everywhere else. */
+  .table th,.table td{padding:10px 10px}
+  .table caption{padding:0 0 10px}
 }
 
 
