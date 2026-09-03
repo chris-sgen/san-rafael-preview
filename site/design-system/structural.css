@@ -297,7 +297,22 @@ button{font:inherit;color:inherit}
 .container--wide{width:100%;max-width:1440px;margin-left:auto;margin-right:auto;padding-left:24px;padding-right:24px}
 
 .section{position:relative;padding-top:var(--ds-space-band);padding-bottom:var(--ds-space-band)}
-.section--tight{padding-top:calc(var(--ds-space-band) * 0.55);padding-bottom:calc(var(--ds-space-band) * 0.55)}
+/* .section--tight IS NOW A NO-OP, and deliberately so (owner decision 2026-09-03).
+   It used to be calc(var(--ds-space-band) * 0.55), which put 53px bands next to 96px bands and broke
+   the owner's amended cadence rule of 2026-08-11 - "every section must lead like every other and
+   trail like every other". G-CADENCE (verify-section-rhythm) enforces that within 8px; the measured
+   spread was 44px at 1440, 25 at 768, 28 at 375, and it blocked 27 of 29 pages.
+   NEUTRALISED HERE RATHER THAN STRIPPED FROM THE MARKUP, for a reason worth recording: the class
+   appears 30 times across 20 pages, and SIX of those files (auto-accident, chiropractic, first-visit,
+   narrative-report, work-injuries, sciatica) are write-locked by PRE-EXISTING violations of other
+   gates - duplicate pre-footer CTA bands, adjacent same-shape sections, a phrase repeated across
+   three sections. Editing them to remove a padding class would have meant first making unrequested
+   content changes to six pages. Neutralising the modifier gets the identical rendered result with one
+   declaration and no write to a locked file.
+   The class is KEPT DEFINED (not deleted) so the markup's class still resolves and
+   verify-no-orphan-classes stays green. It should be stripped from the HTML the next time each of
+   those pages is legitimately edited; until then this rule is the single point of truth. */
+.section--tight{padding-top:var(--ds-space-band);padding-bottom:var(--ds-space-band)}
 .section--flush-top{padding-top:0}
 .section--flush-bottom{padding-bottom:0}
 /* A GREY WASH THAT FALLS AWAY DOWNWARD, with the page's own subject behind it.
@@ -1731,7 +1746,19 @@ h3.eyebrow{font-size:var(--ds-step-h3);letter-spacing:normal;text-transform:none
   :root, .surface-dark{
     --ds-step-hero:clamp(1.9rem,7.4vw,2.45rem);
     --ds-step-h2:clamp(1.55rem,6.5vw,1.9rem);
-    --ds-space-band:2.75rem;
+    /* 4rem (64px), raised 2026-09-03 from 2.75rem (44px). This is the ONE value that could not stay
+       where it was once the cadence had to be uniform, and the reason is physical, not stylistic:
+       `.section--seamed:not(.hero)` carries a 64px FLOOR because the band's carved edge is 34px tall
+       and the curve has to clear the copy. At 44px the seamed band still rendered 64 while every
+       plain band rendered 44 - measured §1[44] §2[44] §3[44] §4[64] - so leading AND trailing both
+       broke uniformity by 20px at 375, and no amount of removing `--tight` could close it.
+       Matching the band to the seam's floor is what makes one cadence reachable on a phone. The
+       alternative was cutting the seam floor to 44, which leaves the curve 10px of clearance against
+       a documented measurement that chose 64 to clear it "with margin"; a real constraint beats a
+       spacing preference. COST, stated plainly: every section gains 20px top and bottom below 480px,
+       so a six-band page is about 240px longer on a phone. Reversible by restoring 2.75rem, which
+       re-breaks G-CADENCE at 375. */
+    --ds-space-band:4rem;
     --ds-space-gap:1.15rem;
   }
   /* The hero is 62px and max-width:100% everywhere above this breakpoint, as asked. Below it the
@@ -1897,9 +1924,12 @@ h3.eyebrow{font-size:var(--ds-step-h3);letter-spacing:normal;text-transform:none
    320px to 3840px. The calc half was unreachable dead code, and the modifier shipped MORE air than
    no class at all (64px against a plain section's 44px at 375). Now a real constant, set to clear
    the 34px carve with margin while actually being tighter than the 64px non-tight floor. */
+/* NEUTRALISED 2026-09-03 with .section--tight itself (see section 3). A seamed band held 52px here
+   while a plain band held 96 at desktop, which is the same cadence break by a different route. It now
+   simply inherits the seamed floor below, so a seamed band spaces like every other band. */
 .section--tight.section--seamed:not(.hero){
-  padding-top:52px;
-  padding-bottom:52px;
+  padding-top:max(var(--ds-space-band),64px);
+  padding-bottom:max(var(--ds-space-band),64px);
 }
 .hero.section--seamed{padding-bottom:calc(var(--ds-space-band) * 1.15 + 34px)}
 
